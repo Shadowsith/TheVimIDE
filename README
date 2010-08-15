@@ -1,0 +1,111 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=3115
+
+This plugin aims at making it more convenient to compile or run a single
+source file without leaving vim.
+
+Consider this situation: you have just written a small c source file for a
+small test, but you have to write a Makefile to compile it or exit vim to
+compile it or compile it using "!gcc" without quickfix feature because vim's
+make command only use the "make" command? This plugin will help you out.
+
+add these key-mappings to your vimrc:
+
+ nmap <F9> :SCCompile<cr> 
+ nmap <F10> :SCCompileRun<cr>
+
+If your file type is supported, then press F9 to compile your source file, and
+press F10 to compile and run your source file. 
+
+Here is a list of supported languages:
+
+C:
+    bcc (Borland C++ Builder), Windows only
+    cc (UNIX C Compiler), UNIX/Linux only
+    gcc (GNU C Compiler)
+    icc (Intel C++ Compiler)
+    msvc (Microsoft Visual C++), Windows only
+    open-watcom (Open Watcom C/C++32 Compiler)
+    pcc (Portable C Compiler)
+    tcc (Tiny C Compiler)
+
+C++:
+    bcc (Borland C++ Builder), Windows Only
+    g++ (GNU C++ Compiler)
+    icc (Intel C++ Compiler)
+    msvc (Microsoft Visual C++), Windows Only
+    open-watcom (Open Watcom C/C++32 Compiler)
+
+cmake:
+    cmake (cmake)
+
+dos batch:
+    dosbatch (DOS Batch)
+    
+Fortran:
+    g77 (GNU Fortran 77 Compiler)
+    gfortran (GNU Fortran Compiler), UNIX/Linux only
+    ifort (Intel Fortran Compiler)
+    open-watcom (Open Watcom Fortran 77/32 Compiler)
+
+html:
+    chrome (Google Chrome)
+    firefox (Mozilla Firefox)
+    ie (Microsoft Internet Explorer)
+    opera (Opera)
+
+Java:
+    gcj (GNU Java Compiler)
+    sunjdk (Sun Java Development Kit)
+
+LaTeX:
+    miktex (MiKTeX), Windows Only
+    texlive (Tex Live)
+
+lua:
+    lua (Lua Interpreter)
+
+Makefile:
+    gmake (GNU Make)
+    mingw32-make (MinGW32 Make)
+    nmake (Microsoft Program Maintenance Utility)
+
+perl:
+    perl (Perl Interpreter)
+
+python:
+    jython (Jython)
+    pypy (PyPy)
+    python3 (Python 3 Interpreter)
+    python (Python Interpreter)
+    
+ruby:
+    ruby (Ruby Interpreter)
+    
+sh(UNIX shell):
+    shell (UNIX Shell)
+
+vb script:
+    vbs (VB Script Interpreter)
+    
+xhtml:
+    firefox (Mozilla Firefox)
+    chrome (Google Chrome)
+    opera (Opera)
+    ie (Microsoft Internet Explorer)
+
+
+You can add your compiler support if your compiler is not in the list. See
+details in the help file SingleCompile.txt
+
+Interpreting language such as python can also be supported by this plugin,
+see details in the help file SingleCompile.txt.
+
+This plugin cannot deal with a project with more than one source file. 
+
+if you have any question, send an email to xuhdev AT gmail DOT com.
+
+Here is a list of plugins which SingleCompile is supporting:
+Marc Weber's vim-addon-actions: http://github.com/MarcWeber/vim-addon-actions
+
+
+check the latest code at: http://code.google.com/p/single-compile/source/checkout
