@@ -1,5 +1,5 @@
 " File: autoload/SingleCompile.vim
-" Version: 1.1
+" Version: 1.2
 " check doc/SingleCompile.txt for more information
 
 
@@ -7,7 +7,7 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 function! SingleCompile#GetVersion() " get the script version {{{1
-    return 110
+    return 120
 endfunction
 
 function! s:Intialize() "{{{1
@@ -30,11 +30,14 @@ function! SingleCompile#SetTemplate(langname,stype,string,...) " set the templat
         return
     endif
 
+    " if g:SingleCompile_templates does not exist or it is not a dic, then
+    " make g:SingleCompile_templates a dic
     if !exists('g:SingleCompile_templates') || type(g:SingleCompile_templates) != type({})
         unlet! g:SingleCompile_templates
         let g:SingleCompile_templates={}
     endif
 
+    " if the key a:langname does not exist, create it
     if !has_key(g:SingleCompile_templates,a:langname)
         let g:SingleCompile_templates[a:langname]={}
     elseif type(g:SingleCompile_templates[a:langname]) != type({})
@@ -42,15 +45,14 @@ function! SingleCompile#SetTemplate(langname,stype,string,...) " set the templat
         let g:SingleCompile_templates[a:langname]={}
     endif
 
+    " if a:stype does not exist, create it
     if !has_key(g:SingleCompile_templates[a:langname],a:stype)
         let g:SingleCompile_templates[a:langname][a:stype] = a:string
     elseif type(g:SingleCompile_templates[a:langname][a:stype]) != type('')
         unlet! g:SingleCompile_templates[a:langname][a:stype]
         let g:SingleCompile_templates[a:langname][a:stype] = a:string
-    else
-        if a:0 == 0 || a:1 == 0
-            let g:SingleCompile_templates[a:langname][a:stype] = a:string
-        endif
+    elseif a:0 == 0 || a:1 == 0 " if the ... from the argument is 0 or the additional argument does not exist
+        let g:SingleCompile_templates[a:langname][a:stype] = a:string
     endif
 endfunction
 
@@ -65,7 +67,7 @@ function! s:ShowMessage(message) "{{{1
 
 endfunction
 
-function! s:IsLanguageInterpreting(filetype_name) "{{{ tell if a language is an interpreting language, reutrn 1 if yes, 0 if no
+function! s:IsLanguageInterpreting(filetype_name) "{{{1 tell if a language is an interpreting language, reutrn 1 if yes, 0 if no
     return (!has_key(g:SingleCompile_templates[a:filetype_name],'run') 
                 \ || substitute(g:SingleCompile_templates[a:filetype_name]['run'], ' ','',"g") == '')
 endfunction
