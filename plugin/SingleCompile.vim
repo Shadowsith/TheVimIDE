@@ -1,6 +1,6 @@
 " File: plugin/SingleCompile.vim
 " GetLatestVimScripts: 3115 1 :AutoInstall: SingleCompile.zip
-" version 2.0.1
+" version 2.0.2
 " check doc/SingleCompile.txt for more version information
 
 if v:version < 700
@@ -68,4 +68,4 @@ endif
 
 let &cpo = s:saved_cpo
 
-" vim:fdm=marker
+" vim:fdm=marker et
