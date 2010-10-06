@@ -1,5 +1,5 @@
 " File: autoload/SingleCompile.vim
-" Version: 2.0.3
+" Version: 2.0.4
 " check doc/SingleCompile.txt for more information
 
 
@@ -15,7 +15,7 @@ let s:TemplateIntialized = 0
 
 
 function! SingleCompile#GetVersion() " get the script version {{{1
-    return 202
+    return 204
 endfunction
 
 " compiler detect functions {{{1
@@ -23,22 +23,22 @@ function! s:DetectCompilerGenerally(compile_command) " {{{2
     " the general function of compiler detection. The principle is to search
     " the environment varible PATH and some special directory
 
-    if executable(a:compile_command) == 1
-        return a:compile_command
-    endif
-
-    " unix-like system compiler detection
     if has('unix') || has('macunix')
-        for cmd in [expand('/usr/bin/'.a:compile_command), 
+        let l:list_to_detect = [expand(a:compile_command),
+                    \expand('/usr/bin/'.a:compile_command), 
                     \expand('/usr/local/bin/'.a:compile_command),
                     \expand('/bin/'.a:compile_command),
                     \expand('~/bin/'.a:compile_command)
                     \]
-            if executable(cmd) == 1
-                return cmd
-            endif
-        endfor
+    else
+        let l:list_to_detect = [expand(a:compile_command)]
     endif
+
+    for cmd in l:list_to_detect
+        if executable(cmd) == 1
+            return cmd
+        endif
+    endfor
 
     return 0
 endfunction
@@ -93,6 +93,7 @@ function! s:Intialize() "{{{1
         
         let s:TemplateIntialized = 1
 
+        " templates {{{2
         if has('win32') || has('win64') || has('os2')
             let s:common_run_command = '%<'
         else
@@ -233,7 +234,7 @@ function! s:SetCompilerSingleTemplate(lang_name, compiler_name, key, value, ...)
     " set the template. if the '...' is nonzero, this function will not override the corresponding template if there is an existing template 
 
     if a:0 > 1
-        echohl ErrorMsg | echo 'too many argument for SingleCompile#SetCompilerSingleTemplate function' | echohl None
+        call s:ShowMessage('too many argument for SingleCompile#SetCompilerSingleTemplate function')
         return
     endif
 
@@ -263,7 +264,7 @@ endfunction
 
 function! SingleCompile#SetTemplate(langname,stype,string,...) " set the template. if the '...' is nonzero, this function will not override the corresponding template if there is an existing template {{{1
     if a:0 > 1
-        echohl ErrorMsg | echo 'too many argument for SingleCompile#SetTemplate function' | echohl None
+        call s:ShowMessage('too many argument for SingleCompile#SetTemplate function')
         return
     endif
 
@@ -297,7 +298,7 @@ endfunction
 function! s:ShowMessage(message) "{{{1
 
     if g:SingleCompile_usedialog == 0 || !((has('gui_running') && has('dialog_gui')) || has('dialog_con'))
-        echohl ErrorMsg | echo a:message | echohl None
+        call s:ShowMessage(a:message)
     else
         call confirm(a:message)
     endif
@@ -311,7 +312,7 @@ function! s:IsLanguageInterpreting(filetype_name) "{{{1 tell if a language is an
     else
         let l:chosen_compiler = s:CompilerTemplate[a:filetype_name]['chosen_compiler']
         return (!has_key(s:CompilerTemplate[a:filetype_name][l:chosen_compiler], 'run')
-                    \ || substitute(s:CompilerTemplate[a:filetype_name][l:chosen_compiler]['run'], ' ', '', "g") )
+                    \ || substitute(s:CompilerTemplate[a:filetype_name][l:chosen_compiler]['run'], ' ', '', "g") == '')
     endif
 endfunction
 
@@ -411,6 +412,7 @@ function! SingleCompile#Compile(...) " compile only {{{1
         exec 'setlocal makeprg='.l:old_makeprg
         exec 'setlocal shellpipe='.escape(l:old_shellpipe,' |')
 
+
     else " use quickfix for compiling language
 
         " change the makeprg and shellpipe temporarily 
@@ -426,6 +428,12 @@ function! SingleCompile#Compile(...) " compile only {{{1
         " set back makeprg and shellpipe
         exec 'setlocal makeprg='.l:old_makeprg
         exec 'setlocal shellpipe='.escape(l:old_shellpipe,' |')
+    endif
+
+    " if it's interpreting language, then return 2 (means do not call run if
+    " user uses SCCompileRun command
+    if s:IsLanguageInterpreting(&filetype)
+        let l:toret = 2
     endif
 
     " switch back to the original directory
