@@ -1,5 +1,5 @@
 " File: autoload/SingleCompile.vim
-" Version: 2.0.4
+" Version: 2.1
 " check doc/SingleCompile.txt for more information
 
 
@@ -15,7 +15,7 @@ let s:TemplateIntialized = 0
 
 
 function! SingleCompile#GetVersion() " get the script version {{{1
-    return 204
+    return 210
 endfunction
 
 " compiler detect functions {{{1
@@ -110,8 +110,13 @@ function! s:Intialize() "{{{1
         call SingleCompile#SetCompilerTemplate('c', 'icc', 'Intel C++ Compiler', 'icc', '-o "%<"', s:common_run_command)
         call SingleCompile#SetCompilerTemplate('c', 'pcc', 'Portable C Compiler', 'pcc', '-o "%<"', s:common_run_command)
         call SingleCompile#SetCompilerTemplate('c', 'tcc', 'Tiny C Compiler', 'tcc', '-o "%<"', s:common_run_command)
+        call SingleCompile#SetCompilerTemplate('c', 'ch', 'SoftIntegration Ch', 'ch', '', '')
         if has('unix') || has('macunix')
             call SingleCompile#SetCompilerTemplate('c', 'cc', 'UNIX C Compiler', 'cc', '-o "%<"', s:common_run_command)
+        endif
+        if has('unix')
+            call SingleCompile#SetCompilerTemplate('c', 'sol-studio', 'Sun C Compiler (Sun Solaris Studio)', 'suncc', '-o "%<"', s:common_run_command)
+            call SingleCompile#SetCompilerTemplate('c', 'open64', 'Open64 C Compiler', 'opencc', '-o "%<"', s:common_run_command)
         endif
 
         " cpp
@@ -122,6 +127,11 @@ function! s:Intialize() "{{{1
         endif
         call SingleCompile#SetCompilerTemplate('cpp', 'g++', 'GNU C++ Compiler', 'g++', '-o "%<"', s:common_run_command)
         call SingleCompile#SetCompilerTemplate('cpp', 'icc', 'Intel C++ Compiler', 'icc', '-o "%<"', s:common_run_command)
+        call SingleCompile#SetCompilerTemplate('cpp', 'ch', 'SoftIntegration Ch', 'ch', '', '')
+        if has('unix')
+            call SingleCompile#SetCompilerTemplate('cpp', 'sol-studio', 'Sun C++ Compiler (Sun Solaris Studio)', 'sunCC', '-o "%<"', s:common_run_command)
+            call SingleCompile#SetCompilerTemplate('cpp', 'open64', 'Open64 C++ Compiler', 'openCC', '-o "%<"', s:common_run_command)
+        endif
 
         " java
         call SingleCompile#SetCompilerTemplate('java', 'sunjdk', 'Sun Java Development Kit', 'javac', '', 'java "%<"')
@@ -131,9 +141,23 @@ function! s:Intialize() "{{{1
         if has('unix') || has('macunix')
             call SingleCompile#SetCompilerTemplate('fortran', 'gfortran', 'GNU Fortran Compiler', 'gfortran', '-o "%<"', s:common_run_command)
         endif
+        if has('unix')
+            call SingleCompile#SetCompilerTemplate('fortran', 'sol-studio-f77', 'Sun Fortran 77 Compiler (Sun Solaris Studio)', 'sunf77', '-o "%<"', s:common_run_command)
+            call SingleCompile#SetCompilerTemplate('fortran', 'sol-studio-f90', 'Sun Fortran 90 Compiler (Sun Solaris Studio)', 'sunf90', '-o "%<"', s:common_run_command)
+            call SingleCompile#SetCompilerTemplate('fortran', 'sol-studio-f95', 'Sun Fortran 95 Compiler (Sun Solaris Studio)', 'sunf95', '-o "%<"', s:common_run_command)
+            call SingleCompile#SetCompilerTemplate('fortran', 'open64-f90', 'Open64 Fortran 90 Compiler', 'openf90', '-o "%<"', s:common_run_command)
+            call SingleCompile#SetCompilerTemplate('fortran', 'open64-f95', 'Open64 Fortran 95 Compiler', 'openf95', '-o "%<"', s:common_run_command)
+        endif
+        if has('win32') || has('win64')
+            call SingleCompile#SetCompilerTemplate('fortran', 'ftn95', 'Silverfrost FTN95', 'ftn95', '$source_file$ /LINK', s:common_run_command)
+        endif
         call SingleCompile#SetCompilerTemplate('fortran', 'g77', 'GNU Fortran 77 Compiler', 'g77', '-o "%<"', s:common_run_command)
         call SingleCompile#SetCompilerTemplate('fortran', 'ifort', 'Intel Fortran Compiler', 'ifort', '-o "%<"', s:common_run_command)
         call SingleCompile#SetCompilerTemplate('fortran', 'open-watcom', 'Open Watcom Fortran 77/32 Compiler', 'wfl386', '', s:common_run_command)
+
+        " lisp
+        call SingleCompile#SetCompilerTemplate('lisp', 'clisp', 'GNU CLISP', 'clisp', '', '')
+        call SingleCompile#SetCompilerTemplate('lisp', 'ecl', 'Embeddable Common-Lisp', 'ecl', '-shell', '')
 
         " shell
         call SingleCompile#SetCompilerTemplate('sh', 'shell', 'UNIX Shell', 'sh', '', '')
@@ -143,7 +167,7 @@ function! s:Intialize() "{{{1
 
         " html
         call SingleCompile#SetCompilerTemplate('html', 'firefox', 'Mozilla Firefox', 'firefox', '', '')
-        call SingleCompile#SetCompilerTemplate('html', 'chrome', 'Google Chrome', 'googlechrome', '', '')
+        call SingleCompile#SetCompilerTemplate('html', 'chrome', 'Google Chrome', 'google-chrome', '', '')
         call SingleCompile#SetCompilerTemplate('html', 'opera', 'Opera', 'opera', '', '')
         if has('win32') || has('win64')
             call SingleCompile#SetCompilerTemplate('html', 'ie', 'Microsoft Internet Explorer', 'iexplore', '', '', function('s:DetectIe'))
@@ -153,7 +177,7 @@ function! s:Intialize() "{{{1
 
         " xhtml
         call SingleCompile#SetCompilerTemplate('xhtml', 'firefox', 'Mozilla Firefox', 'firefox', '', '')
-        call SingleCompile#SetCompilerTemplate('xhtml', 'chrome', 'Google Chrome', 'googlechrome', '', '')
+        call SingleCompile#SetCompilerTemplate('xhtml', 'chrome', 'Google Chrome', 'google-chrome', '', '')
         call SingleCompile#SetCompilerTemplate('xhtml', 'opera', 'Opera', 'opera', '', '')
         if has('win32') || has('win64')
             call SingleCompile#SetCompilerTemplate('xhtml', 'ie', 'Microsoft Internet Explorer', 'iexplore', '', '', function('s:DetectIe'))
@@ -202,10 +226,15 @@ function! s:Intialize() "{{{1
             call SingleCompile#SetCompilerTemplate('make', 'nmake', 'Microsoft Program Maintenance Utility', 'nmake', '-f', '')
         endif
 
+        " javascript
+        call SingleCompile#SetCompilerTemplate('javascript', 'rhino', 'Rhino', 'rhino', '', '')
+
+
         " cmake
         call SingleCompile#SetCompilerTemplate('cmake', 'cmake', 'cmake', 'cmake', '', '')
 
         " 2}}}
+
     endif
 endfunction
 
@@ -367,26 +396,42 @@ function! SingleCompile#Compile(...) " compile only {{{1
     let l:curcwd=getcwd()
     cd %:p:h
 
-    " if a:0 is zero and 'flags' is not defined, assign '' to let l:compile_flags
-    if a:0 == 1
+    if a:0 == 1 " if there is only one argument, it means use this argument as the compilation flag
         let l:compile_flags = a:1
-    elseif l:user_specified == 1 && has_key(g:SingleCompile_templates[&filetype],'flags')
+    elseif a:0 == 2 && l:user_specified == 1 && has_key(g:SingleCompile_templates[&filetype],'flags') " if there is two arguments, it means append the provided argument to the flag defined in the template
+        let l:compile_flags = g:SingleCompile_templates[&filetype]['flags'].' '.a:2
+    elseif a:0 == 0 && l:user_specified == 1 && has_key(g:SingleCompile_templates[&filetype],'flags')
         let l:compile_flags = g:SingleCompile_templates[&filetype]['flags']
-    elseif l:user_specified == 0 && has_key(s:CompilerTemplate[&filetype][ s:CompilerTemplate[&filetype]['chosen_compiler'] ], 'flags')
+    elseif a:0 == 2 && l:user_specified == 0 && has_key(s:CompilerTemplate[&filetype][ s:CompilerTemplate[&filetype]['chosen_compiler'] ], 'flags') " if there is two arguments, it means append the provided argument to the flag defined in the template
+
+        let l:compile_flags = s:GetCompilerSingleTemplate(&filetype, s:CompilerTemplate[&filetype]['chosen_compiler'], 'flags').' '.a:2
+    elseif a:0 == 0 && l:user_specified == 0 && has_key(s:CompilerTemplate[&filetype][ s:CompilerTemplate[&filetype]['chosen_compiler'] ], 'flags')
         let l:compile_flags = s:GetCompilerSingleTemplate(&filetype, s:CompilerTemplate[&filetype]['chosen_compiler'], 'flags')
-    else
+    else  " if a:0 is zero and 'flags' is not defined, assign '' to let l:compile_flags
         let l:compile_flags = ''
     endif
 
     " set the file name to be compiled
     let l:file_to_compile = expand('%:p')
-    if match(l:file_to_compile, ' ') != -1 " if there are spaces in the file name, add quotes to it
+
+    " on win32, win64, and os2, replace the backslash in l:file_to_compile
+    " with '/'
+    if has('win32') || has('win64') || has('os2')
+        let l:file_to_compile = substitute(l:file_to_compile, '/', '\\', 'g')
+    endif
+
+    if match(l:file_to_compile, ' ') != -1 " if there are spaces in the file name, surround it with quotes
         let l:file_to_compile = '"'.l:file_to_compile.'"'
     endif
+    
+    if match(l:compile_flags, '\$source_file\$') == -1
+        let l:compile_flags = l:compile_flags.' $source_file$'
+    endif
+    let l:compile_args = substitute(l:compile_flags, '\$source_file\$', escape(l:file_to_compile,'\'), 'g')
 
     if s:ShouldQuickfixBeUsed() == 0
         " if quickfix is not enabled for this plugin or the language is an interpreting language not in unix, then don't use quickfix
-        exec '!'.l:compile_cmd.' '.l:compile_flags.' '.l:file_to_compile
+        exec '!'.l:compile_cmd.' '.l:compile_args
         if v:shell_error != 0
             let l:toret = 1
         endif
@@ -406,7 +451,7 @@ function! SingleCompile#Compile(...) " compile only {{{1
             exec 'setlocal shellpipe=\|\ tee'
         endif
 
-        exec 'make'.' '.l:compile_flags.' '.l:file_to_compile
+        exec 'make'.' '.l:compile_args
 
         " set back makeprg and shellpipe
         exec 'setlocal makeprg='.l:old_makeprg
@@ -420,7 +465,7 @@ function! SingleCompile#Compile(...) " compile only {{{1
         let l:old_shellpipe = &shellpipe
         let &l:makeprg = l:compile_cmd
         exec 'setlocal shellpipe=>%s\ 2>&1'
-        exec 'make'.' '.l:compile_flags.' '.l:file_to_compile
+        exec 'make'.' '.l:compile_args
         " check is compiling successful
         if v:shell_error != 0
             let l:toret = 1
@@ -494,8 +539,10 @@ function! s:Run() " {{{1
 endfunction
 
 function! SingleCompile#CompileRun(...) " compile and run {{{1
-    if a:0 > 0
+    if a:0 == 1
         let l:compileResult = SingleCompile#Compile(a:1)
+    elseif a:0 == 2
+        let l:compileResult = SingleCompile#Compile(a:1, a:2)
     else
         let l:compileResult = SingleCompile#Compile()
     endif

@@ -16,24 +16,30 @@ add these key-mappings to your vimrc:
 If your file type is supported, then press F9 to compile your source file, and
 press F10 to compile and run your source file. 
 
-Here is a list of supported languages:
+Here is a list of built-in supported compilers:
 
 C:
     bcc (Borland C++ Builder), Windows only
     cc (UNIX C Compiler), UNIX/Linux only
+    ch (SoftIntegration Ch)
     gcc (GNU C Compiler)
     icc (Intel C++ Compiler)
     msvc (Microsoft Visual C++), Windows only
     open-watcom (Open Watcom C/C++32 Compiler)
+    open64 (Open64 C Compiler), UNIX/Linux only
     pcc (Portable C Compiler)
+    sol-studio (Sun C Compiler(Sun Solaris Studio)), UNIX/Linux only
     tcc (Tiny C Compiler)
 
 C++:
     bcc (Borland C++ Builder), Windows Only
+    ch (SoftIntegration Ch)
     g++ (GNU C++ Compiler)
     icc (Intel C++ Compiler)
     msvc (Microsoft Visual C++), Windows Only
     open-watcom (Open Watcom C/C++32 Compiler)
+    open64 (Open64 C++ Compiler), UNIX/Linux only
+    sol-studio (Sun C++ Compiler(Sun Solaris Studio)), UNIX/Linux only
 
 cmake:
     cmake (cmake)
@@ -42,10 +48,16 @@ dos batch:
     dosbatch (DOS Batch)
     
 Fortran:
-    g77 (GNU Fortran 77 Compiler)
+    ftn95 (Silverfrost FTN95), Windows only
     gfortran (GNU Fortran Compiler), UNIX/Linux only
+    g77 (GNU Fortran 77 Compiler)
     ifort (Intel Fortran Compiler)
     open-watcom (Open Watcom Fortran 77/32 Compiler)
+    open64-f90 (Open64 Fortran 90 Compiler), UNIX/Linux only
+    open64-f95 (Open64 Fortran 95 Compiler), UNIX/Linux only
+    sol-studio-f77 (Sun Fortran 77 Compiler(Sun Solaris Studio)), UNIX/Linux only
+    sol-studio-f90 (Sun Fortran 90 Compiler(Sun Solaris Studio)), UNIX/Linux only
+    sol-studio-f95 (Sun Fortran 95 Compiler(Sun Solaris Studio)), UNIX/Linux only
 
 html:
     chrome (Google Chrome)
@@ -57,17 +69,24 @@ Java:
     gcj (GNU Java Compiler)
     sunjdk (Sun Java Development Kit)
 
+JavaScript:
+    rhino (Rhino)
+
 LaTeX:
     miktex (MiKTeX), Windows Only
     texlive (Tex Live)
+
+LISP:
+    clisp (GNU CLISP)
+    ecl (Embeddable Common-Lisp)
 
 lua:
     lua (Lua Interpreter)
 
 Makefile:
     gmake (GNU Make)
-    mingw32-make (MinGW32 Make)
     nmake (Microsoft Program Maintenance Utility)
+    mingw32-make (MinGW32 Make)
 
 perl:
     perl (Perl Interpreter)
@@ -75,8 +94,8 @@ perl:
 python:
     jython (Jython)
     pypy (PyPy)
-    python3 (Python 3 Interpreter)
     python (Python Interpreter)
+    python3 (Python 3 Interpreter)
     
 ruby:
     ruby (Ruby Interpreter)
@@ -85,13 +104,13 @@ sh(UNIX shell):
     shell (UNIX Shell)
 
 vb script:
-    vbs (VB Script Interpreter)
+    vb (VB Script Interpreter)
     
 xhtml:
-    firefox (Mozilla Firefox)
     chrome (Google Chrome)
-    opera (Opera)
+    firefox (Mozilla Firefox)
     ie (Microsoft Internet Explorer)
+    opera (Opera)
 
 
 You can add your compiler support if your compiler is not in the list. See

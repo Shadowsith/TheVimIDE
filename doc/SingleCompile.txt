@@ -1,9 +1,9 @@
 *SingleCompile.txt*
 
 File: SingleCompile.txt
-Version: 2.0.4
+Version: 2.1
 Author: H Xu(xuhdev@gmail.com)
-Last Change: 6 October 2010
+Last Change: 25 October 2010
 Description: Make it more convenient to compile or run a single source file.
 License: You can redistribute this plugin and/or modify it under the terms 
          of the GNU General Public License as published by the Free Software 
@@ -36,28 +36,34 @@ make command only use the "make" command? This plugin will help you out.
 add these key-mappings to your vimrc:
 >
  nmap <F9> :SCCompile<cr> 
- nmap <C-F9> :SCCompileRun<cr>
+ nmap <F10> :SCCompileRun<cr>
 <
 If your file type is supported, then press F9 to compile your source file, and
-press Ctrl-F9 to compile and run your source file. Here is a list of supported
+press F10 to compile and run your source file. Here is a list of supported
 language:
 
 C:
     bcc (Borland C++ Builder), Windows only
     cc (UNIX C Compiler), UNIX/Linux only
+    ch (SoftIntegration Ch)
     gcc (GNU C Compiler)
     icc (Intel C++ Compiler)
     msvc (Microsoft Visual C++), Windows only
     open-watcom (Open Watcom C/C++32 Compiler)
+    open64 (Open64 C Compiler), UNIX/Linux only
     pcc (Portable C Compiler)
+    sol-studio (Sun C Compiler(Sun Solaris Studio)), UNIX/Linux only
     tcc (Tiny C Compiler)
 
 C++:
     bcc (Borland C++ Builder), Windows Only
+    ch (SoftIntegration Ch)
     g++ (GNU C++ Compiler)
     icc (Intel C++ Compiler)
     msvc (Microsoft Visual C++), Windows Only
     open-watcom (Open Watcom C/C++32 Compiler)
+    open64 (Open64 C++ Compiler), UNIX/Linux only
+    sol-studio (Sun C++ Compiler(Sun Solaris Studio)), UNIX/Linux only
 
 cmake:
     cmake (cmake)
@@ -66,10 +72,16 @@ dos batch:
     dosbatch (DOS Batch)
     
 Fortran:
-    g77 (GNU Fortran 77 Compiler)
+    ftn95 (Silverfrost FTN95), Windows only
     gfortran (GNU Fortran Compiler), UNIX/Linux only
+    g77 (GNU Fortran 77 Compiler)
     ifort (Intel Fortran Compiler)
     open-watcom (Open Watcom Fortran 77/32 Compiler)
+    open64-f90 (Open64 Fortran 90 Compiler), UNIX/Linux only
+    open64-f95 (Open64 Fortran 95 Compiler), UNIX/Linux only
+    sol-studio-f77 (Sun Fortran 77 Compiler(Sun Solaris Studio)), UNIX/Linux only
+    sol-studio-f90 (Sun Fortran 90 Compiler(Sun Solaris Studio)), UNIX/Linux only
+    sol-studio-f95 (Sun Fortran 95 Compiler(Sun Solaris Studio)), UNIX/Linux only
 
 html:
     chrome (Google Chrome)
@@ -81,17 +93,24 @@ Java:
     gcj (GNU Java Compiler)
     sunjdk (Sun Java Development Kit)
 
+JavaScript:
+    rhino (Rhino)
+
 LaTeX:
     miktex (MiKTeX), Windows Only
     texlive (Tex Live)
+
+LISP:
+    clisp (GNU CLISP)
+    ecl (Embeddable Common-Lisp)
 
 lua:
     lua (Lua Interpreter)
 
 Makefile:
     gmake (GNU Make)
-    mingw32-make (MinGW32 Make)
     nmake (Microsoft Program Maintenance Utility)
+    mingw32-make (MinGW32 Make)
 
 perl:
     perl (Perl Interpreter)
@@ -99,8 +118,8 @@ perl:
 python:
     jython (Jython)
     pypy (PyPy)
-    python3 (Python 3 Interpreter)
     python (Python Interpreter)
+    python3 (Python 3 Interpreter)
     
 ruby:
     ruby (Ruby Interpreter)
@@ -109,13 +128,13 @@ sh(UNIX shell):
     shell (UNIX Shell)
 
 vb script:
-    vbs (VB Script Interpreter)
+    vb (VB Script Interpreter)
     
 xhtml:
-    firefox (Mozilla Firefox)
     chrome (Google Chrome)
-    opera (Opera)
+    firefox (Mozilla Firefox)
     ie (Microsoft Internet Explorer)
+    opera (Opera)
 
 You can add your compiler support if your compiler is not in the list. See
 details in the help file SingleCompile.txt
@@ -153,6 +172,29 @@ Commands:
 Same as |SCCompile|, only for backward compatible use. Not recommended to use
 any more.
 
+                                            *SCCompileAF*
+Commands:
+    :SCCompileAF
+This command is also used for compiling your source file, but it allows you to
+append some additional compilation or interpretion flags other than the flags
+already defined in the compiler and interpreter template. The "AF" is short
+for "Addtional Flags". For example, GCC compiler for C has already been
+defined some flags: "-o "%<"". But sometimes you also want to use "-O2" flag
+to optimize your code, then you can use the following commands to compile your
+file:
+>
+ :SCCompileAF -O2
+<
+:SCCompile can also be used with some arguments, but there are some
+differences. :SCCompileAF use your arguments as "additional" compilation
+flags, which means the flags defined in the original templates are also valid,
+while :SCCompile use you arguments as compilation flags only, which means the
+flags defined in the original templates are not used. For example, the
+templates of GCC defined 'flags' as '-o "%<"', "%<" stands for the output file
+name. ":SCCompile -O2" will use "gcc -O2 some_file.c" to compile your source
+file, while ":SCCompileAF -O2" will use "gcc -o some_file -O2 some_file.c" to
+compile your source file. 
+
                                             *SCCompileRun*
 Commands:
     :SCCompileRun
@@ -174,6 +216,16 @@ Commands:
     :SingleCompileRun
 Same as |SCCompileRun|, only for backward compatible use. Not recommended to use
 any more.
+
+                                            *SCCompileRunAF*
+Commands:
+    :SCCompileRunAF
+Same as |SCCompileAF|, but also run the binary file after compilation. For
+example, the following command is going to compile your source file with an
+additional "-O2" flag and run the output binary file:
+>
+ :SCCompileRunAF -O2
+<
 
                                             *SCChooseCompiler*
 Commands:
@@ -288,14 +340,14 @@ automatically, and use the first detected one.
 Here are some examples excerpted from built-in compiler templates:
 >
  " c
- call SingleCompile#SetCompilerTemplate('c', 'gcc', 'GNU C Compiler', 'gcc', '-o %<', s:common_run_command)
- call SingleCompile#SetCompilerTemplate('c', 'icc', 'Intel C++ Compiler', 'icc', '-o %<', s:common_run_command)
+ call SingleCompile#SetCompilerTemplate('c', 'gcc', 'GNU C Compiler', 'gcc', '-o "%<"', s:common_run_command)
+ call SingleCompile#SetCompilerTemplate('c', 'icc', 'Intel C++ Compiler', 'icc', '-o "%<"', s:common_run_command)
 
  call SingleCompile#ChooseCompiler('c', 'gcc')
 
  " fortran
- call SingleCompile#SetCompilerTemplate('fortran', 'g77', 'GNU Fortran 77 Compiler', 'g77', '-o %<', s:common_run_command)
- call SingleCompile#SetCompilerTemplate('fortran', 'ifort', 'Intel Fortran Compiler', 'ifort', '-o %<', s:common_run_command)
+ call SingleCompile#SetCompilerTemplate('fortran', 'g77', 'GNU Fortran 77 Compiler', 'g77', '-o "%<"', s:common_run_command)
+ call SingleCompile#SetCompilerTemplate('fortran', 'ifort', 'Intel Fortran Compiler', 'ifort', '-o "%<"', s:common_run_command)
 
  call SingleCompile#ChooseCompiler('fortran', 'g77')
 
@@ -362,19 +414,25 @@ The following compilers have built-in support in this plugin:
 C:
     bcc (Borland C++ Builder), Windows only
     cc (UNIX C Compiler), UNIX/Linux only
+    ch (SoftIntegration Ch)
     gcc (GNU C Compiler)
     icc (Intel C++ Compiler)
     msvc (Microsoft Visual C++), Windows only
     open-watcom (Open Watcom C/C++32 Compiler)
+    open64 (Open64 Compiler Suite), UNIX/Linux only
     pcc (Portable C Compiler)
+    sol-studio (Sun C Compiler (Sun Solaris Studio)), UNIX/Linux only
     tcc (Tiny C Compiler)
 
 C++:
     bcc (Borland C++ Builder), Windows Only
+    ch (SoftIntegration Ch)
     g++ (GNU C++ Compiler)
     icc (Intel C++ Compiler)
     msvc (Microsoft Visual C++), Windows Only
     open-watcom (Open Watcom C/C++32 Compiler)
+    open64 (Open64 Compiler Suite), UNIX/Linux only
+    sol-studio (Sun C++ Compiler (Sun Solaris Studio)), UNIX/Linux only
 
 cmake:
     cmake (cmake)
@@ -383,10 +441,14 @@ dos batch:
     dosbatch (DOS Batch)
     
 Fortran:
+    ftn95 (Silverfrost FTN95), Windows only
     gfortran (GNU Fortran Compiler), UNIX/Linux only
     g77 (GNU Fortran 77 Compiler)
     ifort (Intel Fortran Compiler)
     open-watcom (Open Watcom Fortran 77/32 Compiler)
+    sol-studio-f77 (Sun Fortran 77 Compiler (Sun Solaris Studio)), UNIX/Linux only
+    sol-studio-f90 (Sun Fortran 90 Compiler (Sun Solaris Studio)), UNIX/Linux only
+    sol-studio-f95 (Sun Fortran 95 Compiler (Sun Solaris Studio)), UNIX/Linux only
 
 html:
     chrome (Google Chrome)
@@ -398,9 +460,15 @@ Java:
     gcj (GNU Java Compiler)
     sunjdk (Sun Java Development Kit)
 
+JavaScript:
+    rhino (Rhino)
+
 LaTeX:
     miktex (MiKTeX), Windows Only
     texlive (Tex Live)
+
+LISP:
+    ecl (Embeddable Common-Lisp)
 
 lua:
     lua (Lua Interpreter)
@@ -449,13 +517,13 @@ INSTALLATION~
 Download the SingleCompile.zip file and extract it to your vim runtime
 directory(~/.vim on linux and $VIM_INSTALLATION_FOLDER\vimfiles on windows),
 you'd better then use helptags command to generate the help tag(for example
-use ":helptags ~/.vim/doc" on Linux).
+use ":helptags ~/.vim/doc" on UNIX/Linux).
 
 THANKS~
                                             *SingleCompile-thanks*
 ----------------------------------------------------------------------------
-Marc Weber has given me a lot of help to improve this plugin, so thank him
-very much.
+Marc Weber has offered me a lot of help to improve this plugin, thank him very
+much.
 
 
 

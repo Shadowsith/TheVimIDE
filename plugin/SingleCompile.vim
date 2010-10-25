@@ -1,6 +1,6 @@
 " File: plugin/SingleCompile.vim
 " GetLatestVimScripts: 3115 1 :AutoInstall: SingleCompile.zip
-" version 2.0.4
+" version 2.1
 " check doc/SingleCompile.txt for more version information
 
 if v:version < 700
@@ -22,6 +22,8 @@ command -nargs=* SCCompile       if <q-args> == '' | call SingleCompile#Compile(
 command -nargs=* SCCompileRun    if <q-args> == '' | call SingleCompile#CompileRun() | else | call SingleCompile#CompileRun(<q-args>) | endif
 command -nargs=* SingleCompile       if <q-args> == '' | call SingleCompile#Compile() | else | call SingleCompile#Compile(<q-args>) | endif
 command -nargs=* SingleCompileRun    if <q-args> == '' | call SingleCompile#CompileRun() | else | call SingleCompile#CompileRun(<q-args>) | endif
+command -nargs=+ SCCompileAF    call SingleCompile#Compile('AdditionalFlags', <q-args>)
+command -nargs=+ SCCompileRunAF    call SingleCompile#CompileRun('AdditionalFlags', <q-args>)
 command SCChooseCompiler call SingleCompile#ChooseCompiler(&filetype)
 
 " menu {{{1
