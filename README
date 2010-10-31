@@ -80,6 +80,8 @@ LISP:
     clisp (GNU CLISP)
     ecl (Embeddable Common-Lisp)
 
+    gcl (GNU Common Lisp)
+
 lua:
     lua (Lua Interpreter)
 

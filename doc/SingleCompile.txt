@@ -1,9 +1,9 @@
 *SingleCompile.txt*
 
 File: SingleCompile.txt
-Version: 2.1
+Version: 2.1.1
 Author: H Xu(xuhdev@gmail.com)
-Last Change: 25 October 2010
+Last Change: 31 October 2010
 Description: Make it more convenient to compile or run a single source file.
 License: You can redistribute this plugin and/or modify it under the terms 
          of the GNU General Public License as published by the Free Software 
@@ -39,8 +39,8 @@ add these key-mappings to your vimrc:
  nmap <F10> :SCCompileRun<cr>
 <
 If your file type is supported, then press F9 to compile your source file, and
-press F10 to compile and run your source file. Here is a list of supported
-language:
+press F10 to compile and run your source file. Here is a list of built-in
+supported compilers:
 
 C:
     bcc (Borland C++ Builder), Windows only
@@ -103,6 +103,7 @@ LaTeX:
 LISP:
     clisp (GNU CLISP)
     ecl (Embeddable Common-Lisp)
+    gcl (GNU Common Lisp)
 
 lua:
     lua (Lua Interpreter)
@@ -140,9 +141,7 @@ You can add your compiler support if your compiler is not in the list. See
 details in the help file SingleCompile.txt
 
 Interpreting language such as python can also be supported by this plugin,
-see details in the help file SingleCompile.txt.
-
-This plugin cannot deal with a project with more than one source file. 
+see details in the help file.
 
 COMMANDS~
                                             *SingleCompile-commands*
@@ -419,9 +418,9 @@ C:
     icc (Intel C++ Compiler)
     msvc (Microsoft Visual C++), Windows only
     open-watcom (Open Watcom C/C++32 Compiler)
-    open64 (Open64 Compiler Suite), UNIX/Linux only
+    open64 (Open64 C Compiler), UNIX/Linux only
     pcc (Portable C Compiler)
-    sol-studio (Sun C Compiler (Sun Solaris Studio)), UNIX/Linux only
+    sol-studio (Sun C Compiler(Sun Solaris Studio)), UNIX/Linux only
     tcc (Tiny C Compiler)
 
 C++:
@@ -431,8 +430,8 @@ C++:
     icc (Intel C++ Compiler)
     msvc (Microsoft Visual C++), Windows Only
     open-watcom (Open Watcom C/C++32 Compiler)
-    open64 (Open64 Compiler Suite), UNIX/Linux only
-    sol-studio (Sun C++ Compiler (Sun Solaris Studio)), UNIX/Linux only
+    open64 (Open64 C++ Compiler), UNIX/Linux only
+    sol-studio (Sun C++ Compiler(Sun Solaris Studio)), UNIX/Linux only
 
 cmake:
     cmake (cmake)
@@ -446,9 +445,11 @@ Fortran:
     g77 (GNU Fortran 77 Compiler)
     ifort (Intel Fortran Compiler)
     open-watcom (Open Watcom Fortran 77/32 Compiler)
-    sol-studio-f77 (Sun Fortran 77 Compiler (Sun Solaris Studio)), UNIX/Linux only
-    sol-studio-f90 (Sun Fortran 90 Compiler (Sun Solaris Studio)), UNIX/Linux only
-    sol-studio-f95 (Sun Fortran 95 Compiler (Sun Solaris Studio)), UNIX/Linux only
+    open64-f90 (Open64 Fortran 90 Compiler), UNIX/Linux only
+    open64-f95 (Open64 Fortran 95 Compiler), UNIX/Linux only
+    sol-studio-f77 (Sun Fortran 77 Compiler(Sun Solaris Studio)), UNIX/Linux only
+    sol-studio-f90 (Sun Fortran 90 Compiler(Sun Solaris Studio)), UNIX/Linux only
+    sol-studio-f95 (Sun Fortran 95 Compiler(Sun Solaris Studio)), UNIX/Linux only
 
 html:
     chrome (Google Chrome)
@@ -468,7 +469,9 @@ LaTeX:
     texlive (Tex Live)
 
 LISP:
+    clisp (GNU CLISP)
     ecl (Embeddable Common-Lisp)
+    gcl (GNU Common Lisp)
 
 lua:
     lua (Lua Interpreter)
@@ -501,6 +504,8 @@ xhtml:
     firefox (Mozilla Firefox)
     ie (Microsoft Internet Explorer)
     opera (Opera)
+
+
 
 See |SingleCompile-add-your-compiler| to add your compiler support.
 

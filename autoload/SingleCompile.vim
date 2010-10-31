@@ -1,5 +1,5 @@
 " File: autoload/SingleCompile.vim
-" Version: 2.1
+" Version: 2.1.1
 " check doc/SingleCompile.txt for more information
 
 
@@ -15,7 +15,7 @@ let s:TemplateIntialized = 0
 
 
 function! SingleCompile#GetVersion() " get the script version {{{1
-    return 210
+    return 211
 endfunction
 
 " compiler detect functions {{{1
@@ -158,6 +158,7 @@ function! s:Intialize() "{{{1
         " lisp
         call SingleCompile#SetCompilerTemplate('lisp', 'clisp', 'GNU CLISP', 'clisp', '', '')
         call SingleCompile#SetCompilerTemplate('lisp', 'ecl', 'Embeddable Common-Lisp', 'ecl', '-shell', '')
+        call SingleCompile#SetCompilerTemplate('lisp', 'gcl', 'GNU Common Lisp', 'gcl', '-batch -load', '')
 
         " shell
         call SingleCompile#SetCompilerTemplate('sh', 'shell', 'UNIX Shell', 'sh', '', '')
@@ -327,7 +328,7 @@ endfunction
 function! s:ShowMessage(message) "{{{1
 
     if g:SingleCompile_usedialog == 0 || !((has('gui_running') && has('dialog_gui')) || has('dialog_con'))
-        call s:ShowMessage(a:message)
+        echohl Error | echo a:message | echohl None
     else
         call confirm(a:message)
     endif
@@ -359,13 +360,18 @@ function! SingleCompile#Compile(...) " compile only {{{1
     call s:Intialize()
     let l:toret = 0
 
+    " save current file type. Don't use &filetype directly because after
+    " "make" and quickfix is working and the error is in another file,
+    " sometimes the value of &filetype may not be correct.
+    let l:cur_filetype = &filetype 
+
     " if the following condition is met, then use the user specified command
-    if has_key(g:SingleCompile_templates,&filetype) && has_key(g:SingleCompile_templates[&filetype],'command')
+    if has_key(g:SingleCompile_templates,l:cur_filetype) && has_key(g:SingleCompile_templates[l:cur_filetype],'command')
         let l:user_specified = 1
-    elseif has_key(s:CompilerTemplate, &filetype) && type(s:CompilerTemplate[&filetype]) == type({})
+    elseif has_key(s:CompilerTemplate, l:cur_filetype) && type(s:CompilerTemplate[l:cur_filetype]) == type({})
         let l:user_specified = 0
     else
-        call s:ShowMessage('Language template for "'.&filetype.'" is not defined on your system.')
+        call s:ShowMessage('Language template for "'.l:cur_filetype.'" is not defined on your system.')
         return -1
     endif
 
@@ -377,19 +383,19 @@ function! SingleCompile#Compile(...) " compile only {{{1
 
     " if user specified is zero, then detect compilers
     if l:user_specified == 0
-        if !has_key(s:CompilerTemplate[&filetype], 'chosen_compiler')
-            let detected_compilers = s:DetectCompiler(&filetype)
+        if !has_key(s:CompilerTemplate[l:cur_filetype], 'chosen_compiler')
+            let detected_compilers = s:DetectCompiler(l:cur_filetype)
             " if detected_compilers is empty, then no compiler is detected
             if empty(detected_compilers)
                 call s:ShowMessage('SingleCompile: No compiler is detected on your system!')
                 return -1
             endif
 
-            let s:CompilerTemplate[&filetype]['chosen_compiler'] = get(detected_compilers, 0)
+            let s:CompilerTemplate[l:cur_filetype]['chosen_compiler'] = get(detected_compilers, 0)
         endif
-        let l:compile_cmd = s:GetCompilerSingleTemplate(&filetype, s:CompilerTemplate[&filetype]['chosen_compiler'], 'command')
+        let l:compile_cmd = s:GetCompilerSingleTemplate(l:cur_filetype, s:CompilerTemplate[l:cur_filetype]['chosen_compiler'], 'command')
     elseif l:user_specified == 1
-        let l:compile_cmd = g:SingleCompile_templates[&filetype]['command']
+        let l:compile_cmd = g:SingleCompile_templates[l:cur_filetype]['command']
     endif
 
     " switch current work directory to the file's directory
@@ -398,15 +404,15 @@ function! SingleCompile#Compile(...) " compile only {{{1
 
     if a:0 == 1 " if there is only one argument, it means use this argument as the compilation flag
         let l:compile_flags = a:1
-    elseif a:0 == 2 && l:user_specified == 1 && has_key(g:SingleCompile_templates[&filetype],'flags') " if there is two arguments, it means append the provided argument to the flag defined in the template
-        let l:compile_flags = g:SingleCompile_templates[&filetype]['flags'].' '.a:2
-    elseif a:0 == 0 && l:user_specified == 1 && has_key(g:SingleCompile_templates[&filetype],'flags')
-        let l:compile_flags = g:SingleCompile_templates[&filetype]['flags']
-    elseif a:0 == 2 && l:user_specified == 0 && has_key(s:CompilerTemplate[&filetype][ s:CompilerTemplate[&filetype]['chosen_compiler'] ], 'flags') " if there is two arguments, it means append the provided argument to the flag defined in the template
+    elseif a:0 == 2 && l:user_specified == 1 && has_key(g:SingleCompile_templates[l:cur_filetype],'flags') " if there is two arguments, it means append the provided argument to the flag defined in the template
+        let l:compile_flags = g:SingleCompile_templates[l:cur_filetype]['flags'].' '.a:2
+    elseif a:0 == 0 && l:user_specified == 1 && has_key(g:SingleCompile_templates[l:cur_filetype],'flags')
+        let l:compile_flags = g:SingleCompile_templates[l:cur_filetype]['flags']
+    elseif a:0 == 2 && l:user_specified == 0 && has_key(s:CompilerTemplate[l:cur_filetype][ s:CompilerTemplate[l:cur_filetype]['chosen_compiler'] ], 'flags') " if there is two arguments, it means append the provided argument to the flag defined in the template
 
-        let l:compile_flags = s:GetCompilerSingleTemplate(&filetype, s:CompilerTemplate[&filetype]['chosen_compiler'], 'flags').' '.a:2
-    elseif a:0 == 0 && l:user_specified == 0 && has_key(s:CompilerTemplate[&filetype][ s:CompilerTemplate[&filetype]['chosen_compiler'] ], 'flags')
-        let l:compile_flags = s:GetCompilerSingleTemplate(&filetype, s:CompilerTemplate[&filetype]['chosen_compiler'], 'flags')
+        let l:compile_flags = s:GetCompilerSingleTemplate(l:cur_filetype, s:CompilerTemplate[l:cur_filetype]['chosen_compiler'], 'flags').' '.a:2
+    elseif a:0 == 0 && l:user_specified == 0 && has_key(s:CompilerTemplate[l:cur_filetype][ s:CompilerTemplate[l:cur_filetype]['chosen_compiler'] ], 'flags')
+        let l:compile_flags = s:GetCompilerSingleTemplate(l:cur_filetype, s:CompilerTemplate[l:cur_filetype]['chosen_compiler'], 'flags')
     else  " if a:0 is zero and 'flags' is not defined, assign '' to let l:compile_flags
         let l:compile_flags = ''
     endif
@@ -414,7 +420,7 @@ function! SingleCompile#Compile(...) " compile only {{{1
     " set the file name to be compiled
     let l:file_to_compile = expand('%:p')
 
-    " on win32, win64, and os2, replace the backslash in l:file_to_compile
+    " on win32, win64 and os2, replace the backslash in l:file_to_compile
     " with '/'
     if has('win32') || has('win64') || has('os2')
         let l:file_to_compile = substitute(l:file_to_compile, '/', '\\', 'g')
@@ -436,7 +442,7 @@ function! SingleCompile#Compile(...) " compile only {{{1
             let l:toret = 1
         endif
 
-    elseif has('unix') && s:IsLanguageInterpreting(&filetype) " use quickfix for interpreting language in unix
+    elseif has('unix') && s:IsLanguageInterpreting(l:cur_filetype) " use quickfix for interpreting language in unix
         " change the makeprg and shellpipe temporarily
         let l:old_makeprg = &makeprg
         let l:old_shellpipe = &shellpipe
@@ -477,7 +483,7 @@ function! SingleCompile#Compile(...) " compile only {{{1
 
     " if it's interpreting language, then return 2 (means do not call run if
     " user uses SCCompileRun command
-    if s:IsLanguageInterpreting(&filetype)
+    if s:IsLanguageInterpreting(l:cur_filetype)
         let l:toret = 2
     endif
 
