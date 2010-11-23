@@ -1,37 +1,95 @@
 " File: autoload/SingleCompile.vim
-" Version: 2.1.1
+" Version: 2.2
 " check doc/SingleCompile.txt for more information
 
 
-let s:save_cpo = &cpo
+let s:saved_cpo = &cpo
 set cpo&vim
 
 
+" varibles {{{1
 " the dic to store the compiler template
 let s:CompilerTemplate = {}
 let g:SingleCompile_templates = {}
+
 let s:TemplateIntialized = 0
 
 
 
 function! SingleCompile#GetVersion() " get the script version {{{1
-    return 211
+    return 220
+endfunction
+
+" utils {{{1
+function! s:GetEnvSeperator() " get the seperator among the environment varibles {{{2
+    if has('win32') || has('win64') || has('os2')
+        return ';'
+    else
+        return ':'
+endfunction
+
+function! s:GetPathSeperator() "get the path seperator {{{2
+    if has('win32') || has('win64') || has('os2')
+        return '\'
+    else
+        return '/'
+    endif
+endfunction
+" pre-do functions {{{1
+function! s:PredoWatcom(compiling_info) " watcom pre-do {{{2
+    let s:old_path = $PATH
+    let $PATH = $WATCOM.s:GetPathSeperator().'binnt'.s:GetEnvSeperator().
+                \$WATCOM.s:GetPathSeperator().'binw'.s:GetEnvSeperator().
+                \$PATH
+    return a:compiling_info
+endfunction
+
+function! s:PredoGcc(compiling_info) " gcc pre-do {{{2
+    if has('unix')
+        " if we find '#include <math.h>' in the file, then add '-lm' flag
+        if match( getline( 1, '$' ), '^[ \t]*#include[ \t]*["<]math.h[">][ \t]*$' ) != -1
+            let l:new_comp_info = a:compiling_info
+            let l:new_comp_info['args'] = '-lm '.l:new_comp_info['args']
+            return l:new_comp_info
+        endif
+    endif
+
+    return a:compiling_info
+endfunction
+
+function! s:PredoSolStudioC(compiling_info) " solaris studio C/C++ pre-do {{{2
+    if has('unix')
+        " if we find '#include <math.h>' in the file, then add '-lm' flag
+        if match( getline( 1, '$' ), '^[ \t]*#include[ \t]*["<]math.h[">][ \t]*$' ) != -1
+            let l:new_comp_info = a:compiling_info
+            let l:new_comp_info['args'] = '-lm '.l:new_comp_info['args']
+            return l:new_comp_info
+        endif
+    endif
+
+    return a:compiling_info
+endfunction
+
+" post-do functions {{{1
+function! s:PostdoWatcom(compiling_info) " watcom pre-do {{{2
+    let $PATH = s:old_path
+    return a:compiling_info
 endfunction
 
 " compiler detect functions {{{1
-function! s:DetectCompilerGenerally(compile_command) " {{{2
+function! s:DetectCompilerGenerally(compiling_command) " {{{2
     " the general function of compiler detection. The principle is to search
     " the environment varible PATH and some special directory
 
     if has('unix') || has('macunix')
-        let l:list_to_detect = [expand(a:compile_command),
-                    \expand('/usr/bin/'.a:compile_command), 
-                    \expand('/usr/local/bin/'.a:compile_command),
-                    \expand('/bin/'.a:compile_command),
-                    \expand('~/bin/'.a:compile_command)
+        let l:list_to_detect = [expand(a:compiling_command),
+                    \expand('~/bin/'.a:compiling_command),
+                    \expand('/usr/local/bin/'.a:compiling_command),
+                    \expand('/usr/bin/'.a:compiling_command), 
+                    \expand('/bin/'.a:compiling_command)
                     \]
     else
-        let l:list_to_detect = [expand(a:compile_command)]
+        let l:list_to_detect = [expand(a:compiling_command)]
     endif
 
     for cmd in l:list_to_detect
@@ -41,6 +99,22 @@ function! s:DetectCompilerGenerally(compile_command) " {{{2
     endfor
 
     return 0
+endfunction
+
+function! SingleCompile#DetectCompilerGenerally(compiling_command)
+    return s:DetectCompilerGenerally(a:compiling_command)
+endfunction
+
+function! s:DetectWatcom(compiling_command) " {{{2
+    let l:watcom_command =
+                \s:DetectCompilerGenerally(a:compiling_command)
+    if l:watcom_command != 0
+        return l:watcom_command
+    endif
+
+    if $WATCOM != ''
+        return $WATCOM.'\binnt\'.a:compiling_command
+    endif
 endfunction
 
 function! s:DetectIe(not_used_arg) " {{{2
@@ -101,21 +175,31 @@ function! s:Intialize() "{{{1
         endif
 
         " c
-        call SingleCompile#SetCompilerTemplate('c', 'open-watcom', 'Open Watcom C/C++32 Compiler', 'wcl386', '', s:common_run_command)
+        call SingleCompile#SetCompilerTemplate('c', 'open-watcom', 'Open Watcom C/C++32 Compiler', 'wcl386', '', s:common_run_command, function('s:DetectWatcom'))
+        call SingleCompile#SetPredo('c', 'open-watcom', function('s:PredoWatcom'))
+        call SingleCompile#SetPostdo('c', 'open-watcom', function('s:PostdoWatcom'))
         if has('win32') || has('win64')
             call SingleCompile#SetCompilerTemplate('c', 'msvc', 'Microsoft Visual C++', 'cl', '-o "%<"', s:common_run_command)
             call SingleCompile#SetCompilerTemplate('c', 'bcc', 'Borland C++ Builder', 'bcc32', '-o "%<"', s:common_run_command)
         endif
         call SingleCompile#SetCompilerTemplate('c', 'gcc', 'GNU C Compiler', 'gcc', '-o "%<"', s:common_run_command)
+        call SingleCompile#SetPredo('c', 'gcc', function('s:PredoGcc'))
         call SingleCompile#SetCompilerTemplate('c', 'icc', 'Intel C++ Compiler', 'icc', '-o "%<"', s:common_run_command)
+        if has('win32') || has('win64') || has('os2')
+            call SingleCompile#SetCompilerTemplate('c', 'lcc', 'Little C Compiler', 'lc', '$source_file$ -o "%<.exe"', s:common_run_command)
+        else
+            call SingleCompile#SetCompilerTemplate('c', 'lcc', 'Little C Compiler', 'lc', '$source_file$ -o "%<"', s:common_run_command)
+        endif
         call SingleCompile#SetCompilerTemplate('c', 'pcc', 'Portable C Compiler', 'pcc', '-o "%<"', s:common_run_command)
         call SingleCompile#SetCompilerTemplate('c', 'tcc', 'Tiny C Compiler', 'tcc', '-o "%<"', s:common_run_command)
+        call SingleCompile#SetCompilerTemplate('c', 'tcc-run', 'Tiny C Compiler with "-run" Flag', 'tcc', '-run', '')
         call SingleCompile#SetCompilerTemplate('c', 'ch', 'SoftIntegration Ch', 'ch', '', '')
         if has('unix') || has('macunix')
             call SingleCompile#SetCompilerTemplate('c', 'cc', 'UNIX C Compiler', 'cc', '-o "%<"', s:common_run_command)
         endif
         if has('unix')
             call SingleCompile#SetCompilerTemplate('c', 'sol-studio', 'Sun C Compiler (Sun Solaris Studio)', 'suncc', '-o "%<"', s:common_run_command)
+            call SingleCompile#SetPredo('c', 'sol-studio', function('s:PredoSolStudioC'))
             call SingleCompile#SetCompilerTemplate('c', 'open64', 'Open64 C Compiler', 'opencc', '-o "%<"', s:common_run_command)
         endif
 
@@ -126,10 +210,12 @@ function! s:Intialize() "{{{1
             call SingleCompile#SetCompilerTemplate('cpp', 'bcc', 'Borland C++ Builder', 'bcc32', '-o "%<"', s:common_run_command)
         endif
         call SingleCompile#SetCompilerTemplate('cpp', 'g++', 'GNU C++ Compiler', 'g++', '-o "%<"', s:common_run_command)
+        call SingleCompile#SetPredo('cpp', 'g++', function('s:PredoGcc'))
         call SingleCompile#SetCompilerTemplate('cpp', 'icc', 'Intel C++ Compiler', 'icc', '-o "%<"', s:common_run_command)
         call SingleCompile#SetCompilerTemplate('cpp', 'ch', 'SoftIntegration Ch', 'ch', '', '')
         if has('unix')
             call SingleCompile#SetCompilerTemplate('cpp', 'sol-studio', 'Sun C++ Compiler (Sun Solaris Studio)', 'sunCC', '-o "%<"', s:common_run_command)
+            call SingleCompile#SetPredo('cpp', 'sol-studio', function('s:PredoSolStudioC'))
             call SingleCompile#SetCompilerTemplate('cpp', 'open64', 'Open64 C++ Compiler', 'openCC', '-o "%<"', s:common_run_command)
         endif
 
@@ -153,7 +239,9 @@ function! s:Intialize() "{{{1
         endif
         call SingleCompile#SetCompilerTemplate('fortran', 'g77', 'GNU Fortran 77 Compiler', 'g77', '-o "%<"', s:common_run_command)
         call SingleCompile#SetCompilerTemplate('fortran', 'ifort', 'Intel Fortran Compiler', 'ifort', '-o "%<"', s:common_run_command)
-        call SingleCompile#SetCompilerTemplate('fortran', 'open-watcom', 'Open Watcom Fortran 77/32 Compiler', 'wfl386', '', s:common_run_command)
+        call SingleCompile#SetCompilerTemplate('fortran', 'open-watcom', 'Open Watcom Fortran 77/32 Compiler', 'wfl386', '', s:common_run_command, function('s:DetectWatcom'))
+        call SingleCompile#SetPredo('fortran', 'open-watcom', function('s:PredoWatcom'))
+        call SingleCompile#SetPostdo('fortran', 'open-watcom', function('s:PostdoWatcom'))
 
         " lisp
         call SingleCompile#SetCompilerTemplate('lisp', 'clisp', 'GNU CLISP', 'clisp', '', '')
@@ -207,6 +295,7 @@ function! s:Intialize() "{{{1
 
         " python
         call SingleCompile#SetCompilerTemplate('python', 'cpython', 'CPython', 'python', '', '')
+        call SingleCompile#SetCompilerTemplate('python', 'ironpython', 'IronPython', 'ipy', '', '')
         call SingleCompile#SetCompilerTemplate('python', 'jython', 'Jython', 'jython', '', '')
         call SingleCompile#SetCompilerTemplate('python', 'pypy', 'PyPy', 'pypy', '', '')
         call SingleCompile#SetCompilerTemplate('python', 'cpython3', 'CPython 3', 'python3', '', '')
@@ -234,6 +323,8 @@ function! s:Intialize() "{{{1
         " cmake
         call SingleCompile#SetCompilerTemplate('cmake', 'cmake', 'cmake', 'cmake', '', '')
 
+        " haskell
+        call SingleCompile#SetCompilerTemplate('haskell', 'ghc', 'Glasgow Haskell Compiler', 'ghc', '-o "%<"', s:common_run_command)
         " 2}}}
 
     endif
@@ -258,6 +349,14 @@ endfunction
 
 function! s:GetCompilerSingleTemplate(lang_name, compiler_name, key) " {{{1
     return s:CompilerTemplate[a:lang_name][a:compiler_name][a:key]
+endfunction
+
+function! SingleCompile#SetPredo( lang_name, compiler_name, predo_func ) " set the pre-do function {{{1
+    call s:SetCompilerSingleTemplate( a:lang_name, a:compiler_name, 'pre-do', a:predo_func )
+endfunction
+
+function! SingleCompile#SetPostdo( lang_name, compiler_name, postdo_func ) " set the post-do function {{{1
+    call s:SetCompilerSingleTemplate( a:lang_name, a:compiler_name, 'post-do', a:postdo_func )
 endfunction
 
 function! s:SetCompilerSingleTemplate(lang_name, compiler_name, key, value, ...) " {{{1
@@ -393,14 +492,15 @@ function! SingleCompile#Compile(...) " compile only {{{1
 
             let s:CompilerTemplate[l:cur_filetype]['chosen_compiler'] = get(detected_compilers, 0)
         endif
-        let l:compile_cmd = s:GetCompilerSingleTemplate(l:cur_filetype, s:CompilerTemplate[l:cur_filetype]['chosen_compiler'], 'command')
+        let l:chosen_compiler = s:CompilerTemplate[l:cur_filetype]['chosen_compiler']
+        let l:compile_cmd = s:GetCompilerSingleTemplate(l:cur_filetype, l:chosen_compiler, 'command')
     elseif l:user_specified == 1
         let l:compile_cmd = g:SingleCompile_templates[l:cur_filetype]['command']
     endif
 
     " switch current work directory to the file's directory
     let l:curcwd=getcwd()
-    cd %:p:h
+    silent cd %:p:h
 
     if a:0 == 1 " if there is only one argument, it means use this argument as the compilation flag
         let l:compile_flags = a:1
@@ -435,6 +535,15 @@ function! SingleCompile#Compile(...) " compile only {{{1
     endif
     let l:compile_args = substitute(l:compile_flags, '\$source_file\$', escape(l:file_to_compile,'\'), 'g')
 
+    " call the pre-do function if set
+    if l:user_specified == 0 && has_key(s:CompilerTemplate[l:cur_filetype][l:chosen_compiler], 'pre-do')
+        let l:command_dic = s:CompilerTemplate[l:cur_filetype][l:chosen_compiler]['pre-do']({ 'command': l:compile_cmd, 'args': l:compile_args })
+        let l:compile_cmd = l:command_dic['command']
+        let l:compile_args = l:command_dic['args']
+    endif
+
+
+
     if s:ShouldQuickfixBeUsed() == 0
         " if quickfix is not enabled for this plugin or the language is an interpreting language not in unix, then don't use quickfix
         exec '!'.l:compile_cmd.' '.l:compile_args
@@ -457,7 +566,7 @@ function! SingleCompile#Compile(...) " compile only {{{1
             exec 'setlocal shellpipe=\|\ tee'
         endif
 
-        exec 'make'.' '.l:compile_args
+        exec 'make '.l:compile_args
 
         " set back makeprg and shellpipe
         exec 'setlocal makeprg='.l:old_makeprg
@@ -487,8 +596,14 @@ function! SingleCompile#Compile(...) " compile only {{{1
         let l:toret = 2
     endif
 
+    " call the post-do function if set
+    if l:user_specified == 0 && has_key(s:CompilerTemplate[l:cur_filetype][l:chosen_compiler], 'post-do')
+        call s:CompilerTemplate[l:cur_filetype][l:chosen_compiler]['post-do']({ 'command': l:compile_cmd, 'args': l:compile_args })
+    endif
+
+
     " switch back to the original directory
-    exec 'cd '.'"'.l:curcwd.'"'
+    silent exec 'cd '.'"'.l:curcwd.'"'
     return l:toret
 endfunction
 
@@ -502,7 +617,8 @@ function! s:DetectCompiler(lang_name) " to detect compilers for one language. Re
             continue
         endif
         call s:SetCompilerSingleTemplate(a:lang_name, some_compiler, 'command', 
-                    \s:CompilerTemplate[a:lang_name][some_compiler]['detect_func'](s:CompilerTemplate[a:lang_name][some_compiler]['detect_func_arg']) )
+                    \s:CompilerTemplate[a:lang_name][some_compiler]['detect_func']
+                    \(s:CompilerTemplate[a:lang_name][some_compiler]['detect_func_arg']) )
 
         " if the type of s:CompilerTemplate[&filetype]['command'] returned
         " by the detection function is not a string, then we may think
@@ -527,7 +643,7 @@ function! s:Run() " {{{1
     endif
 
     let l:curcwd=getcwd()
-    cd %:p:h
+    silent cd %:p:h
 
     if l:user_specified == 1
         let l:run_cmd = g:SingleCompile_templates[&filetype]['run']
@@ -539,7 +655,7 @@ function! s:Run() " {{{1
 
     exec '!'.l:run_cmd
 
-    exec 'cd '.'"'.l:curcwd.'"'
+    silent exec 'cd '.'"'.l:curcwd.'"'
 
     return
 endfunction
@@ -608,6 +724,8 @@ function! SingleCompile#ChooseCompiler(lang_name, ...) " choose a compiler {{{1
             endif
         endfor
 
+        " if l:choose_list is empty, it means no compiler is available for
+        " this language
         if empty(l:choose_list)
             call s:ShowMessage('SingleCompile: No compiler is available for this language!')
             return
@@ -615,8 +733,14 @@ function! SingleCompile#ChooseCompiler(lang_name, ...) " choose a compiler {{{1
 
         let l:user_choose = inputlist( extend(['Detected compilers: '], l:choose_list_display) )
         
-        " if user does not choose a valid option
+        " If user cancels the choosing, then return directly; if user chooses
+        " a number which is too big, then echo an empty line first and then
+        " show an error message, then return
         if l:user_choose <= 0
+            return
+        elseif l:user_choose > len(l:choose_list_display) 
+            echo ' ' 
+            call s:ShowMessage( 'The number you have chosen is invalid.' )
             return
         endif
 
@@ -633,5 +757,6 @@ call s:Intialize() " {{{1 call the initialize function
 " }}}
 
 
-let &cpo = s:save_cpo
+let &cpo = s:saved_cpo
+unlet! s:saved_cpo
 " vim: fdm=marker et
