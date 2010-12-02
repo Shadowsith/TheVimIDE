@@ -1,5 +1,5 @@
 " File: autoload/SingleCompile.vim
-" Version: 2.2.4
+" Version: 2.2.5
 " check doc/SingleCompile.txt for more information
 
 
@@ -8,16 +8,25 @@ set cpo&vim
 
 
 " varibles {{{1
-" the dic to store the compiler template
-let s:CompilerTemplate = {}
+" the two dicts to store the compiler template
 let g:SingleCompile_templates = {}
+let s:CompilerTemplate = {}
 
-let s:TemplateIntialized = 0
+" is template initialize
+let s:TemplateInitialized = 0
+
+" Chars to escape for ':lcd' command
+if has('win32') || has('win64')
+    let s:CharsEscape = '" '
+else
+    let s:CharsEscape = '" \'
+endif
+
 
 
 
 function! SingleCompile#GetVersion() " get the script version {{{1
-    return 224
+    return 225
 endfunction
 
 " utils {{{1
@@ -160,7 +169,7 @@ function! s:DetectGmake(not_used_arg) " {{{2
     return 0
 endfunction
 
-function! s:Intialize() "{{{1
+function! s:Initialize() "{{{1
     if !exists('g:SingleCompile_autowrite')
         let g:SingleCompile_autowrite = 1
     endif
@@ -174,9 +183,9 @@ function! s:Intialize() "{{{1
     endif
 
 
-    if s:TemplateIntialized == 0
+    if s:TemplateInitialized == 0
         
-        let s:TemplateIntialized = 1
+        let s:TemplateInitialized = 1
 
         " templates {{{2
         if has('win32') || has('win64') || has('os2')
@@ -463,7 +472,7 @@ function! SingleCompile#SetCompilerTemplate(lang_name, compiler,
             \compiler_name, detect_func_arg, flags, run_command, ...) 
     " set compiler's template
 
-    call s:Intialize()
+    call s:Initialize()
 
     call s:SetCompilerSingleTemplate(a:lang_name, a:compiler, 'name',
                 \a:compiler_name)
@@ -622,7 +631,7 @@ function! s:ShouldQuickfixBeUsed() " tell whether quickfix sould be used{{{1
 endfunction
 
 function! SingleCompile#Compile(...) " compile only {{{1
-    call s:Intialize()
+    call s:Initialize()
     let l:toret = 0
 
     " save current file type. Don't use &filetype directly because after
@@ -673,8 +682,10 @@ function! SingleCompile#Compile(...) " compile only {{{1
                     \g:SingleCompile_templates[l:cur_filetype]['command']
     endif
 
+    " save current working directory
+    let l:cwd = getcwd()
     " switch current work directory to the file's directory
-    silent cd %:p:h
+    silent lcd %:p:h
 
     if a:0 == 1 
         " if there is only one argument, it means use this argument as the
@@ -819,7 +830,8 @@ function! SingleCompile#Compile(...) " compile only {{{1
 
 
     " switch back to the original directory
-    silent cd -
+    exec 'lcd '.escape(l:cwd, s:CharsEscape)
+
     return l:toret
 endfunction
 
@@ -855,7 +867,7 @@ function! s:DetectCompiler(lang_name) " {{{1
 endfunction
 
 function! s:Run() " {{{1
-    call s:Intialize()
+    call s:Initialize()
 
     if has_key(g:SingleCompile_templates,&filetype) && 
                 \has_key(g:SingleCompile_templates[&filetype],'run')
@@ -868,7 +880,9 @@ function! s:Run() " {{{1
         call s:ShowMessage('SingleCompile: Fail to run!')
     endif
 
-    silent cd %:p:h
+    " save current working directory
+    let l:cwd = getcwd()
+    silent lcd %:p:h
 
     if l:user_specified == 1
         let l:run_cmd = g:SingleCompile_templates[&filetype]['run']
@@ -881,7 +895,8 @@ function! s:Run() " {{{1
 
     exec '!'.l:run_cmd
 
-    silent cd -
+    " switch back to the original directory
+    exec 'lcd '.escape(l:cwd, s:CharsEscape)
 
     return
 endfunction
@@ -903,7 +918,7 @@ endfunction
 
 fun! SingleCompile#ChooseCompiler(lang_name, ...) " choose a compiler {{{1
 
-    call s:Intialize()
+    call s:Initialize()
 
     if a:0 > 1
         call s:ShowMessage('SingleCompile: '.
@@ -935,13 +950,20 @@ fun! SingleCompile#ChooseCompiler(lang_name, ...) " choose a compiler {{{1
         return
     endif
 
+    " when no argument is provided, list all available compilers and
+    " interpreters for user to choose
     if a:0 == 0
+
+        " if the language template is not defined for this language, show an
+        " error message then return
         if !has_key(s:CompilerTemplate, a:lang_name)
+            call s:ShowMessage('SingleCompile: Language template for "'.
+                        \a:lang_name.'" is not defined on your system.')
             return
         endif
 
         let l:detected_compilers = s:DetectCompiler(a:lang_name)
-        " used to remember the compilers
+        " used to store the detected compilers
         let l:choose_list = [] 
         " used to filled with compiler names to be displayed in front of user
         let l:choose_list_display = [] 
@@ -954,7 +976,8 @@ fun! SingleCompile#ChooseCompiler(lang_name, ...) " choose a compiler {{{1
             endif
 
             if count(l:detected_compilers, some_compiler) > 0 
-                " if the compiler is detected, then display it
+                " if the compiler is detected, then add it to the choose_list,
+                " which would be displayed then
 
                 call add(l:choose_list, some_compiler)
                 call add(l:choose_list_display, 
@@ -996,7 +1019,7 @@ fun! SingleCompile#ChooseCompiler(lang_name, ...) " choose a compiler {{{1
     endif
 endfunction
 
-call s:Intialize() " {{{1 call the initialize function
+call s:Initialize() " {{{1 call the initialize function
 
 
 
@@ -1005,4 +1028,5 @@ call s:Intialize() " {{{1 call the initialize function
 
 let &cpo = s:saved_cpo
 unlet! s:saved_cpo
+
 " vim: fdm=marker et ts=4 tw=78 sw=4
