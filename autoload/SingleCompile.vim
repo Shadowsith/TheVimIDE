@@ -1,5 +1,5 @@
 " File: autoload/SingleCompile.vim
-" Version: 2.2.2
+" Version: 2.2.4
 " check doc/SingleCompile.txt for more information
 
 
@@ -17,7 +17,7 @@ let s:TemplateIntialized = 0
 
 
 function! SingleCompile#GetVersion() " get the script version {{{1
-    return 222
+    return 224
 endfunction
 
 " utils {{{1
@@ -674,7 +674,6 @@ function! SingleCompile#Compile(...) " compile only {{{1
     endif
 
     " switch current work directory to the file's directory
-    let l:curcwd=getcwd()
     silent cd %:p:h
 
     if a:0 == 1 
@@ -820,7 +819,7 @@ function! SingleCompile#Compile(...) " compile only {{{1
 
 
     " switch back to the original directory
-    silent exec 'cd '.escape(l:curcwd, '| \')
+    silent cd -
     return l:toret
 endfunction
 
@@ -869,7 +868,6 @@ function! s:Run() " {{{1
         call s:ShowMessage('SingleCompile: Fail to run!')
     endif
 
-    let l:curcwd=getcwd()
     silent cd %:p:h
 
     if l:user_specified == 1
@@ -883,7 +881,7 @@ function! s:Run() " {{{1
 
     exec '!'.l:run_cmd
 
-    silent exec 'cd '.escape(l:curcwd, '| \')
+    silent cd -
 
     return
 endfunction
