@@ -61,6 +61,9 @@ C++:
 cmake:
     cmake (cmake)
 
+D:
+    dmd (DMD Compiler)
+
 dos batch:
     dosbatch (DOS Batch)
     

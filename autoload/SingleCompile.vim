@@ -1,5 +1,5 @@
 " File: autoload/SingleCompile.vim
-" Version: 2.2.6
+" Version: 2.2.7
 " check doc/SingleCompile.txt for more information
 
 
@@ -26,7 +26,7 @@ endif
 
 
 function! SingleCompile#GetVersion() " get the script version {{{1
-    return 226
+    return 227
 endfunction
 
 " utils {{{1
@@ -52,7 +52,7 @@ function! s:AddLmIfMathH(compiling_info) " {{{2
     " add -lm flag if math.h is included
 
     " if we find '#include <math.h>' in the file, then add '-lm' flag
-    if match(getline(1, '$'), '^[ \t]*#include[ \t]*["<]math.h[">][ \t]*$') 
+    if match(getline(1, '$'), '^[ \t]*#[ \t]*include[ \t]*["<]math.h[">][ \t]*$') 
                 \!= -1
         let l:new_comp_info = a:compiling_info
         let l:new_comp_info['args'] = '-lm '.l:new_comp_info['args']
@@ -288,6 +288,10 @@ function! s:Initialize() "{{{1
                         \'Open64 C++ Compiler', 'openCC', '-o "%<"',
                         \s:common_run_command)
         endif
+
+        " d
+        call SingleCompile#SetCompilerTemplate('d', 'dmd', 'DMD Compiler', '',
+                    \s:common_run_command)
 
         " java
         call SingleCompile#SetCompilerTemplate('java', 'sunjdk', 
