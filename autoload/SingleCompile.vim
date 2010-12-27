@@ -1,5 +1,5 @@
 " File: autoload/SingleCompile.vim
-" Version: 2.2.7
+" Version: 2.2.8
 " check doc/SingleCompile.txt for more information
 
 
@@ -26,7 +26,7 @@ endif
 
 
 function! SingleCompile#GetVersion() " get the script version {{{1
-    return 227
+    return 228
 endfunction
 
 " utils {{{1
@@ -290,8 +290,8 @@ function! s:Initialize() "{{{1
         endif
 
         " d
-        call SingleCompile#SetCompilerTemplate('d', 'dmd', 'DMD Compiler', '',
-                    \s:common_run_command)
+        call SingleCompile#SetCompilerTemplate('d', 'dmd', 'DMD Compiler',
+                    \'dmd', '', s:common_run_command)
 
         " java
         call SingleCompile#SetCompilerTemplate('java', 'sunjdk', 
