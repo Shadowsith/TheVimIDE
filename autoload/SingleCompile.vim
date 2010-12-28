@@ -1,5 +1,5 @@
 " File: autoload/SingleCompile.vim
-" Version: 2.2.8
+" Version: 2.2.9
 " check doc/SingleCompile.txt for more information
 
 
@@ -26,7 +26,7 @@ endif
 
 
 function! SingleCompile#GetVersion() " get the script version {{{1
-    return 228
+    return 229
 endfunction
 
 " utils {{{1
@@ -178,8 +178,8 @@ function! s:Initialize() "{{{1
         let g:SingleCompile_usedialog = 0
     endif
 
-    if !exists('g:SingleCompile_enablequickfix')
-        let g:SingleCompile_enablequickfix = 1
+    if !exists('g:SingleCompile_usequickfix')
+        let g:SingleCompile_usequickfix = 1
     endif
 
 
@@ -625,7 +625,7 @@ function! s:IsLanguageInterpreting(filetype_name) "{{{1
 endfunction
 
 function! s:ShouldQuickfixBeUsed() " tell whether quickfix sould be used{{{1
-    if g:SingleCompile_enablequickfix == 0
+    if g:SingleCompile_usequickfix == 0
                 \ || !has('quickfix') 
                 \ || ( s:IsLanguageInterpreting(&filetype) && !has('unix') )
         return 0
