@@ -1,9 +1,9 @@
 *SingleCompile.txt*
 
 File: SingleCompile.txt
-Version: 2.3beta
+Version: 2.3.2
 Author and Current Main Maintainer: H Xu <xuhdev@gmail.com>
-Last Change: 21 January 2011
+Last Change: 28 January 2011
 Description: Make it more convenient to compile or run a single source file.
 License: You can redistribute this plugin and/or modify it under the terms 
          of the GNU General Public License as published by the Free Software 
@@ -87,6 +87,10 @@ C++:
 cmake:
     cmake (cmake)
 
+csh:
+    csh (C Shell)
+    tcsh (TENEX C Shell)
+
 D:
     dmd (DMD Compiler)
 
@@ -151,8 +155,16 @@ python:
 ruby:
     ruby (Ruby Interpreter)
     
-sh(UNIX shell):
-    shell (UNIX Shell)
+sh:
+    ash (Almquist Shell)
+    bash (Bourne-Again Shell)
+    dash (Debian Almquist Shell)
+    ksh (Korn Shell)
+    sh (Bourne Shell)
+    zsh (Z Shell)
+
+tcsh:
+    tcsh (TENEX C Shell)
 
 vb script:
     vb (VB Script Interpreter)
@@ -183,7 +195,7 @@ Commands:
     :SCCompile
 If you are editing a source file of a compiling language such as C, Java, this
 command will compile the file which you are editing now. If you are editing a
-source file of a interpreted language such as shell language, this command
+source file of a interpreted language such as python language, this command
 will run the file which you are editing. See |SingleCompile-compiler-template|
 about the compilation command.
 
@@ -232,7 +244,7 @@ Commands:
 If you are editing a source file of a compiling language such as C, Java, this
 command will compile the file which you are editing now and run the
 executable; if you are editing a source file of a interpreted language such as
-shell language, this command will run the source file you are editing. That
+python, ruby, this command will run the source file you are editing. That
 means, it is nothing different between :SCCompile and :SCCompileRun for a
 interpreted language source file.
 
@@ -454,10 +466,10 @@ Here are some examples:
  call SingleCompile#SetTemplate('java','flags','')
  call SingleCompile#SetTemplate('java','run','java %<')
 
- " shell
- call SingleCompile#SetTemplate('sh','command','sh')
- call SingleCompile#SetTemplate('sh','flags','')
- call SingleCompile#SetTemplate('sh','run','')
+ " python
+ call SingleCompile#SetTemplate('python','command','python')
+ call SingleCompile#SetTemplate('python','flags','')
+ call SingleCompile#SetTemplate('python','run','')
 
  " latex
  call SingleCompile#SetTemplate('tex','command','latex')
@@ -518,6 +530,10 @@ C++:
 
 cmake:
     cmake (cmake)
+
+csh:
+    csh (C Shell)
+    tcsh (TENEX C Shell)
 
 D:
     dmd (DMD Compiler)
@@ -583,8 +599,16 @@ python:
 ruby:
     ruby (Ruby Interpreter)
     
-sh(UNIX shell):
-    shell (UNIX Shell)
+sh:
+    ash (Almquist Shell)
+    bash (Bourne-Again Shell)
+    dash (Debian Almquist Shell)
+    ksh (Korn Shell)
+    sh (Bourne Shell)
+    zsh (Z Shell)
+
+tcsh:
+    tcsh (TENEX C Shell)
 
 vb script:
     vb (VB Script Interpreter)

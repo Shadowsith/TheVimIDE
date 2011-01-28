@@ -61,6 +61,10 @@ C++:
 cmake:
     cmake (cmake)
 
+csh:
+    csh (C Shell)
+    tcsh (TENEX C Shell)
+
 D:
     dmd (DMD Compiler)
 
@@ -125,8 +129,16 @@ python:
 ruby:
     ruby (Ruby Interpreter)
     
-sh(UNIX shell):
-    shell (UNIX Shell)
+sh:
+    ash (Almquist Shell)
+    bash (Bourne-Again Shell)
+    dash (Debian Almquist Shell)
+    ksh (Korn Shell)
+    sh (Bourne Shell)
+    zsh (Z Shell)
+
+tcsh:
+    tcsh (TENEX C Shell)
 
 vb script:
     vb (VB Script Interpreter)
