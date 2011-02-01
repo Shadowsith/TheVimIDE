@@ -1,9 +1,9 @@
 *SingleCompile.txt*
 
 File: SingleCompile.txt
-Version: 2.3.2
+Version: 2.3.3
 Author and Current Main Maintainer: H Xu <xuhdev@gmail.com>
-Last Change: 28 January 2011
+Last Change: 1 February 2011
 Description: Make it more convenient to compile or run a single source file.
 License: You can redistribute this plugin and/or modify it under the terms 
          of the GNU General Public License as published by the Free Software 
@@ -111,6 +111,7 @@ Fortran:
 
 Haskell:
     ghc (Glasgow Haskell Compiler)
+    runhaskell (runhaskell)
 
 html:
     chrome (Google Chrome)
@@ -273,8 +274,13 @@ additional "-O2" flag and run the output binary file:
                                             *:SCChooseCompiler*
 Commands:
     :SCChooseCompiler
-Choose a compiler to use. This command will give you a list of compilers to
-choose one.
+Choose a compiler to use. This command will display a list of compilers for
+you to choose one.
+
+                                            *:SCChooseInterpreter*
+Commands:
+    :SCChooseInterpreter
+Same as |:SCChooseCompiler|.
 
 SETTINGS~
                                             *SingleCompile-settings*
@@ -416,10 +422,10 @@ Here are some examples modified from built-in compiler templates:
 
  " c
  call SingleCompile#SetCompilerTemplate('c', 'gcc', 'GNU C Compiler',
-             \'gcc', '-o "$(FILE_TITLE)$"', l:common_run_command)
+             \'gcc', '-o $(FILE_TITLE)$', l:common_run_command)
  call SingleCompile#SetOutfile('c', 'gcc', l:common_out_file)
  call SingleCompile#SetCompilerTemplate('c', 'icc', 
-             \'Intel C++ Compiler', 'icc', '-o "$(FILE_TITLE)$"',
+             \'Intel C++ Compiler', 'icc', '-o $(FILE_TITLE)$',
              \l:common_run_command)
  call SingleCompile#SetOutfile('c', 'icc', l:common_out_file)
 
@@ -427,11 +433,11 @@ Here are some examples modified from built-in compiler templates:
 
  " fortran
  call SingleCompile#SetCompilerTemplate('fortran', 'g77', 
-             \'GNU Fortran 77 Compiler', 'g77', '-o "$(FILE_TITLE)$"',
+             \'GNU Fortran 77 Compiler', 'g77', '-o $(FILE_TITLE)$',
              \l:common_run_command)
  call SingleCompile#SetOutfile('fortran', 'g77', l:common_out_file)
  call SingleCompile#SetCompilerTemplate('fortran', 'ifort', 
-             \'Intel Fortran Compiler', 'ifort', '-o "$(FILE_TITLE)$"',
+             \'Intel Fortran Compiler', 'ifort', '-o $(FILE_TITLE)$',
              \l:common_run_command)
  call SingleCompile#SetOutfile('fortran', 'ifort', l:common_out_file)
 
@@ -555,6 +561,7 @@ Fortran:
 
 Haskell:
     ghc (Glasgow Haskell Compiler)
+    runhaskell (runhaskell)
 
 html:
     chrome (Google Chrome)

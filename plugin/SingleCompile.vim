@@ -1,6 +1,6 @@
 " File: plugin/SingleCompile.vim
 " GetLatestVimScripts: 3115 1 SingleCompile.zip
-" version 2.3.2
+" version 2.3.3
 " check doc/SingleCompile.txt for more version information
 
 if v:version < 700
@@ -35,6 +35,7 @@ command -nargs=+ SCCompileAF
 command -nargs=+ SCCompileRunAF    
             \call SingleCompile#CompileRun('AdditionalFlags', <q-args>)
 command SCChooseCompiler call SingleCompile#ChooseCompiler(&filetype)
+command SCChooseInterpreter call SingleCompile#ChooseCompiler(&filetype)
 
 " menus {{{1
 
