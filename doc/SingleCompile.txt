@@ -1,9 +1,9 @@
 *SingleCompile.txt*
 
 File: SingleCompile.txt
-Version: 2.3.3
+Version: 2.3.4
 Author and Current Main Maintainer: H Xu <xuhdev@gmail.com>
-Last Change: 1 February 2011
+Last Change: 7 February 2011
 Description: Make it more convenient to compile or run a single source file.
 License: You can redistribute this plugin and/or modify it under the terms 
          of the GNU General Public License as published by the Free Software 
@@ -153,6 +153,9 @@ python:
     python (Python Interpreter)
     python3 (Python 3 Interpreter)
     
+R:
+    R (R)
+
 ruby:
     ruby (Ruby Interpreter)
     
@@ -176,8 +179,27 @@ xhtml:
     ie (Microsoft Internet Explorer)
     opera (Opera)
 
+zsh:
+    zsh (Z Shell)
+
 You can add your compiler or interpreter support if the compiler or
 interpreter you want is not in the list. See details in the help file.
+
+There are some supporting code in this plugin for Marc Weber's
+vim-addon-actions:
+     http://github.com/MarcWeber/vim-addon-actions
+
+If you find any bug, please report it to xuhdev@gmail.com or submit it on
+the issue tracker:
+https://bitbucket.org/xuhdev/singlecompile/issues
+
+
+Repository:
+https://bitbucket.org/xuhdev/singlecompile
+
+Follow xuhdev on twitter if you are interested in my development:
+http://twitter.com/xuhdev
+
 
 INSTALLATION~
                                             *SingleCompile-installation*
@@ -602,6 +624,9 @@ python:
     pypy (PyPy)
     python (Python Interpreter)
     python3 (Python 3 Interpreter)
+
+R:
+    R (R)
     
 ruby:
     ruby (Ruby Interpreter)
@@ -626,6 +651,8 @@ xhtml:
     ie (Microsoft Internet Explorer)
     opera (Opera)
 
+zsh:
+    zsh (Z Shell)
 
 
 See |SingleCompile-add-your-compiler| to add your compiler support.
