@@ -1,5 +1,5 @@
 " File: autoload/SingleCompile.vim
-" Version: 2.3.4
+" Version: 2.4
 " check doc/SingleCompile.txt for more information
 
 
@@ -16,33 +16,54 @@ let s:CompilerTemplate = {}
 let s:TemplateInitialized = 0
 
 " Chars to escape for ':lcd' command
-if has('win32') || has('win64') || has('os2')
+if has('win32') || has('os2')
     let s:CharsEscape = '" '
 else
     let s:CharsEscape = '" \'
 endif
 
 " seperator in the environment varibles
-if has('win32') || has('win64') || has('os2')
+if has('win32') || has('os2')
     let s:EnvSeperator = ';'
 else
     let s:EnvSeperator = ':'
 endif
 
-if has('win32') || has('win64') || has('os2')
+if has('win32') || has('os2')
     let s:PathSeperator = '\'
 else
     let s:PathSeperator = '/'
 endif
 
+" the path of file where the output running result is stored
+let s:run_result_tempfile = ''
 
 
 
 function! SingleCompile#GetVersion() " get the script version {{{1
-    return 234
+    return 240
 endfunction
 
 " util {{{1
+function! s:GetShellPipe()  " get the shell pipe command according to it's platform
+    if has('unix') || has('macunix')
+        if &shell =~ 'sh' || &shell =~ 'ksh' || &shell =~ 'zsh' || 
+                    \&shell =~ 'bash'
+            return '2>&1| tee'
+        elseif &shell =~ 'csh' || &shell =~ 'tcsh' 
+            return '|& tee'
+        else
+            return '| tee'
+        endif
+    elseif has('win32')
+        if executable('tee')
+            return '2>&1 | tee'
+        else
+            return '>'
+        endif
+    endif
+
+endfunction
 function! s:Expand(str, ...) " expand the string{{{2
     " the second argument is optional. If it is given and it is nonzero, then
     " we thought 
@@ -67,7 +88,7 @@ function! s:Expand(str, ...) " expand the string{{{2
     for one_key in keys(l:rep_dict)
         let l:rep_string = expand(l:rep_dict[one_key])
         " on win32, win64 and os2, replace the backslash with '/'
-        if has('win32') || has('win64') || has('os2')
+        if has('win32') || has('os2')
             let l:rep_string = substitute(l:rep_string, '/', '\\', 'g')
         endif
 
@@ -136,7 +157,7 @@ function! s:DetectCompilerGenerally(compiling_command) " {{{2
     " the general function of compiler detection. The principle is to search
     " the environment varible PATH and some special directory
 
-    if has('unix') || has('macunix')
+    if has('unix')
         let l:list_to_detect = [s:Expand(expand(a:compiling_command)),
                     \s:Expand(expand('~/bin/'.a:compiling_command)),
                     \s:Expand(expand('/usr/local/bin/'.a:compiling_command)),
@@ -177,7 +198,7 @@ function! s:DetectIe(not_used_arg) " {{{2
         return 'iexplore'
     endif
 
-    if has('win32') || has('win64')
+    if has('win32')
         for iepath in ['C:\Program Files\Internet Explorer\iexplore',
                     \ 'D:\Program Files\Internet Explorer\iexplore',
                     \ 'E:\Program Files\Internet Explorer\iexplore',
@@ -227,7 +248,7 @@ function! s:Initialize() "{{{1
         let s:TemplateInitialized = 1
 
         " templates {{{2
-        if has('win32') || has('win64') || has('os2')
+        if has('win32') || has('os2')
             let l:common_run_command = '$(FILE_TITLE)$'
             let l:common_out_file = '$(FILE_TITLE)$.exe'
         else
@@ -244,7 +265,7 @@ function! s:Initialize() "{{{1
                     \ 'post-do' : function('s:PostdoWatcom'),
                     \ 'out-file': l:common_out_file
                     \})
-        if has('win32') || has('win64')
+        if has('win32')
             call SingleCompile#SetCompilerTemplate('c', 'msvc', 
                         \'Microsoft Visual C++', 'cl', '-o $(FILE_TITLE)$', 
                         \l:common_run_command)
@@ -264,7 +285,7 @@ function! s:Initialize() "{{{1
                     \'Intel C++ Compiler', 'icc', '-o $(FILE_TITLE)$',
                     \l:common_run_command)
         call SingleCompile#SetOutfile('c', 'icc', l:common_out_file)
-        if has('win32') || has('win64') || has('os2')
+        if has('win32') || has('os2')
             call SingleCompile#SetCompilerTemplate('c', 'lcc', 
                         \'Little C Compiler', 'lc', 
                         \'$(FILE_TITLE)$ -o "$(FILE_TITLE)$.exe"', 
@@ -293,13 +314,11 @@ function! s:Initialize() "{{{1
                     \ 'pre-do'  : function('s:PredoClang'),
                     \ 'out-file': l:common_out_file
                     \})
-        if has('unix') || has('macunix')
+        if has('unix')
             call SingleCompile#SetCompilerTemplate('c', 'cc', 
                         \'UNIX C Compiler', 'cc', '-o $(FILE_TITLE)$', 
                         \l:common_run_command)
             call SingleCompile#SetOutfile('c', 'cc', l:common_out_file)
-        endif
-        if has('unix')
             call SingleCompile#SetCompilerTemplate('c', 'sol-studio', 
                         \'Sun C Compiler (Sun Solaris Studio)', 'suncc', 
                         \'-o $(FILE_TITLE)$', l:common_run_command)
@@ -321,7 +340,7 @@ function! s:Initialize() "{{{1
                     \ 'post-do' : function('s:PostdoWatcom'),
                     \ 'out-file': l:common_out_file
                     \})
-        if has('win32') || has('win64')
+        if has('win32')
             call SingleCompile#SetCompilerTemplate('cpp', 'msvc', 
                         \'Microsoft Visual C++', 'cl', '-o $(FILE_TITLE)$', 
                         \l:common_run_command)
@@ -415,7 +434,7 @@ function! s:Initialize() "{{{1
             call SingleCompile#SetOutfile('fortran', 'open64-f95', 
                         \l:common_out_file)
         endif
-        if has('win32') || has('win64')
+        if has('win32')
             call SingleCompile#SetCompilerTemplate('fortran', 'ftn95',
                         \'Silverfrost FTN95', 'ftn95', '$(FILE_NAME)$ /LINK',
                         \l:common_run_command)
@@ -487,7 +506,7 @@ function! s:Initialize() "{{{1
                     \'Google Chrome', 'google-chrome', '', '')
         call SingleCompile#SetCompilerTemplate('html', 'opera', 'Opera', 
                     \'opera', '', '')
-        if has('win32') || has('win64')
+        if has('win32')
             call SingleCompile#SetCompilerTemplate('html', 'ie', 
                         \'Microsoft Internet Explorer', 'iexplore', '', '',
                         \function('s:DetectIe'))
@@ -503,7 +522,7 @@ function! s:Initialize() "{{{1
                     \'Google Chrome', 'google-chrome', '', '')
         call SingleCompile#SetCompilerTemplate('xhtml', 'opera', 
                     \'Opera', 'opera', '', '')
-        if has('win32') || has('win64')
+        if has('win32')
             call SingleCompile#SetCompilerTemplate('xhtml', 'ie', 
                         \'Microsoft Internet Explorer', 'iexplore', '', '',
                         \function('s:DetectIe'))
@@ -517,12 +536,12 @@ function! s:Initialize() "{{{1
                     \'VB Script Interpreter', 'cscript', '', '')
 
         " latex
-        if has('unix') || has('macunix')
+        if has('unix')
             call SingleCompile#SetCompilerTemplate('tex', 'texlive', 
                         \'Tex Live', 'latex', '', 'xdvi "$(FILE_TITLE)$.dvi"')
             call SingleCompile#SetOutfile('tex', 'texlive', 
                         \'$(FILE_TITLE)$'.'.dvi')
-        elseif has('win32') || has('win64')
+        elseif has('win32')
             call SingleCompile#SetCompilerTemplate('tex', 'texlive', 
                         \'Tex Live', 'latex', '', 
                         \'dviout "$(FILE_TITLE)$.dvi"')
@@ -535,12 +554,12 @@ function! s:Initialize() "{{{1
         endif
 
         " plain tex
-        if has('unix') || has('macunix')
+        if has('unix')
             call SingleCompile#SetCompilerTemplate('plaintex', 'texlive', 
                         \'Tex Live', 'latex', '', 'xdvi "$(FILE_TITLE)$.dvi"')
             call SingleCompile#SetOutfile('tex', 'texlive', 
                         \'$(FILE_TITLE)$'.'.dvi')
-        elseif has('win32') || has('win64')
+        elseif has('win32')
             call SingleCompile#SetCompilerTemplate('plaintex', 'texlive', 
                         \'Tex Live', 'latex', '', 
                         \'dviout "$(FILE_TITLE)$.dvi"')
@@ -581,7 +600,7 @@ function! s:Initialize() "{{{1
                     \'gmake', '-f', '', function('s:DetectGmake'))
         call SingleCompile#SetCompilerTemplate('make', 'mingw32-make',
                     \'MinGW32 Make', 'mingw32-make', '-f', '')
-        if has('win32') || has('win64')
+        if has('win32')
             call SingleCompile#SetCompilerTemplate('make', 'nmake', 
                         \'Microsoft Program Maintenance Utility', 'nmake',
                         \'-f', '')
@@ -916,7 +935,7 @@ function! SingleCompile#Compile(...) " compile only {{{1
         let l:compile_flags = a:1
     elseif a:0 == 2 && l:user_specified == 1 && 
                 \has_key(g:SingleCompile_templates[l:cur_filetype],'flags') 
-        " if there is two arguments, it means append the provided argument to
+        " if there are two arguments, it means append the provided argument to
         " the flag defined in the template
 
         let l:compile_flags = 
@@ -930,7 +949,7 @@ function! SingleCompile#Compile(...) " compile only {{{1
                 \s:CompilerTemplate[l:cur_filetype][ 
                 \s:CompilerTemplate[l:cur_filetype]['chosen_compiler']], 
                 \'flags')
-        " if there is two arguments, it means append the provided argument to
+        " if there are two arguments, it means append the provided argument to
         " the flag defined in the template
 
         let l:compile_flags = s:GetCompilerSingleTemplate(l:cur_filetype, 
@@ -978,7 +997,13 @@ function! SingleCompile#Compile(...) " compile only {{{1
         " interpreting language not in unix, then don't use quickfix
 
         exec '!'.l:compile_cmd.' '.l:compile_args
+
+        " check whether compiling is successful, if not, show the return value
+        " with error message highlighting and set the return value to 1
         if v:shell_error != 0
+            echo ' '
+            echohl ErrorMsg | echo 'Return value is '.v:shell_error 
+                        \| echohl None
             let l:toret = 1
         endif
 
@@ -991,14 +1016,7 @@ function! SingleCompile#Compile(...) " compile only {{{1
         let &l:makeprg = l:compile_cmd
 
         " change shellpipe according to the shell type
-        if &shell =~ 'sh' || &shell =~ 'ksh' || &shell =~ 'zsh' || 
-                    \&shell =~ 'bash'
-            setlocal shellpipe=2>&1\|\ tee
-        elseif &shell =~ 'csh' || &shell =~ 'tcsh' 
-            setlocal shellpipe=\|&\ tee
-        else
-            setlocal shellpipe=\|\ tee
-        endif
+        let &l:shellpipe = s:GetShellPipe()
 
         exec 'make '.l:compile_args
 
@@ -1012,11 +1030,17 @@ function! SingleCompile#Compile(...) " compile only {{{1
         " change the makeprg and shellpipe temporarily 
         let l:old_makeprg = &l:makeprg
         let l:old_shellpipe = &l:shellpipe
+
         let &l:makeprg = l:compile_cmd
         setlocal shellpipe=>%s\ 2>&1
         exec 'make'.' '.l:compile_args
-        " check whether compiling is successful
+
+        " check whether compiling is successful, if not, show the return value
+        " with error message highlighting and set the return value to 1
         if v:shell_error != 0
+            echo ' '
+            echohl ErrorMsg | echo 'Return value is '.v:shell_error 
+                        \| echohl None
             let l:toret = 1
         endif
 
@@ -1109,6 +1133,13 @@ function! s:Run() " {{{1
     endif
 
     let l:run_cmd = '"'.l:run_cmd.'"'
+
+    if executable('tee')
+        " if tee is available, then redirect the result to a temp file
+
+        let s:run_result_tempfile = tempname()
+        let l:run_cmd = l:run_cmd.' '.s:GetShellPipe().' '.s:run_result_tempfile
+    endif
 
     exec '!'.l:run_cmd
 
@@ -1246,6 +1277,30 @@ fun! SingleCompile#ChooseCompiler(lang_name, ...) " choose a compiler {{{1
 
         return
     endif
+endfunction
+
+function! SingleCompile#ViewResult() " view the running result {{{1
+    " split a window below and put the result there
+
+    if empty(s:run_result_tempfile)
+        return
+    endif
+
+    " if the __SINGLE_COMPILE_RUN_RESULT__ buffer has already existed, delete
+    " it first
+    let l:result_bufnr = bufnr('__SINGLE_COMPILE_RUN_RESULT__') 
+    if l:result_bufnr != -1
+        exec l:result_bufnr.'bdelete'
+    endif
+
+    rightbelow 5split __SINGLE_COMPILE_RUN_RESULT__
+
+    setl noswapfile buftype=nofile bufhidden=wipe foldcolumn=0 nobuflisted
+
+    setl modifiable
+    call append(0, readfile(s:run_result_tempfile))
+    setl nomodifiable
+
 endfunction
 
 call s:Initialize() " {{{1 call the initialize function

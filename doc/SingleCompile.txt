@@ -1,9 +1,9 @@
 *SingleCompile.txt*
 
 File: SingleCompile.txt
-Version: 2.3.4
+Version: 2.4
 Author and Current Main Maintainer: H Xu <xuhdev@gmail.com>
-Last Change: 7 February 2011
+Last Change: 8 February 2011
 Description: Make it more convenient to compile or run a single source file.
 License: You can redistribute this plugin and/or modify it under the terms 
          of the GNU General Public License as published by the Free Software 
@@ -303,6 +303,15 @@ you to choose one.
 Commands:
     :SCChooseInterpreter
 Same as |:SCChooseCompiler|.
+
+                                            *:SCViewResult*
+Commands:
+    :SCViewResult 
+View the result of the last run command. Only valid when "tee" command is
+available.  "tee" is usually available on a UNIX system. If you are under
+Windows, install cygwin or visit the following link to download a "tee"
+command for Windows:
+http://gnuwin32.sourceforge.net/packages/coreutils.htm
 
 SETTINGS~
                                             *SingleCompile-settings*
