@@ -33,6 +33,9 @@ Here is a list of built-in supported compilers or interpreter(For some
 compilers, you need to set the environment varibles correctly to make them
 available for SingleCompile):
 
+bash:
+    bash (Bourne-Again Shell)
+
 C:
     bcc (Borland C++ Builder), Windows only
     cc (UNIX C Compiler), UNIX only
@@ -102,6 +105,9 @@ Java:
 JavaScript:
     rhino (Rhino)
 
+ksh:
+    ksh (Korn Shell)
+
 LaTeX:
     miktex (MiKTeX), Windows Only
     texlive (Tex Live)
@@ -142,6 +148,9 @@ sh:
     ksh (Korn Shell)
     sh (Bourne Shell)
     zsh (Z Shell)
+
+Tcl:
+    tclsh (Simple shell containing Tcl interpreter)
 
 tcsh:
     tcsh (TENEX C Shell)

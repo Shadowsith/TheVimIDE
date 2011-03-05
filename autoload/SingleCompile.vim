@@ -1,5 +1,5 @@
 " File: autoload/SingleCompile.vim
-" Version: 2.4
+" Version: 2.4.1
 " check doc/SingleCompile.txt for more information
 
 
@@ -41,7 +41,7 @@ let s:run_result_tempfile = ''
 
 
 function! SingleCompile#GetVersion() " get the script version {{{1
-    return 240
+    return 241
 endfunction
 
 " util {{{1
@@ -226,20 +226,35 @@ function! s:DetectGmake(not_used_arg) " {{{2
 endfunction
 
 function! s:Initialize() "{{{1
-    if !exists('g:SingleCompile_autowrite')
+    if !exists('g:SingleCompile_autowrite') ||
+                \type(g:SingleCompile_autowrite) != type(0)
+        unlet! g:SingleCompile_autowrite
         let g:SingleCompile_autowrite = 1
     endif
 
-    if !exists('g:SingleCompile_usedialog')
+    if !exists('g:SingleCompile_usedialog') ||
+                \type(g:SingleCompile_usedialog) != type(0)
+        unlet! g:SingleCompile_usedialog
         let g:SingleCompile_usedialog = 0
     endif
 
-    if !exists('g:SingleCompile_usequickfix')
+    if !exists('g:SingleCompile_usequickfix') ||
+                \type(g:SingleCompile_usequickfix) != type(0)
+        unlet! g:SingleCompile_usequickfix
         let g:SingleCompile_usequickfix = 1
     endif
 
-    if !exists('g:SingleCompile_alwayscompile')
+    if !exists('g:SingleCompile_alwayscompile') ||
+                \type(g:SingleCompile_alwayscompile) != type(0)
+        unlet! g:SingleCompile_alwayscompile
         let g:SingleCompile_alwayscompile = 1
+    endif
+
+    if !exists('g:SingleCompile_resultheight') ||
+                \type(g:SingleCompile_resultheight) != type(0) ||
+                \g:SingleCompile_resultheight <= 0
+        unlet! g:SingleCompile_resultheight
+        let g:SingleCompile_resultheight = 5
     endif
 
 
@@ -485,6 +500,14 @@ function! s:Initialize() "{{{1
         call SingleCompile#SetCompilerTemplate('zsh', 'zsh', 
                     \'Z Shell', 'zsh', '', '')
 
+        " bash
+        call SingleCompile#SetCompilerTemplate('bash', 'bash',
+                    \'Bourne-Again Shell', 'bash', '', '')
+
+        " ksh
+        call SingleCompile#SetCompilerTemplate('ksh', 'ksh',
+                    \'Korn Shell', 'ksh', '', '')
+
         " csh
         call SingleCompile#SetCompilerTemplate('csh', 'csh',
                     \'C Shell', 'csh', '', '')
@@ -625,6 +648,11 @@ function! s:Initialize() "{{{1
         call SingleCompile#SetOutfile('haskell', 'ghc', l:common_out_file)
         call SingleCompile#SetCompilerTemplate('haskell', 'runhaskell', 
                     \'runhaskell', 'runhaskell', '', '')
+
+        " tcl
+        call SingleCompile#SetCompilerTemplate('tcl', 'tclsh', 
+                    \'Simple shell containing Tcl interpreter', 'tclsh', 
+                    \'', '')
         " 2}}}
 
     endif
@@ -1286,6 +1314,8 @@ function! SingleCompile#ViewResult() " view the running result {{{1
         return
     endif
 
+    call s:Initialize()
+
     " if the __SINGLE_COMPILE_RUN_RESULT__ buffer has already existed, delete
     " it first
     let l:result_bufnr = bufnr('__SINGLE_COMPILE_RUN_RESULT__') 
@@ -1293,7 +1323,8 @@ function! SingleCompile#ViewResult() " view the running result {{{1
         exec l:result_bufnr.'bdelete'
     endif
 
-    rightbelow 5split __SINGLE_COMPILE_RUN_RESULT__
+    exec 'rightbelow '.g:SingleCompile_resultheight.
+                \'split __SINGLE_COMPILE_RUN_RESULT__'
 
     setl noswapfile buftype=nofile bufhidden=wipe foldcolumn=0 nobuflisted
 
