@@ -1,5 +1,5 @@
 " File: autoload/SingleCompile.vim
-" Version: 2.4.1
+" Version: 2.4.2
 " check doc/SingleCompile.txt for more information
 
 
@@ -41,7 +41,7 @@ let s:run_result_tempfile = ''
 
 
 function! SingleCompile#GetVersion() " get the script version {{{1
-    return 241
+    return 242
 endfunction
 
 " util {{{1
@@ -65,8 +65,8 @@ function! s:GetShellPipe()  " get the shell pipe command according to it's platf
 
 endfunction
 function! s:Expand(str, ...) " expand the string{{{2
-    " the second argument is optional. If it is given and it is nonzero, then
-    " we thought 
+    " the second argument is optional. If it is given and it is zero, then
+    " we thought we don't need double quote.
 
     let l:double_quote_needed = 1
     if a:0 > 1
@@ -397,6 +397,13 @@ function! s:Initialize() "{{{1
                         \'-o $(FILE_TITLE)$', l:common_run_command)
             call SingleCompile#SetOutfile('cpp', 'open64', l:common_out_file)
         endif
+
+        " c#
+        call SingleCompile#SetCompilerTemplate('cs', 'mono',
+                    \'Mono C# compiler', 'mcs', '',
+                    \'mono $(FILE_TITLE)$'.'.exe')
+        call SingleCompile#SetOutfile('cs', 'mono',
+                    \'$(FILE_TITLE)$'.'.exe')
 
         " d
         call SingleCompile#SetCompilerTemplate('d', 'dmd', 'DMD Compiler',
@@ -1038,20 +1045,11 @@ function! SingleCompile#Compile(...) " compile only {{{1
     elseif has('unix') && s:IsLanguageInterpreting(l:cur_filetype) 
         " use quickfix for interpreting language in unix
 
-        " change the makeprg and shellpipe temporarily
-        let l:old_makeprg = &l:makeprg
-        let l:old_shellpipe = &l:shellpipe
-        let &l:makeprg = l:compile_cmd
+        let s:run_result_tempfile = tempname()
+        exec '!'.l:compile_cmd.' '.l:compile_args.' '.s:GetShellPipe().
+                    \' '.s:run_result_tempfile
 
-        " change shellpipe according to the shell type
-        let &l:shellpipe = s:GetShellPipe()
-
-        exec 'make '.l:compile_args
-
-        " set back makeprg and shellpipe
-        let &l:makeprg = l:old_makeprg
-        let &l:shellpipe = l:old_shellpipe
-
+        cgetexpr readfile(s:run_result_tempfile)
 
     else " use quickfix for compiling language
 
@@ -1154,13 +1152,11 @@ function! s:Run() " {{{1
     silent lcd %:p:h
 
     if l:user_specified == 1
-        let l:run_cmd = s:Expand(g:SingleCompile_templates[&filetype]['run'], 0)
+        let l:run_cmd = s:Expand(g:SingleCompile_templates[&filetype]['run'], 1)
     elseif l:user_specified == 0
         let l:run_cmd = s:Expand(s:GetCompilerSingleTemplate(&filetype, 
-                    \s:CompilerTemplate[&filetype]['chosen_compiler'], 'run'), 0)
+                    \s:CompilerTemplate[&filetype]['chosen_compiler'], 'run'), 1)
     endif
-
-    let l:run_cmd = '"'.l:run_cmd.'"'
 
     if executable('tee')
         " if tee is available, then redirect the result to a temp file
