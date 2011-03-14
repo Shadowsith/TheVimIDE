@@ -21,7 +21,7 @@ run result.
 
 
 Features:
-1. Compile or run the source file quickly using quickfix feature of vim;
+1. Compile or run the source file quickly using quickfix feature and compiler feature of vim;
 2. Compilers and interpreters auto detecting;
 3. Fast switch between several installed compilers or interpreters;
 4. Multi-language support;
@@ -64,6 +64,7 @@ C++:
     sol-studio (Sun C++ Compiler(Sun Solaris Studio)), UNIX only
 
 C#:
+    msvcs(Microsoft Visual C#), Windows Only
     mono (Mono C# compiler)
 
 cmake:
@@ -81,8 +82,9 @@ dos batch:
     
 Fortran:
     ftn95 (Silverfrost FTN95), Windows only
-    gfortran (GNU Fortran Compiler)
     g77 (GNU Fortran 77 Compiler)
+    g95 (G95)
+    gfortran (GNU Fortran Compiler)
     ifort (Intel Fortran Compiler)
     open-watcom (Open Watcom Fortran 77/32 Compiler)
     open64-f90 (Open64 Fortran 90 Compiler), UNIX only
@@ -152,7 +154,7 @@ sh:
     sh (Bourne Shell)
     zsh (Z Shell)
 
-Tcl:
+tcl:
     tclsh (Simple shell containing Tcl interpreter)
 
 tcsh:

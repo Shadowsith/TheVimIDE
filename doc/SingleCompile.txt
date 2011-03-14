@@ -1,9 +1,9 @@
 *SingleCompile.txt*
 
 File: SingleCompile.txt
-Version: 2.4.2
+Version: 2.5
 Author and Current Main Maintainer: H Xu <xuhdev@gmail.com>
-Last Change: 7 March 2011
+Last Change: 14 March 2011
 Description: Make it more convenient to compile or run a single source file.
 License: You can redistribute this plugin and/or modify it under the terms 
          of the GNU General Public License as published by the Free Software 
@@ -90,6 +90,7 @@ C++:
     sol-studio (Sun C++ Compiler(Sun Solaris Studio)), UNIX only
 
 C#:
+    msvcs(Microsoft Visual C#), Windows Only
     mono (Mono C# compiler)
 
 cmake:
@@ -107,8 +108,9 @@ dos batch:
     
 Fortran:
     ftn95 (Silverfrost FTN95), Windows only
-    gfortran (GNU Fortran Compiler)
     g77 (GNU Fortran 77 Compiler)
+    g95 (G95)
+    gfortran (GNU Fortran Compiler)
     ifort (Intel Fortran Compiler)
     open-watcom (Open Watcom Fortran 77/32 Compiler)
     open64-f90 (Open64 Fortran 90 Compiler), UNIX only
@@ -593,6 +595,7 @@ C++:
     sol-studio (Sun C++ Compiler(Sun Solaris Studio)), UNIX only
 
 C#:
+    msvcs(Microsoft Visual C#), Windows Only
     mono (Mono C# compiler)
 
 cmake:
@@ -610,8 +613,9 @@ dos batch:
     
 Fortran:
     ftn95 (Silverfrost FTN95), Windows only
-    gfortran (GNU Fortran Compiler)
     g77 (GNU Fortran 77 Compiler)
+    g95 (G95)
+    gfortran (GNU Fortran Compiler)
     ifort (Intel Fortran Compiler)
     open-watcom (Open Watcom Fortran 77/32 Compiler)
     open64-f90 (Open64 Fortran 90 Compiler), UNIX only
@@ -819,6 +823,21 @@ corresponding language and compiler.
 To make it less confusing, I better explain the calling order here. The
 calling order is: first the compiler detecting function, then "Predo"
 function, then compile, and the last is the "Postdo" function.
+
+                                            *SingleCompile-vim-compiler*
+SingleCompile can work with the compiler feature of vim(see |:compiler|). To
+set the compiler file in the compiler direcotry for a compiler, use
+SingleCompile#SetVimCompiler function. For example, for g77, the GNU Fortran
+77 compiler, use the following line to set the compiler file for g77:
+>
+ call SingleCompile#SetVimCompiler('fortran', 'g77', 'fortran_g77')
+<
+(This line is excerpted from the built-in templates.)
+
+Then if we are using g77 as our compiler, SingleCompile will first execute
+":compiler fortran_g77" before compiling the source file. This will give us
+the advantage that vim's quickfix will recognize the messages output by g77
+and help us locate these errors quickly.
 
 CREDITS~
                                             *SingleCompile-credits*

@@ -1,5 +1,5 @@
 " File: autoload/SingleCompile.vim
-" Version: 2.4.2
+" Version: 2.5
 " check doc/SingleCompile.txt for more information
 
 
@@ -22,6 +22,13 @@ else
     let s:CharsEscape = '" \'
 endif
 
+" executable suffix
+if has('win32') || has('os2')
+    let s:ExecutableSuffix = '.exe'
+else
+    let s:ExecutableSuffix = ''
+endif
+
 " seperator in the environment varibles
 if has('win32') || has('os2')
     let s:EnvSeperator = ';'
@@ -41,7 +48,7 @@ let s:run_result_tempfile = ''
 
 
 function! SingleCompile#GetVersion() " get the script version {{{1
-    return 242
+    return 250
 endfunction
 
 " util {{{1
@@ -399,11 +406,20 @@ function! s:Initialize() "{{{1
         endif
 
         " c#
+        if has('win32')
+            call SingleCompile#SetCompilerTemplate('cs', 'msvcs',
+                        \'Microsoft Visual C#', 'csc', '',
+                        \l:common_run_command)
+            call SingleCompile#SetOutfile('cs', 'msvcs',
+                        \l:common_out_file)
+            call SingleCompile#SetVimCompiler('cs', 'msvcs', 'cs')
+        endif
         call SingleCompile#SetCompilerTemplate('cs', 'mono',
                     \'Mono C# compiler', 'mcs', '',
                     \'mono $(FILE_TITLE)$'.'.exe')
         call SingleCompile#SetOutfile('cs', 'mono',
                     \'$(FILE_TITLE)$'.'.exe')
+        call SingleCompile#SetVimCompiler('cs', 'mono', 'mcs')
 
         " d
         call SingleCompile#SetCompilerTemplate('d', 'dmd', 'DMD Compiler',
@@ -415,6 +431,7 @@ function! s:Initialize() "{{{1
                     \'java $(FILE_TITLE)$')
         call SingleCompile#SetOutfile('java', 'sunjdk', 
                     \'$(FILE_TITLE)$'.'.class')
+        call SingleCompile#SetVimCompiler('java', 'sunjdk', 'javac')
         call SingleCompile#SetCompilerTemplate('java', 'gcj', 
                     \'GNU Java Compiler', 'gcj', '', 'java $(FILE_TITLE)$')
         call SingleCompile#SetOutfile('java', 'gcj', '$(FILE_TITLE)$'.'.class')
@@ -423,6 +440,12 @@ function! s:Initialize() "{{{1
         call SingleCompile#SetCompilerTemplate('fortran', 'gfortran', 
                     \'GNU Fortran Compiler', 'gfortran', 
                     \'-o $(FILE_TITLE)$', l:common_run_command)
+        call SingleCompile#SetOutfile('fortran', 'gfortran',
+                    \l:common_out_file)
+        call SingleCompile#SetCompilerTemplate('fortran', 'g95',
+                    \'G95', 'g95', '-o $(FILE_TITLE)$'.s:ExecutableSuffix,
+                    \l:common_run_command)
+        call SingleCompile#SetOutfile('fortran', 'g95', l:common_out_file)
         if has('unix')
             call SingleCompile#SetCompilerTemplate('fortran', 
                         \'sol-studio-f77', 
@@ -467,6 +490,7 @@ function! s:Initialize() "{{{1
                     \'GNU Fortran 77 Compiler', 'g77', '-o $(FILE_TITLE)$',
                     \l:common_run_command)
         call SingleCompile#SetOutfile('fortran', 'g77', l:common_out_file)
+        call SingleCompile#SetVimCompiler('fortran', 'g77', 'fortran_g77')
         call SingleCompile#SetCompilerTemplate('fortran', 'ifort', 
                     \'Intel Fortran Compiler', 'ifort', '-o $(FILE_TITLE)$',
                     \l:common_run_command)
@@ -602,7 +626,7 @@ function! s:Initialize() "{{{1
         endif
 
         " python
-        call SingleCompile#SetCompilerTemplate('python', 'cpython', 'CPython',
+        call SingleCompile#SetCompilerTemplate('python', 'python', 'CPython',
                     \'python', '', '')
         call SingleCompile#SetCompilerTemplate('python', 'ironpython',
                     \'IronPython', 'ipy', '', '')
@@ -610,7 +634,7 @@ function! s:Initialize() "{{{1
                     \'jython', '', '')
         call SingleCompile#SetCompilerTemplate('python', 'pypy', 'PyPy',
                     \'pypy', '', '')
-        call SingleCompile#SetCompilerTemplate('python', 'cpython3', 
+        call SingleCompile#SetCompilerTemplate('python', 'python3', 
                     \'CPython 3', 'python3', '', '')
 
         " perl
@@ -660,8 +684,20 @@ function! s:Initialize() "{{{1
         call SingleCompile#SetCompilerTemplate('tcl', 'tclsh', 
                     \'Simple shell containing Tcl interpreter', 'tclsh', 
                     \'', '')
+        call SingleCompile#SetVimCompiler('tcl', 'tclsh', 'tcl')
         " 2}}}
 
+    endif
+endfunction
+
+function! s:SetVimCompiler(lang_name, compiler) " {{{1
+    " call the :compiler command
+
+    let l:dict_compiler = s:CompilerTemplate[a:lang_name][a:compiler]
+    if has_key(l:dict_compiler, 'vim-compiler')
+        silent! exec 'compiler '.l:dict_compiler['vim-compiler']
+    else
+        silent! exec 'compiler '.a:compiler
     endif
 endfunction
 
@@ -696,8 +732,9 @@ function! SingleCompile#SetCompilerTemplateByDict(
     " set templates by using a dict(template_dict), thus calling the template
     " settings functions below one by one is not needed.
 
-    let l:key_list = ['name', 'detect_func_arg', 'flags', 'run', 
-                \'detect_func', 'pre-do', 'post-do', 'out-file']
+    let l:key_list = ['name', 'detect_func_arg', 'flags', 'run',
+                \'detect_func', 'pre-do', 'post-do', 'out-file',
+                \'vim-compiler']
 
     for key in l:key_list
         if has_key(a:template_dict, key)
@@ -734,6 +771,13 @@ function! SingleCompile#SetOutfile(lang_name, compiler, outfile) " {{{2
 
     call s:SetCompilerSingleTemplate(a:lang_name, a:compiler, 
                 \'out-file', a:outfile)
+endfunction
+
+fun! SingleCompile#SetVimCompiler(lang_name, compiler, vim_compiler) " {{{2
+    " set vim-compiler
+
+    call s:SetCompilerSingleTemplate(a:lang_name, a:compiler,
+                \'vim-compiler', a:vim_compiler)
 endfunction
 
 function! s:GetCompilerSingleTemplate(lang_name, compiler_name, key) " {{{1
@@ -952,7 +996,7 @@ function! SingleCompile#Compile(...) " compile only {{{1
                 \'out-file')
                 \&& getftime(s:Expand(
                 \s:CompilerTemplate[l:cur_filetype][l:chosen_compiler]
-                \['out-file']))
+                \['out-file'], 0))
                 \> getftime(expand('%:p'))
         " switch back to the original directory
         exec 'lcd '.escape(l:cwd, s:CharsEscape)
@@ -1056,6 +1100,9 @@ function! SingleCompile#Compile(...) " compile only {{{1
         " change the makeprg and shellpipe temporarily 
         let l:old_makeprg = &l:makeprg
         let l:old_shellpipe = &l:shellpipe
+        let l:old_errorformat = &l:errorformat
+
+        call s:SetVimCompiler(l:cur_filetype, l:chosen_compiler)
 
         let &l:makeprg = l:compile_cmd
         setlocal shellpipe=>%s\ 2>&1
@@ -1073,6 +1120,7 @@ function! SingleCompile#Compile(...) " compile only {{{1
         " set back makeprg and shellpipe
         let &l:makeprg = l:old_makeprg
         let &l:shellpipe = l:old_shellpipe
+        let &l:errorformat = l:old_errorformat
     endif
 
     " if it's interpreting language, then return 2 (means do not call run if
