@@ -14,10 +14,11 @@ Add these key-mappings to your vimrc:
  nmap <F10> :SCCompileRun<cr>
 
 If your file type is supported, then press F9 to compile your source file, and
-press F10 to compile and run your source file. You may also use
-":SCChooseCompiler" command to choose a compiler if you have more than one
-kind of compiler available on you system. ":SCViewResult" will show you the last
-run result.
+press F10 to compile and run your source file. If there is a compilation
+error, and the quickfix feature is enabled, then you could use ":cope"
+command to see the error list. You may also use ":SCChooseCompiler" command to
+choose a compiler if you have more than one kind of compiler available on you
+system.  ":SCViewResult" will show you the last run result.
 
 
 Features:
@@ -184,6 +185,11 @@ vim-addon-actions:
 If you find any bug, please report it to xuhdev@gmail.com or submit it on
 the issue tracker:
 https://bitbucket.org/xuhdev/singlecompile/issues
+
+If you've written some templates for some compilers or interpreters which are
+not included as built-in template, and you think they are useful for other
+people, you could send me an email to inform me, and I'll put them in the
+built-in templates.
 
 
 Repository: 

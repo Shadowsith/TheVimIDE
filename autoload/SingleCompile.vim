@@ -1,5 +1,5 @@
 " File: autoload/SingleCompile.vim
-" Version: 2.5
+" Version: 2.6
 " check doc/SingleCompile.txt for more information
 
 
@@ -48,12 +48,12 @@ let s:run_result_tempfile = ''
 
 
 function! SingleCompile#GetVersion() " get the script version {{{1
-    return 250
+    return 260
 endfunction
 
 " util {{{1
 function! s:GetShellPipe()  " get the shell pipe command according to it's platform
-    if has('unix') || has('macunix')
+    if has('unix')
         if &shell =~ 'sh' || &shell =~ 'ksh' || &shell =~ 'zsh' || 
                     \&shell =~ 'bash'
             return '2>&1| tee'
@@ -218,6 +218,12 @@ function! s:DetectIe(not_used_arg) " {{{2
     endif
 endfunction
 
+function! s:DetectDosbatch(not_used_arg) " {{{2
+    " always return an empty string, because dosbatch is always available on
+    " Windows.
+    return ''
+endfunction
+
 function! s:DetectGmake(not_used_arg) " {{{2
     let l:make_command = s:DetectCompilerGenerally('gmake')
     if l:make_command != 0
@@ -264,6 +270,11 @@ function! s:Initialize() "{{{1
         let g:SingleCompile_resultheight = 5
     endif
 
+    if !exists('g:SingleCompile_showquickfixiferror') ||
+                \type(g:SingleCompile_showquickfixiferror) != type(0)
+        unlet! g:SingleCompile_showquickfixiferror
+        let g:SingleCompile_showquickfixiferror = 0
+    endif
 
     if s:TemplateInitialized == 0
         
@@ -377,7 +388,8 @@ function! s:Initialize() "{{{1
                     \l:common_run_command)
         call SingleCompile#SetCompilerTemplateByDict('cpp', 'g++', {
                     \ 'pre-do'  : function('s:PredoGcc'),
-                    \ 'out-file': l:common_out_file
+                    \ 'out-file': l:common_out_file,
+                    \ 'vim-compiler': 'gcc'
                     \})
         call SingleCompile#SetCompilerTemplate('cpp', 'icc', 
                     \'Intel C++ Compiler', 'icc', '-o $(FILE_TITLE)$', 
@@ -389,7 +401,8 @@ function! s:Initialize() "{{{1
                     \'clang++', '-o $(FILE_TITLE)$', l:common_run_command)
         call SingleCompile#SetCompilerTemplateByDict('cpp', 'clang++', {
                     \ 'pre-do'  : function('s:PredoClang'),
-                    \ 'out-file': l:common_out_file
+                    \ 'out-file': l:common_out_file,
+                    \ 'vim-compiler': 'clang'
                     \})
         if has('unix')
             call SingleCompile#SetCompilerTemplate('cpp', 'sol-studio', 
@@ -550,8 +563,11 @@ function! s:Initialize() "{{{1
                     \'TENEX C Shell', 'tcsh', '', '')
 
         " dosbatch
-        call SingleCompile#SetCompilerTemplate('dosbatch', 'dosbatch', 
-                    \'DOS Batch', '', '', '')
+        if has('win32')
+            call SingleCompile#SetCompilerTemplate('dosbatch', 'dosbatch', 
+                        \'DOS Batch', '', '', '',
+                        \function('s:DetectDosbatch'))
+        endif
 
         " html
         call SingleCompile#SetCompilerTemplate('html', 'firefox', 
@@ -1142,6 +1158,13 @@ function! SingleCompile#Compile(...) " compile only {{{1
 
     " switch back to the original directory
     exec 'lcd '.escape(l:cwd, s:CharsEscape)
+
+    " show the quickfix window if error occurs, quickfix is used and 
+    " g:SingleCompile_showquickfixiferror is set to nonzero
+    if l:toret == 1 && g:SingleCompile_showquickfixiferror &&
+                \s:ShouldQuickfixBeUsed()
+        cope
+    endif
 
     return l:toret
 endfunction
