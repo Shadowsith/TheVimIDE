@@ -1,9 +1,9 @@
 *SingleCompile.txt*
 
 File: SingleCompile.txt
-Version: 2.6
+Version: 2.7.1
 Author and Current Main Maintainer: H Xu <xuhdev@gmail.com>
-Last Change: 19 March 2011
+Last Change: 29 March 2011
 Description: Make it more convenient to compile or run a single source file.
 License: You can redistribute this plugin and/or modify it under the terms 
          of the GNU General Public License as published by the Free Software 
@@ -211,6 +211,11 @@ If you find any bug, please report it to xuhdev@gmail.com or submit it on
 the issue tracker:
 https://bitbucket.org/xuhdev/singlecompile/issues
 
+If you've written some templates for some compilers or interpreters which are
+not included as built-in template, and you think they are useful for other
+people, you could send me an email to inform me, and I'll put them in the
+built-in templates.
+
 
 Repository:
 https://bitbucket.org/xuhdev/singlecompile
@@ -393,6 +398,16 @@ your vimrc file:
  let g:SingleCompile_showquickfixiferror = 1
 <
 The default value of g:SingleCompile_showquickfixiferror is 0.
+
+                                            *SingleCompile-showresultafterrun*
+If "tee" command is available on your system, copy the following line to your
+vimrc file will make vim show the result of the run automatically after you
+run the program:
+>
+ let g:SingleCompile_showresultafterrun = 1
+<
+The default value of g:SingleCompile_showresultafterrun is 0. Also see
+|:SCViewResult|.
 
                                             *SingleCompile-usedialog*
 If you want SingleCompile to show message in a dialog, add the
