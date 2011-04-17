@@ -1,5 +1,5 @@
 " File: autoload/SingleCompile.vim
-" Version: 2.7.1
+" Version: 2.7.2
 " check doc/SingleCompile.txt for more information
 
 
@@ -48,7 +48,7 @@ let s:run_result_tempfile = ''
 
 
 function! SingleCompile#GetVersion() " get the script version {{{1
-    return 271
+    return 272
 endfunction
 
 " util {{{1
@@ -58,32 +58,37 @@ function! s:GetShellPipe(tee_used) " {{{2
     " wouldn't be contained in the return value.
 
     if has('unix')
-            if &shell =~ 'csh' || &shell =~ 'tcsh' 
-                if a:tee_used
-                    return '|& tee'
-                else
-                    return '>&'
-                endif
-            elseif &shell =~ 'sh' || &shell =~ 'ksh' || &shell =~ 'zsh' || 
-                        \&shell =~ 'bash'
-                if a:tee_used
-                    return '2>&1| tee'
-                else
-                    return '>%s 2>&1'
-                endif
+        let l:cur_shell = strpart(&shell, strridx(&shell, '/') + 1)
+
+        if l:cur_shell =~ '^csh' || l:cur_shell =~ '^tcsh' 
+            if a:tee_used
+                return '|& tee'
             else
-                if a:tee_used
-                    return '| tee'
-                else
-                    return '>'
-                endif
+                return '>&'
             endif
-        elseif has('win32')
-            if executable('tee') && a:tee_used
-                return '2>&1 | tee'
+        elseif l:cur_shell =~ '^sh' ||
+                    \l:cur_shell =~ '^bash' ||
+                    \l:cur_shell =~ '^ksh' ||
+                    \l:cur_shell =~ '^mksh' ||
+                    \l:cur_shell =~ '^pdksh' ||
+                    \l:cur_shell =~ '^zsh'
+            if a:tee_used
+                return '2>&1| tee'
             else
                 return '>%s 2>&1'
             endif
+        else
+            if a:tee_used
+                return '| tee'
+            else
+                return '>'
+            endif
+        endif
+    elseif has('win32')
+        if executable('tee') && a:tee_used
+            return '2>&1 | tee'
+        else
+            return '>%s 2>&1'
         endif
     endif
 
@@ -168,6 +173,16 @@ function! s:PredoClang(compiling_info) " clang Predo {{{2
     else
         return a:compiling_info
     endif
+endfunction
+
+function! s:PredoIdlang(compiling_info) " Interactive Data Language Predo {{{2
+
+    " For IDL, there is no batch mode, so we use pipe to redirect the string 
+    " 'exit' to the interpreter to exit the interpter after everything's done.
+    let l:new_compiling_info = a:compiling_info
+    let l:new_compiling_info['command'] = 'echo "exit" | '.
+                \a:compiling_info['command']
+    return l:new_compiling_info
 endfunction
 
 " post-do functions {{{1
@@ -724,6 +739,18 @@ function! s:Initialize() "{{{1
                     \'Simple shell containing Tcl interpreter', 'tclsh', 
                     \'', '')
         call SingleCompile#SetVimCompiler('tcl', 'tclsh', 'tcl')
+
+        " idlang (Interactive Data Language)
+        call SingleCompile#SetCompilerTemplate('idlang', 'idl',
+                    \'ITT Visual Information Solutions '.
+                    \'Interactive Data Language', 'idl', '-quiet', '')
+        call SingleCompile#SetPredo('idlang', 'idl',
+                    \function('s:PredoIdlang'))
+        call SingleCompile#SetCompilerTemplate('idlang', 'gdl',
+                    \'GNU Data Language incremental compiler',
+                    \'gdl', '-quiet', '')
+        call SingleCompile#SetPredo('idlang', 'gdl',
+                    \function('s:PredoIdlang'))
         " 2}}}
 
     endif
@@ -1141,7 +1168,11 @@ function! SingleCompile#Compile(...) " compile only {{{1
         let l:old_shellpipe = &l:shellpipe
         let l:old_errorformat = &l:errorformat
 
-        call s:SetVimCompiler(l:cur_filetype, l:chosen_compiler)
+        " if we are not in user-specified mode, then call :compiler command to 
+        " set vim compiler
+        if l:user_specified == 0
+            call s:SetVimCompiler(l:cur_filetype, l:chosen_compiler)
+        endif
 
         let &l:makeprg = l:compile_cmd
         let &l:shellpipe = s:GetShellPipe(0)

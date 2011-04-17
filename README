@@ -104,6 +104,10 @@ html:
     ie (Microsoft Internet Explorer)
     opera (Opera)
 
+IDL(Interactive Data Language):
+    idl (ITT Visual Information Solutions Interactive Data Language)
+    gdl (GNU Data Language incremental compiler)
+
 Java:
     gcj (GNU Java Compiler)
     sunjdk (Sun Java Development Kit)
@@ -172,6 +176,7 @@ xhtml:
 
 zsh:
     zsh (Z Shell)
+
 
 
 You can add your compiler or interpreter support if the compiler or 
