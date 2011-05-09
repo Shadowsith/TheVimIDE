@@ -80,7 +80,10 @@ D:
 
 dos batch:
     dosbatch (DOS Batch)
-    
+
+erlang:
+    escript (Erlang Scripting Support)
+
 Fortran:
     ftn95 (Silverfrost FTN95), Windows only
     g77 (GNU Fortran 77 Compiler)
@@ -135,6 +138,10 @@ Makefile:
     nmake (Microsoft Program Maintenance Utility)
     mingw32-make (MinGW32 Make)
 
+Pascal:
+    fpc (Free Pascal Compiler)
+    gpc (GNU Pascal Compiler)
+
 perl:
     perl (Perl Interpreter)
 
@@ -144,10 +151,10 @@ python:
     pypy (PyPy)
     python (Python Interpreter)
     python3 (Python 3 Interpreter)
-    
+
 R:
     R (R)
-
+    
 ruby:
     ruby (Ruby Interpreter)
     

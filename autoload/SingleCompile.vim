@@ -1,5 +1,5 @@
 " File: autoload/SingleCompile.vim
-" Version: 2.7.2
+" Version: 2.7.3
 " check doc/SingleCompile.txt for more information
 
 
@@ -48,7 +48,7 @@ let s:run_result_tempfile = ''
 
 
 function! SingleCompile#GetVersion() " get the script version {{{1
-    return 272
+    return 273
 endfunction
 
 " util {{{1
@@ -95,7 +95,7 @@ function! s:GetShellPipe(tee_used) " {{{2
 endfunction
 function! s:Expand(str, ...) " expand the string{{{2
     " the second argument is optional. If it is given and it is zero, then
-    " we thought we don't need double quote.
+    " we thought we don't need single quote.
 
     let l:double_quote_needed = 1
     if a:0 > 1
@@ -111,11 +111,26 @@ function! s:Expand(str, ...) " expand the string{{{2
     let l:rep_dict = {
                 \'\$(FILE_NAME)\$': '%',
                 \'\$(FILE_TITLE)\$': '%:r',
-                \'\$(FILE_PATH)\$': '%:p' }
+                \'\$(FILE_PATH)\$': '%:p',
+                \'\$(FILE_EXEC)\$': '%:p'}
+
+    let l:rep_dict_suffix = {
+                \'\$(FILE_NAME)\$': '',
+                \'\$(FILE_TITLE)\$': '',
+                \'\$(FILE_PATH)\$': ''}
+
+    if has('win32') || has('os2')
+        let l:rep_dict_suffix['\$(FILE_EXEC)\$'] = '.exe'
+    elseif has('unix')
+        let l:rep_dict_suffix['\$(FILE_EXEC)\$'] = ''
+    endif
+
 
     let l:str = a:str
     for one_key in keys(l:rep_dict)
-        let l:rep_string = expand(l:rep_dict[one_key])
+        let l:rep_string = expand(l:rep_dict[one_key]).
+                    \l:rep_dict_suffix[one_key]
+
         " on win32, win64 and os2, replace the backslash with '/'
         if has('win32') || has('os2')
             let l:rep_string = substitute(l:rep_string, '/', '\\', 'g')
@@ -123,7 +138,7 @@ function! s:Expand(str, ...) " expand the string{{{2
 
         let l:rep_string = escape(l:rep_string, '\')
         if l:double_quote_needed && match(l:rep_string, ' ') != -1
-            let l:rep_string = '"'.l:rep_string.'"'
+            let l:rep_string = "'".l:rep_string."'"
         endif
         let l:str = substitute(l:str, one_key, l:rep_string, 'g')
     endfor
@@ -173,16 +188,6 @@ function! s:PredoClang(compiling_info) " clang Predo {{{2
     else
         return a:compiling_info
     endif
-endfunction
-
-function! s:PredoIdlang(compiling_info) " Interactive Data Language Predo {{{2
-
-    " For IDL, there is no batch mode, so we use pipe to redirect the string 
-    " 'exit' to the interpreter to exit the interpter after everything's done.
-    let l:new_compiling_info = a:compiling_info
-    let l:new_compiling_info['command'] = 'echo "exit" | '.
-                \a:compiling_info['command']
-    return l:new_compiling_info
 endfunction
 
 " post-do functions {{{1
@@ -320,12 +325,16 @@ function! s:Initialize() "{{{1
 
         " templates {{{2
         if has('win32') || has('os2')
-            let l:common_run_command = '$(FILE_TITLE)$'
+            let l:common_run_command = '$(FILE_TITLE)$.exe'
             let l:common_out_file = '$(FILE_TITLE)$.exe'
         else
             let l:common_run_command = './$(FILE_TITLE)$'
             let l:common_out_file = '$(FILE_TITLE)$'
         endif
+
+        " bash
+        call SingleCompile#SetCompilerTemplate('bash', 'bash',
+                    \'Bourne-Again Shell', 'bash', '', '')
 
         " c
         call SingleCompile#SetCompilerTemplate('c', 'open-watcom', 
@@ -472,20 +481,30 @@ function! s:Initialize() "{{{1
                     \'$(FILE_TITLE)$'.'.exe')
         call SingleCompile#SetVimCompiler('cs', 'mono', 'mcs')
 
+        " cmake
+        call SingleCompile#SetCompilerTemplate('cmake', 'cmake', 'cmake',
+                    \'cmake', '', '')
+
+        " csh
+        call SingleCompile#SetCompilerTemplate('csh', 'csh',
+                    \'C Shell', 'csh', '', '')
+        call SingleCompile#SetCompilerTemplate('csh', 'tcsh',
+                    \'TENEX C shell', 'tcsh', '', '')
+
         " d
         call SingleCompile#SetCompilerTemplate('d', 'dmd', 'DMD Compiler',
                     \'dmd', '', l:common_run_command)
 
-        " java
-        call SingleCompile#SetCompilerTemplate('java', 'sunjdk', 
-                    \ 'Sun Java Development Kit', 'javac', '', 
-                    \'java $(FILE_TITLE)$')
-        call SingleCompile#SetOutfile('java', 'sunjdk', 
-                    \'$(FILE_TITLE)$'.'.class')
-        call SingleCompile#SetVimCompiler('java', 'sunjdk', 'javac')
-        call SingleCompile#SetCompilerTemplate('java', 'gcj', 
-                    \'GNU Java Compiler', 'gcj', '', 'java $(FILE_TITLE)$')
-        call SingleCompile#SetOutfile('java', 'gcj', '$(FILE_TITLE)$'.'.class')
+        " dosbatch
+        if has('win32')
+            call SingleCompile#SetCompilerTemplate('dosbatch', 'dosbatch', 
+                        \'DOS Batch', '', '', '',
+                        \function('s:DetectDosbatch'))
+        endif
+
+        " erlang
+        call SingleCompile#SetCompilerTemplate('erlang', 'escript',
+                    \'Erlang Scripting Support', 'escript', '', '')
 
         " fortran
         call SingleCompile#SetCompilerTemplate('fortran', 'gfortran', 
@@ -556,56 +575,13 @@ function! s:Initialize() "{{{1
                     \ 'out-file': l:common_out_file
                     \})
 
-        " lisp
-        call SingleCompile#SetCompilerTemplate('lisp', 'clisp', 'GNU CLISP',
-                    \'clisp', '', '')
-        call SingleCompile#SetCompilerTemplate('lisp', 'ecl', 
-                    \'Embeddable Common-Lisp', 'ecl', '-shell', '')
-        call SingleCompile#SetCompilerTemplate('lisp', 'gcl', 
-                    \'GNU Common Lisp', 'gcl', '-batch -load', '')
-
-        " sh
-        call SingleCompile#SetCompilerTemplate('sh', 'sh', 
-                    \'Bourne Shell', 'sh', '', '')
-        call SingleCompile#SetCompilerTemplate('sh', 'bash', 
-                    \'Bourne-Again Shell', 'bash', '', '')
-        call SingleCompile#SetCompilerTemplate('sh', 'ksh', 
-                    \'Korn Shell', 'ksh', '', '')
-        call SingleCompile#SetCompilerTemplate('sh', 'zsh', 
-                    \'Z Shell', 'zsh', '', '')
-        call SingleCompile#SetCompilerTemplate('sh', 'ash', 
-                    \'Almquist Shell', 'ash', '', '')
-        call SingleCompile#SetCompilerTemplate('sh', 'dash', 
-                    \'Debian Almquist Shell', 'dash', '', '')
-
-        " zsh
-        call SingleCompile#SetCompilerTemplate('zsh', 'zsh', 
-                    \'Z Shell', 'zsh', '', '')
-
-        " bash
-        call SingleCompile#SetCompilerTemplate('bash', 'bash',
-                    \'Bourne-Again Shell', 'bash', '', '')
-
-        " ksh
-        call SingleCompile#SetCompilerTemplate('ksh', 'ksh',
-                    \'Korn Shell', 'ksh', '', '')
-
-        " csh
-        call SingleCompile#SetCompilerTemplate('csh', 'csh',
-                    \'C Shell', 'csh', '', '')
-        call SingleCompile#SetCompilerTemplate('csh', 'tcsh',
-                    \'TENEX C shell', 'tcsh', '', '')
-
-        " tcsh
-        call SingleCompile#SetCompilerTemplate('tcsh', 'tcsh',
-                    \'TENEX C Shell', 'tcsh', '', '')
-
-        " dosbatch
-        if has('win32')
-            call SingleCompile#SetCompilerTemplate('dosbatch', 'dosbatch', 
-                        \'DOS Batch', '', '', '',
-                        \function('s:DetectDosbatch'))
-        endif
+        " haskell
+        call SingleCompile#SetCompilerTemplate('haskell', 'ghc', 
+                    \'Glasgow Haskell Compiler', 'ghc', '-o $(FILE_TITLE)$',
+                    \l:common_run_command)
+        call SingleCompile#SetOutfile('haskell', 'ghc', l:common_out_file)
+        call SingleCompile#SetCompilerTemplate('haskell', 'runhaskell', 
+                    \'runhaskell', 'runhaskell', '', '')
 
         " html
         call SingleCompile#SetCompilerTemplate('html', 'firefox', 
@@ -614,6 +590,8 @@ function! s:Initialize() "{{{1
                     \'Google Chrome', 'google-chrome', '', '')
         call SingleCompile#SetCompilerTemplate('html', 'opera', 'Opera', 
                     \'opera', '', '')
+        call SingleCompile#SetCompilerTemplate('html', 'konqueror',
+                    \'Konqueror', 'konqueror', '', '')
         if has('win32')
             call SingleCompile#SetCompilerTemplate('html', 'ie', 
                         \'Microsoft Internet Explorer', 'iexplore', '', '',
@@ -623,25 +601,33 @@ function! s:Initialize() "{{{1
                         \'Microsoft Internet Explorer', 'iexplore', '', '')
         endif
 
-        " xhtml
-        call SingleCompile#SetCompilerTemplate('xhtml', 'firefox', 
-                    \'Mozilla Firefox', 'firefox', '', '')
-        call SingleCompile#SetCompilerTemplate('xhtml', 'chrome', 
-                    \'Google Chrome', 'google-chrome', '', '')
-        call SingleCompile#SetCompilerTemplate('xhtml', 'opera', 
-                    \'Opera', 'opera', '', '')
-        if has('win32')
-            call SingleCompile#SetCompilerTemplate('xhtml', 'ie', 
-                        \'Microsoft Internet Explorer', 'iexplore', '', '',
-                        \function('s:DetectIe'))
-        else
-            call SingleCompile#SetCompilerTemplate('xhtml', 'ie', 
-                        \'Microsoft Internet Explorer', 'iexplore', '', '')
-        endif
+        " idlang (Interactive Data Language)
+        call SingleCompile#SetCompilerTemplate('idlang', 'idl',
+                    \'ITT Visual Information Solutions '.
+                    \'Interactive Data Language', 'idl',
+                    \"-quiet -e '@$(FILE_NAME)$'", '')
+        call SingleCompile#SetCompilerTemplate('idlang', 'gdl',
+                    \'GNU Data Language incremental compiler',
+                    \'gdl', "-quiet -e '@$(FILE_NAME)$'", '')
 
-        " vbs
-        call SingleCompile#SetCompilerTemplate('vb', 'vbs', 
-                    \'VB Script Interpreter', 'cscript', '', '')
+        " java
+        call SingleCompile#SetCompilerTemplate('java', 'sunjdk', 
+                    \ 'Sun Java Development Kit', 'javac', '', 
+                    \'java $(FILE_TITLE)$')
+        call SingleCompile#SetOutfile('java', 'sunjdk', 
+                    \'$(FILE_TITLE)$'.'.class')
+        call SingleCompile#SetVimCompiler('java', 'sunjdk', 'javac')
+        call SingleCompile#SetCompilerTemplate('java', 'gcj', 
+                    \'GNU Java Compiler', 'gcj', '', 'java $(FILE_TITLE)$')
+        call SingleCompile#SetOutfile('java', 'gcj', '$(FILE_TITLE)$'.'.class')
+
+        " javascript
+        call SingleCompile#SetCompilerTemplate('javascript', 'rhino', 'Rhino',
+                    \'rhino', '', '')
+
+        " ksh
+        call SingleCompile#SetCompilerTemplate('ksh', 'ksh',
+                    \'Korn Shell', 'ksh', '', '')
 
         " latex
         if has('unix')
@@ -660,6 +646,46 @@ function! s:Initialize() "{{{1
             call SingleCompile#SetOutfile('tex', 'miktex', 
                         \'$(FILE_TITLE)$'.'.dvi')
         endif
+
+        " lisp
+        call SingleCompile#SetCompilerTemplate('lisp', 'clisp', 'GNU CLISP',
+                    \'clisp', '', '')
+        call SingleCompile#SetCompilerTemplate('lisp', 'ecl', 
+                    \'Embeddable Common-Lisp', 'ecl', '-shell', '')
+        call SingleCompile#SetCompilerTemplate('lisp', 'gcl', 
+                    \'GNU Common Lisp', 'gcl', '-batch -load', '')
+
+        " lua
+        call SingleCompile#SetCompilerTemplate('lua', 'lua', 
+                    \'Lua Interpreter', 'lua', '', '')
+
+        " Makefile
+        call SingleCompile#SetCompilerTemplate('make', 'gmake', 'GNU Make',
+                    \'gmake', '-f', '', function('s:DetectGmake'))
+        call SingleCompile#SetCompilerTemplate('make', 'mingw32-make',
+                    \'MinGW32 Make', 'mingw32-make', '-f', '')
+        if has('win32')
+            call SingleCompile#SetCompilerTemplate('make', 'nmake', 
+                        \'Microsoft Program Maintenance Utility', 'nmake',
+                        \'-f', '')
+        endif
+
+        " Pascal
+        call SingleCompile#SetCompilerTemplate('pascal', 'fpc', 
+                    \'Free Pascal Compiler', 'fpc', 
+                    \'', l:common_run_command)
+        call SingleCompile#SetOutfile('pascal', 'fpc',
+                    \l:common_out_file)
+        call SingleCompile#SetCompilerTemplate('pascal', 'gpc', 
+                    \'GNU Pascal Compiler', 'gpc', 
+                    \'-o $(FILE_TITLE)$', l:common_run_command)
+        call SingleCompile#SetOutfile('pascal', 'gpc',
+                    \l:common_out_file)
+
+
+        " perl
+        call SingleCompile#SetCompilerTemplate('perl', 'perl', 
+                    \'Perl Interpreter', 'perl', '', '')
 
         " plain tex
         if has('unix')
@@ -691,48 +717,27 @@ function! s:Initialize() "{{{1
         call SingleCompile#SetCompilerTemplate('python', 'python3', 
                     \'CPython 3', 'python3', '', '')
 
-        " perl
-        call SingleCompile#SetCompilerTemplate('perl', 'perl', 
-                    \'Perl Interpreter', 'perl', '', '')
+        " r
+        call SingleCompile#SetCompilerTemplate('r', 'R', 'R', 'R',
+                    \'CMD BATCH', '')
 
         " ruby
         call SingleCompile#SetCompilerTemplate('ruby', 'ruby', 
                     \'Ruby Interpreter', 'ruby', '', '')
 
-        " lua
-        call SingleCompile#SetCompilerTemplate('lua', 'lua', 
-                    \'Lua Interpreter', 'lua', '', '')
-
-        " Makefile
-        call SingleCompile#SetCompilerTemplate('make', 'gmake', 'GNU Make',
-                    \'gmake', '-f', '', function('s:DetectGmake'))
-        call SingleCompile#SetCompilerTemplate('make', 'mingw32-make',
-                    \'MinGW32 Make', 'mingw32-make', '-f', '')
-        if has('win32')
-            call SingleCompile#SetCompilerTemplate('make', 'nmake', 
-                        \'Microsoft Program Maintenance Utility', 'nmake',
-                        \'-f', '')
-        endif
-
-        " javascript
-        call SingleCompile#SetCompilerTemplate('javascript', 'rhino', 'Rhino',
-                    \'rhino', '', '')
-
-        " r
-        call SingleCompile#SetCompilerTemplate('r', 'R', 'R', 'R',
-                    \'CMD BATCH', '')
-
-        " cmake
-        call SingleCompile#SetCompilerTemplate('cmake', 'cmake', 'cmake',
-                    \'cmake', '', '')
-
-        " haskell
-        call SingleCompile#SetCompilerTemplate('haskell', 'ghc', 
-                    \'Glasgow Haskell Compiler', 'ghc', '-o $(FILE_TITLE)$',
-                    \l:common_run_command)
-        call SingleCompile#SetOutfile('haskell', 'ghc', l:common_out_file)
-        call SingleCompile#SetCompilerTemplate('haskell', 'runhaskell', 
-                    \'runhaskell', 'runhaskell', '', '')
+        " sh
+        call SingleCompile#SetCompilerTemplate('sh', 'sh', 
+                    \'Bourne Shell', 'sh', '', '')
+        call SingleCompile#SetCompilerTemplate('sh', 'bash', 
+                    \'Bourne-Again Shell', 'bash', '', '')
+        call SingleCompile#SetCompilerTemplate('sh', 'ksh', 
+                    \'Korn Shell', 'ksh', '', '')
+        call SingleCompile#SetCompilerTemplate('sh', 'zsh', 
+                    \'Z Shell', 'zsh', '', '')
+        call SingleCompile#SetCompilerTemplate('sh', 'ash', 
+                    \'Almquist Shell', 'ash', '', '')
+        call SingleCompile#SetCompilerTemplate('sh', 'dash', 
+                    \'Debian Almquist Shell', 'dash', '', '')
 
         " tcl
         call SingleCompile#SetCompilerTemplate('tcl', 'tclsh', 
@@ -740,17 +745,35 @@ function! s:Initialize() "{{{1
                     \'', '')
         call SingleCompile#SetVimCompiler('tcl', 'tclsh', 'tcl')
 
-        " idlang (Interactive Data Language)
-        call SingleCompile#SetCompilerTemplate('idlang', 'idl',
-                    \'ITT Visual Information Solutions '.
-                    \'Interactive Data Language', 'idl', '-quiet', '')
-        call SingleCompile#SetPredo('idlang', 'idl',
-                    \function('s:PredoIdlang'))
-        call SingleCompile#SetCompilerTemplate('idlang', 'gdl',
-                    \'GNU Data Language incremental compiler',
-                    \'gdl', '-quiet', '')
-        call SingleCompile#SetPredo('idlang', 'gdl',
-                    \function('s:PredoIdlang'))
+        " tcsh
+        call SingleCompile#SetCompilerTemplate('tcsh', 'tcsh',
+                    \'TENEX C Shell', 'tcsh', '', '')
+
+        " vbs
+        call SingleCompile#SetCompilerTemplate('vb', 'vbs', 
+                    \'VB Script Interpreter', 'cscript', '', '')
+
+        " xhtml
+        call SingleCompile#SetCompilerTemplate('xhtml', 'firefox', 
+                    \'Mozilla Firefox', 'firefox', '', '')
+        call SingleCompile#SetCompilerTemplate('xhtml', 'chrome', 
+                    \'Google Chrome', 'google-chrome', '', '')
+        call SingleCompile#SetCompilerTemplate('xhtml', 'opera', 
+                    \'Opera', 'opera', '', '')
+        call SingleCompile#SetCompilerTemplate('xhtml', 'konqueror',
+                    \'Konqueror', 'konqueror', '', '')
+        if has('win32')
+            call SingleCompile#SetCompilerTemplate('xhtml', 'ie', 
+                        \'Microsoft Internet Explorer', 'iexplore', '', '',
+                        \function('s:DetectIe'))
+        else
+            call SingleCompile#SetCompilerTemplate('xhtml', 'ie', 
+                        \'Microsoft Internet Explorer', 'iexplore', '', '')
+        endif
+
+        " zsh
+        call SingleCompile#SetCompilerTemplate('zsh', 'zsh', 
+                    \'Z Shell', 'zsh', '', '')
         " 2}}}
 
     endif
@@ -854,6 +877,10 @@ endfunction
 fun! s:SetCompilerSingleTemplate(lang_name, compiler, key, value, ...)
     " set the template. if the '...' is nonzero, this function will not
     " override the corresponding template if there is an existing template 
+
+    " Set the default template first so that we could let this override the 
+    " default compile template.
+    call s:Initialize()
 
     if a:0 > 1
         call s:ShowMessage(
@@ -1068,8 +1095,7 @@ function! SingleCompile#Compile(...) " compile only {{{1
         exec 'lcd '.escape(l:cwd, s:CharsEscape)
         echo 'SingleCompile: '.
                     \'No need to compile. '.
-                    \'No modification to the source file '.
-                    \'is detected since last compilation.'
+                    \'No modification is detected.'
         return 0
     endif
 
@@ -1147,7 +1173,7 @@ function! SingleCompile#Compile(...) " compile only {{{1
         " with error message highlighting and set the return value to 1
         if v:shell_error != 0
             echo ' '
-            echohl ErrorMsg | echo 'Return value is '.v:shell_error 
+            echohl ErrorMsg | echo 'Error! Return value is '.v:shell_error 
                         \| echohl None
             let l:toret = 1
         endif

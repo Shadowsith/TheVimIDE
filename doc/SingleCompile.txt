@@ -1,9 +1,11 @@
 *SingleCompile.txt*
 
 File: SingleCompile.txt
-Version: 2.7.2
-Author and Current Main Maintainer: H Xu <xuhdev@gmail.com>
-Last Change: 17 April 2011
+Version: 2.7.3
+Original Author: H Xu <xuhdev@gmail.com>
+Current Main Maintainers: H Xu <xuhdev@gmail.com>
+                          Zhou Yichao <broken.zhou@gmail.com>
+Last Change: 9 May 2011
 Description: Make it more convenient to compile or run a single source file.
 License: You can redistribute this plugin and/or modify it under the terms 
          of the GNU General Public License as published by the Free Software 
@@ -108,7 +110,10 @@ D:
 
 dos batch:
     dosbatch (DOS Batch)
-    
+
+erlang:
+    escript (Erlang Scripting Support)
+
 Fortran:
     ftn95 (Silverfrost FTN95), Windows only
     g77 (GNU Fortran 77 Compiler)
@@ -131,6 +136,7 @@ html:
     firefox (Mozilla Firefox)
     ie (Microsoft Internet Explorer)
     opera (Opera)
+    konqueror (Konqueror)
 
 IDL(Interactive Data Language):
     idl (ITT Visual Information Solutions Interactive Data Language)
@@ -162,6 +168,10 @@ Makefile:
     gmake (GNU Make)
     nmake (Microsoft Program Maintenance Utility)
     mingw32-make (MinGW32 Make)
+
+Pascal:
+    fpc (Free Pascal Compiler)
+    gpc (GNU Pascal Compiler)
 
 perl:
     perl (Perl Interpreter)
@@ -201,6 +211,7 @@ xhtml:
     firefox (Mozilla Firefox)
     ie (Microsoft Internet Explorer)
     opera (Opera)
+    konqueror (Konqueror)
 
 zsh:
     zsh (Z Shell)
@@ -651,7 +662,10 @@ D:
 
 dos batch:
     dosbatch (DOS Batch)
-    
+
+erlang:
+    escript (Erlang Scripting Support)
+
 Fortran:
     ftn95 (Silverfrost FTN95), Windows only
     g77 (GNU Fortran 77 Compiler)
@@ -705,6 +719,10 @@ Makefile:
     gmake (GNU Make)
     nmake (Microsoft Program Maintenance Utility)
     mingw32-make (MinGW32 Make)
+
+Pascal:
+    fpc (Free Pascal Compiler)
+    gpc (GNU Pascal Compiler)
 
 perl:
     perl (Perl Interpreter)
@@ -901,6 +919,8 @@ TODO~
 Add asynchronous compilation and run support.
 
 Add matlab built-in template.
+
+Add php built-in template.
 
 Make it possible to store compiler template in config files, such as ini 
 files.
