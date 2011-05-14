@@ -1,5 +1,5 @@
 " File: autoload/SingleCompileAsync.vim
-" Version: 2.8beta
+" Version: 2.8.1beta
 " check doc/SingleCompile.txt for more information
 
 
@@ -61,9 +61,18 @@ function! s:RunPython(run_command) " {{{2
 python << EEOOFF
 
 try:
-    SingleCompileAsync.sub_proc = subprocess.Popen(vim.eval('a:run_command'),
-            shell = True,
-            stdout = subprocess.PIPE, stderr = subprocess.STDOUT)
+    if sys.platform == 'win32':
+        # for win32, 'stderr = subprocess.STDOUT' will cause problems, so we
+        # use shell style stderr redirect for win32
+        SingleCompileAsync.sub_proc = subprocess.Popen(
+                vim.eval('a:run_command') + ' 2>&1',
+                shell = True,
+                stdout = subprocess.PIPE)
+    else:
+        SingleCompileAsync.sub_proc = subprocess.Popen(
+                vim.eval('a:run_command'),
+                shell = True,
+                stdout = subprocess.PIPE, stderr = subprocess.STDOUT)
 except:
     vim.command('let l:ret_val = 2')
 
@@ -96,14 +105,17 @@ python << EEOOFF
 try:
     SingleCompileAsync.tmpout = SingleCompileAsync.sub_proc.communicate()[0]
 except:
-    if SingleCompileAsync.output == None:
-        vim.command('let l:ret_val = 2')
+    pass
 else:
     SingleCompileAsync.output = SingleCompileAsync.tmpout
     del SingleCompileAsync.tmpout
 
-vim.command("let l:ret_val = '" +
-        SingleCompileAsync.output.replace("'", "''") + "'")
+try:
+    vim.command("let l:ret_val = '" +
+            SingleCompileAsync.output.replace("'", "''") + "'")
+except:
+    vim.command('let l:ret_val = 2')
+
 EEOOFF
 
     if type(l:ret_val) == type('')
