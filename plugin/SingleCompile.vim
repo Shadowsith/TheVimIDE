@@ -1,6 +1,6 @@
 " File: plugin/SingleCompile.vim
 " GetLatestVimScripts: 3115 1 SingleCompile.zip
-" version 2.8.1beta
+" version 2.8.2beta
 " check doc/SingleCompile.txt for more version information
 
 if v:version < 700
@@ -39,6 +39,14 @@ command -nargs=+ SCCompileRunAF
             \ call SingleCompile#CompileRun('AdditionalFlags', <q-args>)
 command -nargs=+ SCCompileRunAsyncAF
             \ call SingleCompile#CompileRunAsync('AdditionalFlags', <q-args>)
+command SCTerminateAsync
+            \ if SingleCompileAsync#Terminate() |
+            \ echohl ErrorMsg |
+            \ echo 'Failed to terminate the background process!' |
+            \ echohl None |
+            \ else |
+            \ echo 'Background process terminated.' |
+            \ endif
 command SCChooseCompiler call SingleCompile#ChooseCompiler(&filetype)
 command SCChooseInterpreter call SingleCompile#ChooseCompiler(&filetype)
 command SCViewResult call SingleCompile#ViewResult(0)

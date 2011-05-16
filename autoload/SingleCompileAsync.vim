@@ -1,5 +1,5 @@
 " File: autoload/SingleCompileAsync.vim
-" Version: 2.8.1beta
+" Version: 2.8.2beta
 " check doc/SingleCompile.txt for more information
 
 
@@ -28,7 +28,7 @@ except:
     vim.command("return 'Library import error.'")
 
 if sys.version_info[0] < 2 or sys.version_info[1] < 6:
-    vim.command("return 'At least python 2.6 is required.")
+    vim.command("return 'At least python 2.6 is required.'")
 
 class SingleCompileAsync:
     sub_proc = None
@@ -143,7 +143,18 @@ function! SingleCompileAsync#Initialize(mode) " {{{1
     endif
 
     " set function refs to dict
-    if a:mode ==? 'python'
+    if a:mode ==? 'auto'
+        " autodetect for an appropriate mode
+
+        for l:one_mode in ['python']
+            if SingleCompileAsync#Initialize(l:one_mode) == 0
+                return 0
+            endif
+        endfor
+
+        return 0
+
+    elseif a:mode ==? 'python'
         let s:mode_dict['Initialize'] = function('s:InitializePython')
         let s:mode_dict['IsRunning'] = function('s:IsRunningPython')
         let s:mode_dict['Run'] = function('s:RunPython')

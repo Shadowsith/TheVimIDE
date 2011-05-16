@@ -1,5 +1,5 @@
 " File: autoload/SingleCompile.vim
-" Version: 2.8.1beta
+" Version: 2.8.2beta
 " check doc/SingleCompile.txt for more information
 
 
@@ -48,7 +48,7 @@ let s:run_result_tempfile = ''
 
 
 function! SingleCompile#GetVersion() " get the script version {{{1
-    return 281
+    return 282
 endfunction
 
 " util {{{1
@@ -310,7 +310,7 @@ function! s:Initialize() "{{{1
     if !exists('g:SingleCompile_asyncrunmode') ||
                 \type(g:SingleCompile_asyncrunmode) != type('')
         unlet! g:SingleCompile_asyncrunmode
-        let g:SingleCompile_asyncrunmode = 'none'
+        let g:SingleCompile_asyncrunmode = 'auto'
     endif
 
     if !exists('g:SingleCompile_autowrite') ||
@@ -364,6 +364,11 @@ function! s:Initialize() "{{{1
                         \"Failed to initialize the async mode'".
                         \g:SingleCompile_asyncrunmode."'.")
         endif
+    endif
+
+    " terminate the background process before existing vim
+    if has('autocmd')
+        autocmd VimLeave * call SingleCompileAsync#Terminate()
     endif
 
     " templates {{{2
@@ -1442,6 +1447,12 @@ function! s:Run(async) " {{{1
 endfunction
 
 function! s:CompileRunInternal(comp_param, async) " {{{1
+
+    " if async run is not available, give an error message and stop here.
+    if a:async && empty(SingleCompileAsync#GetMode())
+        call s:ShowMessage('Async mode is not available for your vim.')
+        return
+    endif
 
     " call different functions according to a:async
     if a:async
