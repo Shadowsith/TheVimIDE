@@ -1,5 +1,5 @@
 " File: autoload/SingleCompileAsync.vim
-" Version: 2.8.2beta
+" Version: 2.8.3beta
 " check doc/SingleCompile.txt for more information
 
 
@@ -21,9 +21,10 @@ function! s:InitializePython() " {{{2
 python << EEOOFF
 
 try:
-    import vim
+    import shlex
     import subprocess
     import sys
+    import vim
 except:
     vim.command("return 'Library import error.'")
 
@@ -33,6 +34,22 @@ if sys.version_info[0] < 2 or sys.version_info[1] < 6:
 class SingleCompileAsync:
     sub_proc = None
     output = None
+    # This value will be set below if we are on win32. For other systems,
+    # leave this as None
+    startupinfo = None  
+
+# if we are on win32, we need to set STARTUPINFO before calling
+# subprocess.Popen() to make the console of the subprocess show minimized and
+# not actived.
+if sys.platform == 'win32':
+
+    # set subprocess constants
+    subprocess.STARTF_USESHOWWINDOW = 1
+    subprocess.SW_SHOWMINNOACTIVE = 7
+
+    SingleCompileAsync.startupinfo = subprocess.STARTUPINFO()
+    SingleCompileAsync.startupinfo.dwFlags = subprocess.STARTF_USESHOWWINDOW
+    SingleCompileAsync.startupinfo.wShowWindow = subprocess.SW_SHOWMINNOACTIVE
 
 EEOOFF
 endfunction
@@ -61,18 +78,13 @@ function! s:RunPython(run_command) " {{{2
 python << EEOOFF
 
 try:
-    if sys.platform == 'win32':
-        # for win32, 'stderr = subprocess.STDOUT' will cause problems, so we
-        # use shell style stderr redirect for win32
-        SingleCompileAsync.sub_proc = subprocess.Popen(
-                vim.eval('a:run_command') + ' 2>&1',
-                shell = True,
-                stdout = subprocess.PIPE)
-    else:
-        SingleCompileAsync.sub_proc = subprocess.Popen(
-                vim.eval('a:run_command'),
-                shell = True,
-                stdout = subprocess.PIPE, stderr = subprocess.STDOUT)
+    SingleCompileAsync.sub_proc = subprocess.Popen(
+            shlex.split(vim.eval('a:run_command')),
+            shell = False,
+            universal_newlines = True,
+            startupinfo = SingleCompileAsync.startupinfo,
+            stdout = subprocess.PIPE, stderr = subprocess.STDOUT)
+
 except:
     vim.command('let l:ret_val = 2')
 
@@ -254,4 +266,5 @@ endfunction
 let &cpo = s:saved_cpo
 unlet! s:saved_cpo
 
+" vim703: cc=78
 " vim: fdm=marker et ts=4 tw=78 sw=4 fdc=3
