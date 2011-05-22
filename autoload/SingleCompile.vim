@@ -1,5 +1,5 @@
 " File: autoload/SingleCompile.vim
-" Version: 2.8.3beta
+" Version: 2.8.4beta
 " check doc/SingleCompile.txt for more information
 
 
@@ -48,7 +48,7 @@ let s:run_result_tempfile = ''
 
 
 function! SingleCompile#GetVersion() " get the script version {{{1
-    return 283
+    return 284
 endfunction
 
 " util {{{1
@@ -160,7 +160,11 @@ function! s:RunAsyncWithMessage(run_cmd) " {{{2
                         \'There is already an existing process '.
                         \'running in background.')
         endif
+
+        return 1
     endif
+
+    return 0
 endfunction
 
 " pre-do functions {{{1
@@ -355,7 +359,11 @@ function! s:Initialize() "{{{1
         let l:async_init_res = SingleCompileAsync#Initialize(
                     \g:SingleCompile_asyncrunmode)
 
-        if l:async_init_res == 3
+        if type(l:async_init_res) == type('')
+            call s:ShowMessage(
+                        \"Failed to initialize the async mode '".
+                        \g:SingleCompile_asyncrunmode."'.\n".l:async_init_res)
+        elseif l:async_init_res == 3
             call s:ShowMessage("The specified async mode '".
                         \g:SingleCompile_asyncrunmode."' doesn't exist.")
         elseif l:async_init_res != 0
@@ -1387,6 +1395,9 @@ endfunction
 
 function! s:Run(async) " {{{1
     " if async is non-zero, then run asynchronously
+
+    let l:ret_val = 0
+
     call s:Initialize()
 
     " whether we should use async mode
@@ -1401,6 +1412,7 @@ function! s:Run(async) " {{{1
         let l:user_specified = 0
     else
         call s:ShowMessage('Fail to run!')
+        return 1
     endif
 
     " save current working directory
@@ -1417,7 +1429,7 @@ function! s:Run(async) " {{{1
     endif
 
     if l:async
-        call s:RunAsyncWithMessage(l:run_cmd)
+        let l:ret_val = s:RunAsyncWithMessage(l:run_cmd)
     else
         if executable('tee')
             " if tee is available, then redirect the result to a temp file
@@ -1441,7 +1453,7 @@ function! s:Run(async) " {{{1
         call SingleCompile#ViewResult(0)
     endif
 
-    return
+    return l:ret_val
 endfunction
 
 function! s:CompileRunInternal(comp_param, async) " {{{1
@@ -1472,13 +1484,14 @@ function! s:CompileRunInternal(comp_param, async) " {{{1
         return
     endif
 
-    if a:async
+
+    " run the command and display the following messages only when the process
+    " is successfully run.
+    if !s:Run(a:async) && a:async
         echo 'SingleCompile: Now the program is running in background.'
         echo 'SingleCompile: you could use :SCViewResultAsync to see the '
                     \.'output if the program has terminated.'
     endif
-
-    call s:Run(a:async)
 endfunction
 
 function! SingleCompile#CompileRun(...) " compile and run {{{1
