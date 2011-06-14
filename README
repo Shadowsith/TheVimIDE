@@ -108,6 +108,7 @@ html:
     firefox (Mozilla Firefox)
     ie (Microsoft Internet Explorer)
     opera (Opera)
+    konqueror (Konqueror)
 
 IDL(Interactive Data Language):
     idl (ITT Visual Information Solutions Interactive Data Language)
@@ -118,14 +119,15 @@ Java:
     sunjdk (Sun Java Development Kit)
 
 JavaScript:
-    rhino (Rhino)
+    js (SpiderMonkey, a JavaScript engine written in C)
+    rhino (Rhino, a JavaScript engine written in Java)
 
 ksh:
     ksh (Korn Shell)
 
 LaTeX:
-    miktex (MiKTeX), Windows Only
-    texlive (Tex Live)
+    latex (LaTeX)
+    pdflatex (pdfLaTeX)
 
 LISP:
     clisp (GNU CLISP)
@@ -139,6 +141,9 @@ Makefile:
     gmake (GNU Make)
     nmake (Microsoft Program Maintenance Utility)
     mingw32-make (MinGW32 Make)
+
+Object-C:
+    gcc (GNU Object-C Compiler)
 
 Pascal:
     fpc (Free Pascal Compiler)
@@ -156,10 +161,10 @@ python:
     pypy (PyPy)
     python (Python Interpreter)
     python3 (Python 3 Interpreter)
-
+    
 R:
     R (R)
-    
+
 ruby:
     ruby (Ruby Interpreter)
     
@@ -185,9 +190,11 @@ xhtml:
     firefox (Mozilla Firefox)
     ie (Microsoft Internet Explorer)
     opera (Opera)
+    konqueror (Konqueror)
 
 zsh:
     zsh (Z Shell)
+
 
 
 

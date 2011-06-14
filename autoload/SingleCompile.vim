@@ -1,5 +1,5 @@
 " File: autoload/SingleCompile.vim
-" Version: 2.8.5
+" Version: 2.8.6
 " check doc/SingleCompile.txt for more information
 
 
@@ -48,7 +48,7 @@ let s:run_result_tempfile = ''
 
 
 function! SingleCompile#GetVersion() " get the script version {{{1
-    return 285
+    return 286
 endfunction
 
 " util {{{1
@@ -660,10 +660,10 @@ function! s:Initialize() "{{{1
     call SingleCompile#SetCompilerTemplate('idlang', 'idl',
                 \'ITT Visual Information Solutions '.
                 \'Interactive Data Language', 'idl',
-                \"-quiet -e '@$(FILE_NAME)$'", '')
+                \"-quiet -e '.run $(FILE_NAME)$'", '')
     call SingleCompile#SetCompilerTemplate('idlang', 'gdl',
                 \'GNU Data Language incremental compiler',
-                \'gdl', "-quiet -e '@$(FILE_NAME)$'", '')
+                \'gdl', "-quiet -e '.run $(FILE_NAME)$'", '')
 
     " java
     call SingleCompile#SetCompilerTemplate('java', 'sunjdk', 
@@ -677,7 +677,11 @@ function! s:Initialize() "{{{1
     call SingleCompile#SetOutfile('java', 'gcj', '$(FILE_TITLE)$'.'.class')
 
     " javascript
-    call SingleCompile#SetCompilerTemplate('javascript', 'rhino', 'Rhino',
+    call SingleCompile#SetCompilerTemplate('javascript', 'js',
+                \'SpiderMonkey, a JavaScript engine written in C',
+                \'js', '', '')
+    call SingleCompile#SetCompilerTemplate('javascript', 'rhino',
+                \'Rhino, a JavaScript engine written in Java',
                 \'rhino', '', '')
 
     " ksh
@@ -686,20 +690,19 @@ function! s:Initialize() "{{{1
 
     " latex
     if has('unix')
-        call SingleCompile#SetCompilerTemplate('tex', 'texlive', 
-                    \'Tex Live', 'latex', '', 'xdvi "$(FILE_TITLE)$.dvi"')
-        call SingleCompile#SetOutfile('tex', 'texlive', 
-                    \'$(FILE_TITLE)$'.'.dvi')
+        call SingleCompile#SetCompilerTemplate('tex', 'pdflatex', 'pdfLaTeX',
+                    \'pdflatex', '-interaction=nonstopmode',
+                    \'xdg-open "$(FILE_TITLE)$.pdf"')
+        call SingleCompile#SetCompilerTemplate('tex', 'latex', 'LaTeX',
+                    \'latex', '-interaction=nonstopmode',
+                    \'xdg-open "$(FILE_TITLE)$.dvi"')
     elseif has('win32')
-        call SingleCompile#SetCompilerTemplate('tex', 'texlive', 
-                    \'Tex Live', 'latex', '', 
-                    \'dviout "$(FILE_TITLE)$.dvi"')
-        call SingleCompile#SetOutfile('tex', 'texlive', 
-                    \'$(FILE_TITLE)$'.'.dvi')
-        call SingleCompile#SetCompilerTemplate('tex', 'miktex', 
-                    \'MiKTeX', 'latex', '', 'yap "$(FILE_TITLE)$.dvi"')
-        call SingleCompile#SetOutfile('tex', 'miktex', 
-                    \'$(FILE_TITLE)$'.'.dvi')
+        call SingleCompile#SetCompilerTemplate('tex', 'pdflatex', 'pdfLaTeX',
+                    \'pdflatex', '-interaction=nonstopmode',
+                    \'open "$(FILE_TITLE)$.pdf"')
+        call SingleCompile#SetCompilerTemplate('tex', 'latex', 'LaTeX',
+                    \'latex', '-interaction=nonstopmode',
+                    \'open "$(FILE_TITLE)$.dvi"')
     endif
 
     " lisp
@@ -725,6 +728,12 @@ function! s:Initialize() "{{{1
                     \'-f', '')
     endif
 
+    " Object-C
+    call SingleCompile#SetCompilerTemplate('objc', 'gcc',
+                \'GNU Object-C Compiler', 'gcc', '-g -o $(FILE_TITLE)$',
+                \l:common_run_command)
+    call SingleCompile#SetOutfile('objc', 'gcc', l:common_out_file)
+
     " Pascal
     call SingleCompile#SetCompilerTemplate('pascal', 'fpc', 
                 \'Free Pascal Compiler', 'fpc', 
@@ -745,24 +754,6 @@ function! s:Initialize() "{{{1
     " php
     call SingleCompile#SetCompilerTemplate('php', 'php',
                 \"PHP Command Line Interface 'CLI'", 'php', '-f', '')
-
-    " plain tex
-    if has('unix')
-        call SingleCompile#SetCompilerTemplate('plaintex', 'texlive', 
-                    \'Tex Live', 'latex', '', 'xdvi "$(FILE_TITLE)$.dvi"')
-        call SingleCompile#SetOutfile('tex', 'texlive', 
-                    \'$(FILE_TITLE)$'.'.dvi')
-    elseif has('win32')
-        call SingleCompile#SetCompilerTemplate('plaintex', 'texlive', 
-                    \'Tex Live', 'latex', '', 
-                    \'dviout "$(FILE_TITLE)$.dvi"')
-        call SingleCompile#SetOutfile('tex', 'texlive', 
-                    \'$(FILE_TITLE)$'.'.dvi')
-        call SingleCompile#SetCompilerTemplate('plaintex', 'miktex',
-                    \'MiKTeX', 'latex', '', 'yap "$(FILE_TITLE)$.dvi"')
-        call SingleCompile#SetOutfile('tex', 'miktex', 
-                    \'$(FILE_TITLE)$'.'.dvi')
-    endif
 
     " python
     call SingleCompile#SetCompilerTemplate('python', 'python', 'CPython',
@@ -1443,7 +1434,11 @@ function! s:Run(async) " {{{1
                         \' '.s:GetShellPipe(1).' '.s:run_result_tempfile
         endif
 
-        exec '!'.l:run_cmd
+        try
+            exec '!'.l:run_cmd
+        catch
+            call s:ShowMessage('Failed to execute "'.l:run_cmd.'"')
+        endtry
     endif
 
     " switch back to the original directory
