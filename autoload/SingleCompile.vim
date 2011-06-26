@@ -1,5 +1,5 @@
 " File: autoload/SingleCompile.vim
-" Version: 2.8.6
+" Version: 2.8.7
 " check doc/SingleCompile.txt for more information
 
 
@@ -48,7 +48,7 @@ let s:run_result_tempfile = ''
 
 
 function! SingleCompile#GetVersion() " get the script version {{{1
-    return 286
+    return 287
 endfunction
 
 " util {{{1
@@ -386,6 +386,11 @@ function! s:Initialize() "{{{1
         let l:common_run_command = './$(FILE_TITLE)$'
         let l:common_out_file = '$(FILE_TITLE)$'
     endif
+
+    " ada
+    call SingleCompile#SetCompilerTemplate('ada', 'gnat', 'GNAT', 'gnat',
+                \'make', l:common_run_command)
+    call SingleCompile#SetOutfile('ada', 'gnat', l:common_out_file)
 
     " bash
     call SingleCompile#SetCompilerTemplate('bash', 'bash',

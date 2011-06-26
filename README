@@ -36,6 +36,9 @@ Here is a list of built-in supported compilers or interpreter(For some
 compilers, you need to set the environment varibles correctly to make them
 available for SingleCompile):
 
+Ada:
+    gnat (GNAT)
+
 bash:
     bash (Bourne-Again Shell)
 

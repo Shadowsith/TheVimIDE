@@ -1,5 +1,5 @@
 " File: autoload/SingleCompileAsync.vim
-" Version: 2.8.6
+" Version: 2.8.7
 " check doc/SingleCompile.txt for more information
 
 
@@ -18,18 +18,33 @@ function! s:InitializePython() " {{{2
         return 'Python interface is not available in this Vim.'
     endif
 
+    let l:ret = ''
+
 python << EEOOFF
 
 try:
+    import vim
     import shlex
     import subprocess
     import sys
-    import vim
 except:
-    vim.command("return 'Library import error.'")
+    vim.command("let l:ret = 'Library import error.'")
+EEOOFF
 
+    if !empty(l:ret)
+        return l:ret
+    endif
+
+python << EEOOFF
 if sys.version_info[0] < 2 or sys.version_info[1] < 6:
-    vim.command("return 'At least python 2.6 is required.'")
+    vim.command("let l:ret = 'At least python 2.6 is required.'")
+EEOOFF
+
+    if !empty(l:ret)
+        return l:ret
+    endif
+
+python << EEOOFF
 
 class SingleCompileAsync:
     sub_proc = None
