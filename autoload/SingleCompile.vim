@@ -1,5 +1,5 @@
 " File: autoload/SingleCompile.vim
-" Version: 2.8.7
+" Version: 2.8.8
 " check doc/SingleCompile.txt for more information
 
 
@@ -16,27 +16,27 @@ let s:CompilerTemplate = {}
 let s:Initialized = 0
 
 " Chars to escape for ':lcd' command
-if has('win32') || has('os2')
+if has('win32')
     let s:CharsEscape = '" '
 else
     let s:CharsEscape = '" \'
 endif
 
 " executable suffix
-if has('win32') || has('os2')
+if has('win32')
     let s:ExecutableSuffix = '.exe'
 else
     let s:ExecutableSuffix = ''
 endif
 
 " seperator in the environment varibles
-if has('win32') || has('os2')
+if has('win32')
     let s:EnvSeperator = ';'
 else
     let s:EnvSeperator = ':'
 endif
 
-if has('win32') || has('os2')
+if has('win32')
     let s:PathSeperator = '\'
 else
     let s:PathSeperator = '/'
@@ -48,7 +48,7 @@ let s:run_result_tempfile = ''
 
 
 function! SingleCompile#GetVersion() " get the script version {{{1
-    return 287
+    return 288
 endfunction
 
 " util {{{1
@@ -118,7 +118,7 @@ function! s:Expand(str, ...) " expand the string{{{2
                 \'\$(FILE_TITLE)\$': '',
                 \'\$(FILE_PATH)\$': ''}
 
-    if has('win32') || has('os2')
+    if has('win32')
         let l:rep_dict_suffix['\$(FILE_EXEC)\$'] = '.exe'
     elseif has('unix')
         let l:rep_dict_suffix['\$(FILE_EXEC)\$'] = ''
@@ -130,8 +130,8 @@ function! s:Expand(str, ...) " expand the string{{{2
         let l:rep_string = expand(l:rep_dict[one_key]).
                     \l:rep_dict_suffix[one_key]
 
-        " on win32, win64 and os2, replace the backslash with '/'
-        if has('win32') || has('os2')
+        " on win32, replace the backslash with '/'
+        if has('win32')
             let l:rep_string = substitute(l:rep_string, '/', '\\', 'g')
         endif
 
@@ -264,15 +264,10 @@ function! s:DetectIe(not_used_arg) " {{{2
     endif
 
     if has('win32')
-        for iepath in ['C:\Program Files\Internet Explorer\iexplore',
-                    \ 'D:\Program Files\Internet Explorer\iexplore',
-                    \ 'E:\Program Files\Internet Explorer\iexplore',
-                    \ 'F:\Program Files\Internet Explorer\iexplore',
-                    \ 'G:\Program Files\Internet Explorer\iexplore']
-            if executable(iepath)
-                return "\"".iepath."\""
-            endif
-        endfor
+        let iepath = $PROGRAMFILES . '\Internet Explorer\iexplore.exe'
+        if executable(iepath)
+            return "\"".iepath."\""
+        endif
     endif
 endfunction
 
@@ -379,7 +374,7 @@ function! s:Initialize() "{{{1
     endif
 
     " templates {{{2
-    if has('win32') || has('os2')
+    if has('win32')
         let l:common_run_command = '$(FILE_TITLE)$.exe'
         let l:common_out_file = '$(FILE_TITLE)$.exe'
     else
@@ -425,7 +420,7 @@ function! s:Initialize() "{{{1
                 \'Intel C++ Compiler', 'icc', '-o $(FILE_TITLE)$',
                 \l:common_run_command)
     call SingleCompile#SetOutfile('c', 'icc', l:common_out_file)
-    if has('win32') || has('os2')
+    if has('win32')
         call SingleCompile#SetCompilerTemplate('c', 'lcc', 
                     \'Little C Compiler', 'lc', 
                     \'$(FILE_TITLE)$ -o "$(FILE_TITLE)$.exe"', 
@@ -652,6 +647,10 @@ function! s:Initialize() "{{{1
                 \'opera', '', '')
     call SingleCompile#SetCompilerTemplate('html', 'konqueror',
                 \'Konqueror', 'konqueror', '', '')
+    call SingleCompile#SetCompilerTemplate('html', 'arora',
+                \'Arora', 'arora', '', '')
+    call SingleCompile#SetCompilerTemplate('html', 'epiphany',
+                \'Epiphany', 'epiphany', '', '')
     if has('win32')
         call SingleCompile#SetCompilerTemplate('html', 'ie', 
                     \'Microsoft Internet Explorer', 'iexplore', '', '',
@@ -817,6 +816,10 @@ function! s:Initialize() "{{{1
                 \'Opera', 'opera', '', '')
     call SingleCompile#SetCompilerTemplate('xhtml', 'konqueror',
                 \'Konqueror', 'konqueror', '', '')
+    call SingleCompile#SetCompilerTemplate('xhtml', 'arora',
+                \'Arora', 'arora', '', '')
+    call SingleCompile#SetCompilerTemplate('xhtml', 'epiphany',
+                \'Epiphany', 'epiphany', '', '')
     if has('win32')
         call SingleCompile#SetCompilerTemplate('xhtml', 'ie', 
                     \'Microsoft Internet Explorer', 'iexplore', '', '',
@@ -1574,7 +1577,7 @@ fun! SingleCompile#ChooseCompiler(lang_name, ...) " choose a compiler {{{1
 
         let l:count = 1
 
-        for some_compiler in keys(s:CompilerTemplate[a:lang_name])
+        for some_compiler in sort(keys(s:CompilerTemplate[a:lang_name]))
             if some_compiler == 'chosen_compiler'
                 continue
             endif
