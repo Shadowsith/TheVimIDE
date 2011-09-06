@@ -1,5 +1,5 @@
 " File: autoload/SingleCompile.vim
-" Version: 2.8.8
+" Version: 2.8.9
 " check doc/SingleCompile.txt for more information
 
 
@@ -48,7 +48,7 @@ let s:run_result_tempfile = ''
 
 
 function! SingleCompile#GetVersion() " get the script version {{{1
-    return 288
+    return 289
 endfunction
 
 " util {{{1
@@ -167,6 +167,57 @@ function! s:RunAsyncWithMessage(run_cmd) " {{{2
     return 0
 endfunction
 
+function! s:PushEnvironmentVaribles() " {{{2
+    " push environment varibles into stack. Win32 only.
+
+    if !exists('s:environment_varibles_list') ||
+                \ type(s:environment_varibles_list) != type([])
+        unlet! s:environment_varibles_list
+        let s:environment_varibles_list = []
+    endif
+
+    let l:environment_varibles_dic = {}
+
+    let l:environment_varibles_string = system('set')
+
+    for line in split(l:environment_varibles_string, '\n')
+
+        " find the '=' first. The left part is environment varible's name, the
+        " right part is the value
+        let l:eq_pos = match(line, '=')
+        if l:eq_pos == -1
+            continue
+        endif
+
+        let l:key = strpart(line, 0, l:eq_pos)
+        let l:val = strpart(line, l:eq_pos + 1)
+
+        let l:environment_varibles_dic[l:key] = l:val
+    endfor
+
+    call add(s:environment_varibles_list, l:environment_varibles_dic)
+endfunction
+
+function! s:PopEnvironmentVaribles() " {{{2
+    " pop environment varibles out of the stack. Win32 only.
+
+    if !exists('s:environment_varibles_list') ||
+                \ type(s:environment_varibles_list) != type([]) ||
+                \ empty(s:environment_varibles_list)
+        return 0
+    endif
+    
+    let l:environment_varibles_dic = remove(
+                \ s:environment_varibles_list,
+                \ len(s:environment_varibles_list) - 1)
+
+    for l:key in keys(l:environment_varibles_dic)
+        silent! exec 'let $' . l:key . "='" .
+                    \ substitute(l:environment_varibles_dic[l:key], 
+                    \ "'", "''", 'g') . "'"
+    endfor
+endfunction
+
 " pre-do functions {{{1
 
 function! s:AddLmIfMathH(compiling_info) " {{{2 
@@ -211,10 +262,45 @@ function! s:PredoClang(compiling_info) " clang Predo {{{2
     endif
 endfunction
 
+function! s:PredoMicrosoftVC(compiling_info) " MSVC Predo {{{2
+
+    call s:PushEnvironmentVaribles()
+
+    " to get the result environment varibles, we need to write a temp batch
+    " file and call it.
+    let l:tmpbat = tempname() . '.bat'
+    call writefile(['@echo off', 'call "%VS'.
+                \str2nr(strpart(a:compiling_info['command'], 2)).
+                \'COMNTOOLS%..\..\VC\vcvarsall.bat"', 'set'], l:tmpbat)
+    let l:environment_varibles_string = system(l:tmpbat)
+
+    " Set the environment varibles
+    for l:line in split(l:environment_varibles_string, '\n')
+        let l:eq_pos = match(l:line, '=')
+
+        if l:eq_pos == -1
+            continue
+        endif
+
+        silent! exec 'let $' . strpart(l:line, 0, l:eq_pos) . "='" .
+                    \ substitute(strpart(l:line, l:eq_pos + 1),
+                    \ "'", "''", 'g') . "'"
+    endfor
+
+    let l:new_compiling_info = a:compiling_info
+    let l:new_compiling_info['command'] = 'cl'
+
+    return l:new_compiling_info
+endfunction
+
 " post-do functions {{{1
 function! s:PostdoWatcom(compiling_info) " watcom pre-do {{{2
     let $PATH = s:old_path
     return a:compiling_info
+endfunction
+
+function! s:PostdoMicrosoftVC(not_used_arg) " MSVC post-do {{{2
+    call s:PopEnvironmentVaribles()
 endfunction
 
 " compiler detect functions {{{1
@@ -255,6 +341,31 @@ function! s:DetectWatcom(compiling_command) " {{{2
 
     if $WATCOM != ''
         return $WATCOM.'\binnt\'.a:compiling_command
+    endif
+endfunction
+
+function! s:DetectMicrosoftVC(compiling_command) " {{{2
+    " the compiling_command should be cl_vcversion, such as cl80, cl100, etc.
+
+    " return 0 if not starting with 'cl'
+    if strpart(a:compiling_command, 0, 2) != 'cl'
+        return 0
+    endif
+
+    " get the version of vc
+    let l:vc_version = strpart(a:compiling_command, 2)
+
+    " if we have VSXXCOMNTOOLS environment variable, and
+    " %VSXXCOMNTOOLS%\..\..\VC\BIN\cl.exe is executable, and
+    " %VSXXCOMNTOOLS%\..\..\VC\vcvarsall.bat is executable, MSVC is detected
+    exec 'let l:vs_common_tools = $VS'.l:vc_version.'COMNTOOLS'
+
+    if !empty(l:vs_common_tools) &&
+                \ executable(l:vs_common_tools.'..\..\VC\BIN\cl.exe') &&
+                \ executable(l:vs_common_tools.'..\..\VC\vcvarsall.bat')
+        return a:compiling_command
+    else
+        return 0
     endif
 endfunction
 
@@ -402,9 +513,36 @@ function! s:Initialize() "{{{1
                 \})
     if has('win32')
         call SingleCompile#SetCompilerTemplate('c', 'msvc', 
-                    \'Microsoft Visual C++', 'cl', '-o $(FILE_TITLE)$', 
-                    \l:common_run_command)
+                    \'Microsoft Visual C++ (In PATH)', 'cl',
+                    \'-o $(FILE_TITLE)$', l:common_run_command)
         call SingleCompile#SetOutfile('c', 'msvc', l:common_out_file)
+        call SingleCompile#SetCompilerTemplate('c', 'msvc80',
+                    \ 'Microsoft Visual C++ 2005 (8.0)', 'cl80',
+                    \ '-o $(FILE_TITLE)$', l:common_run_command,
+                    \ function('s:DetectMicrosoftVC'))
+        call SingleCompile#SetCompilerTemplateByDict('c', 'msvc80', {
+                    \ 'pre-do' : function('s:PredoMicrosoftVC'),
+                    \ 'post-do' : function('s:PostdoMicrosoftVC'),
+                    \ 'out-file' : l:common_out_file,
+                    \ 'vim-compiler' : 'msvc'})
+        call SingleCompile#SetCompilerTemplate('c', 'msvc90',
+                    \ 'Microsoft Visual C++ 2008 (9.0)', 'cl90',
+                    \ '-o $(FILE_TITLE)$', l:common_run_command,
+                    \ function('s:DetectMicrosoftVC'))
+        call SingleCompile#SetCompilerTemplateByDict('c', 'msvc90', {
+                    \ 'pre-do' : function('s:PredoMicrosoftVC'),
+                    \ 'post-do' : function('s:PostdoMicrosoftVC'),
+                    \ 'out-file' : l:common_out_file,
+                    \ 'vim-compiler' : 'msvc'})
+        call SingleCompile#SetCompilerTemplate('c', 'msvc100',
+                    \ 'Microsoft Visual C++ 2010 (10.0)', 'cl100',
+                    \ '-o $(FILE_TITLE)$', l:common_run_command,
+                    \ function('s:DetectMicrosoftVC'))
+        call SingleCompile#SetCompilerTemplateByDict('c', 'msvc100', {
+                    \ 'pre-do' : function('s:PredoMicrosoftVC'),
+                    \ 'post-do' : function('s:PostdoMicrosoftVC'),
+                    \ 'out-file' : l:common_out_file,
+                    \ 'vim-compiler' : 'msvc'})
         call SingleCompile#SetCompilerTemplate('c', 'bcc', 
                     \'Borland C++ Builder', 'bcc32', 
                     \'-o $(FILE_TITLE)$', l:common_run_command)
@@ -477,9 +615,36 @@ function! s:Initialize() "{{{1
                 \})
     if has('win32')
         call SingleCompile#SetCompilerTemplate('cpp', 'msvc', 
-                    \'Microsoft Visual C++', 'cl', '-o $(FILE_TITLE)$', 
-                    \l:common_run_command)
+                    \'Microsoft Visual C++ (In PATH)', 'cl',
+                    \'-o $(FILE_TITLE)$', l:common_run_command)
         call SingleCompile#SetOutfile('cpp', 'msvc', l:common_out_file)
+        call SingleCompile#SetCompilerTemplate('cpp', 'msvc80',
+                    \ 'Microsoft Visual C++ 2005 (8.0)', 'cl80',
+                    \ '-o $(FILE_TITLE)$', l:common_run_command,
+                    \ function('s:DetectMicrosoftVC'))
+        call SingleCompile#SetCompilerTemplateByDict('cpp', 'msvc80', {
+                    \ 'pre-do' : function('s:PredoMicrosoftVC'),
+                    \ 'post-do' : function('s:PostdoMicrosoftVC'),
+                    \ 'out-file' : l:common_out_file,
+                    \ 'vim-compiler' : 'msvc'})
+        call SingleCompile#SetCompilerTemplate('cpp', 'msvc90',
+                    \ 'Microsoft Visual C++ 2008 (9.0)', 'cl90',
+                    \ '-o $(FILE_TITLE)$', l:common_run_command,
+                    \ function('s:DetectMicrosoftVC'))
+        call SingleCompile#SetCompilerTemplateByDict('cpp', 'msvc90', {
+                    \ 'pre-do' : function('s:PredoMicrosoftVC'),
+                    \ 'post-do' : function('s:PostdoMicrosoftVC'),
+                    \ 'out-file' : l:common_out_file,
+                    \ 'vim-compiler' : 'msvc'})
+        call SingleCompile#SetCompilerTemplate('cpp', 'msvc100',
+                    \ 'Microsoft Visual C++ 2010 (10.0)', 'cl100',
+                    \ '-o $(FILE_TITLE)$', l:common_run_command,
+                    \ function('s:DetectMicrosoftVC'))
+        call SingleCompile#SetCompilerTemplateByDict('cpp', 'msvc100', {
+                    \ 'pre-do' : function('s:PredoMicrosoftVC'),
+                    \ 'post-do' : function('s:PostdoMicrosoftVC'),
+                    \ 'out-file' : l:common_out_file,
+                    \ 'vim-compiler' : 'msvc'})
         call SingleCompile#SetCompilerTemplate('cpp', 'bcc', 
                     \'Borland C++ Builder','bcc32', '-o $(FILE_TITLE)$', 
                     \l:common_run_command)
