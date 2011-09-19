@@ -1,5 +1,5 @@
 " File: autoload/SingleCompile.vim
-" Version: 2.8.9
+" Version: 2.9beta
 " check doc/SingleCompile.txt for more information
 
 
@@ -48,7 +48,7 @@ let s:run_result_tempfile = ''
 
 
 function! SingleCompile#GetVersion() " get the script version {{{1
-    return 289
+    return 290
 endfunction
 
 " util {{{1
@@ -524,6 +524,7 @@ function! s:Initialize() "{{{1
                     \ 'pre-do' : function('s:PredoMicrosoftVC'),
                     \ 'post-do' : function('s:PostdoMicrosoftVC'),
                     \ 'out-file' : l:common_out_file,
+                    \ 'priority' : 15,
                     \ 'vim-compiler' : 'msvc'})
         call SingleCompile#SetCompilerTemplate('c', 'msvc90',
                     \ 'Microsoft Visual C++ 2008 (9.0)', 'cl90',
@@ -533,6 +534,7 @@ function! s:Initialize() "{{{1
                     \ 'pre-do' : function('s:PredoMicrosoftVC'),
                     \ 'post-do' : function('s:PostdoMicrosoftVC'),
                     \ 'out-file' : l:common_out_file,
+                    \ 'priority' : 14,
                     \ 'vim-compiler' : 'msvc'})
         call SingleCompile#SetCompilerTemplate('c', 'msvc100',
                     \ 'Microsoft Visual C++ 2010 (10.0)', 'cl100',
@@ -542,6 +544,7 @@ function! s:Initialize() "{{{1
                     \ 'pre-do' : function('s:PredoMicrosoftVC'),
                     \ 'post-do' : function('s:PostdoMicrosoftVC'),
                     \ 'out-file' : l:common_out_file,
+                    \ 'priority' : 13,
                     \ 'vim-compiler' : 'msvc'})
         call SingleCompile#SetCompilerTemplate('c', 'bcc', 
                     \'Borland C++ Builder', 'bcc32', 
@@ -552,6 +555,7 @@ function! s:Initialize() "{{{1
                 \'gcc', '-g -o $(FILE_TITLE)$', l:common_run_command)
     call SingleCompile#SetCompilerTemplateByDict('c', 'gcc', {
                 \ 'pre-do'  : function('s:PredoGcc'),
+                \ 'priority' : 20,
                 \ 'out-file': l:common_out_file
                 \})
     call SingleCompile#SetCompilerTemplate('c', 'icc', 
@@ -579,9 +583,12 @@ function! s:Initialize() "{{{1
     call SingleCompile#SetOutfile('c', 'tcc', l:common_out_file)
     call SingleCompile#SetCompilerTemplate('c', 'tcc-run', 
                 \'Tiny C Compiler with "-run" Flag', 'tcc', '-run', '')
+    call SingleCompile#SetPriority('c', 'tcc-run', 140)
     call SingleCompile#SetCompilerTemplate('c', 'ch', 
                 \'SoftIntegration Ch', 'ch', '', '')
-    call SingleCompile#SetCompilerTemplate('c', 'clang', 'clang', 'clang',
+    call SingleCompile#SetPriority('c', 'ch', 130)
+    call SingleCompile#SetCompilerTemplate('c', 'clang',
+                \ 'the Clang C and Objective-C compiler', 'clang',
                 \'-o $(FILE_TITLE)$', l:common_run_command)
     call SingleCompile#SetCompilerTemplateByDict('c', 'clang', {
                 \ 'pre-do'  : function('s:PredoClang'),
@@ -626,6 +633,7 @@ function! s:Initialize() "{{{1
                     \ 'pre-do' : function('s:PredoMicrosoftVC'),
                     \ 'post-do' : function('s:PostdoMicrosoftVC'),
                     \ 'out-file' : l:common_out_file,
+                    \ 'priority' : 15,
                     \ 'vim-compiler' : 'msvc'})
         call SingleCompile#SetCompilerTemplate('cpp', 'msvc90',
                     \ 'Microsoft Visual C++ 2008 (9.0)', 'cl90',
@@ -635,6 +643,7 @@ function! s:Initialize() "{{{1
                     \ 'pre-do' : function('s:PredoMicrosoftVC'),
                     \ 'post-do' : function('s:PostdoMicrosoftVC'),
                     \ 'out-file' : l:common_out_file,
+                    \ 'priority' : 14,
                     \ 'vim-compiler' : 'msvc'})
         call SingleCompile#SetCompilerTemplate('cpp', 'msvc100',
                     \ 'Microsoft Visual C++ 2010 (10.0)', 'cl100',
@@ -644,6 +653,7 @@ function! s:Initialize() "{{{1
                     \ 'pre-do' : function('s:PredoMicrosoftVC'),
                     \ 'post-do' : function('s:PostdoMicrosoftVC'),
                     \ 'out-file' : l:common_out_file,
+                    \ 'priority' : 13,
                     \ 'vim-compiler' : 'msvc'})
         call SingleCompile#SetCompilerTemplate('cpp', 'bcc', 
                     \'Borland C++ Builder','bcc32', '-o $(FILE_TITLE)$', 
@@ -656,6 +666,7 @@ function! s:Initialize() "{{{1
     call SingleCompile#SetCompilerTemplateByDict('cpp', 'g++', {
                 \ 'pre-do'  : function('s:PredoGcc'),
                 \ 'out-file': l:common_out_file,
+                \ 'priority' : 20,
                 \ 'vim-compiler': 'gcc'
                 \})
     call SingleCompile#SetCompilerTemplate('cpp', 'icc', 
@@ -664,9 +675,11 @@ function! s:Initialize() "{{{1
     call SingleCompile#SetOutfile('cpp', 'icc', l:common_out_file)
     call SingleCompile#SetCompilerTemplate('cpp', 'ch', 
                 \'SoftIntegration Ch', 'ch', '', '')
-    call SingleCompile#SetCompilerTemplate('cpp', 'clang++', 'clang', 
+    call SingleCompile#SetPriority('cpp', 'ch', 130)
+    call SingleCompile#SetCompilerTemplate('cpp', 'clang',
+                \ 'the Clang C and Objective-C compiler', 
                 \'clang++', '-o $(FILE_TITLE)$', l:common_run_command)
-    call SingleCompile#SetCompilerTemplateByDict('cpp', 'clang++', {
+    call SingleCompile#SetCompilerTemplateByDict('cpp', 'clang', {
                 \ 'pre-do'  : function('s:PredoClang'),
                 \ 'out-file': l:common_out_file,
                 \ 'vim-compiler': 'clang'
@@ -692,6 +705,7 @@ function! s:Initialize() "{{{1
                     \l:common_run_command)
         call SingleCompile#SetOutfile('cs', 'msvcs',
                     \l:common_out_file)
+        call SingleCompile#SetPriority('cs', 'msvcs', 50)
         call SingleCompile#SetVimCompiler('cs', 'msvcs', 'cs')
     endif
     call SingleCompile#SetCompilerTemplate('cs', 'mono',
@@ -710,6 +724,7 @@ function! s:Initialize() "{{{1
                 \'C Shell', 'csh', '', '')
     call SingleCompile#SetCompilerTemplate('csh', 'tcsh',
                 \'TENEX C shell', 'tcsh', '', '')
+    call SingleCompile#SetPriority('csh', 'tcsh', 80)
 
     " d
     call SingleCompile#SetCompilerTemplate('d', 'dmd', 'DMD Compiler',
@@ -732,6 +747,7 @@ function! s:Initialize() "{{{1
                 \'-o $(FILE_TITLE)$', l:common_run_command)
     call SingleCompile#SetOutfile('fortran', 'gfortran',
                 \l:common_out_file)
+    call SingleCompile#SetPriority('fortran', 'gfortran', 70)
     call SingleCompile#SetCompilerTemplate('fortran', 'g95',
                 \'G95', 'g95', '-o $(FILE_TITLE)$'.s:ExecutableSuffix,
                 \l:common_run_command)
@@ -785,6 +801,7 @@ function! s:Initialize() "{{{1
                 \'Intel Fortran Compiler', 'ifort', '-o $(FILE_TITLE)$',
                 \l:common_run_command)
     call SingleCompile#SetOutfile('fortran', 'ifort', l:common_out_file)
+    call SingleCompile#SetPriority('fortran', 'ifort', 80)
     call SingleCompile#SetCompilerTemplate('fortran', 'open-watcom', 
                 \'Open Watcom Fortran 77/32 Compiler', 'wfl386', '',
                 \l:common_run_command, function('s:DetectWatcom'))
@@ -806,10 +823,13 @@ function! s:Initialize() "{{{1
     " html
     call SingleCompile#SetCompilerTemplate('html', 'firefox', 
                 \'Mozilla Firefox', 'firefox', '', '')
+    call SingleCompile#SetPriority('html', 'firefox', 60)
     call SingleCompile#SetCompilerTemplate('html', 'chrome', 
                 \'Google Chrome', 'google-chrome', '', '')
+    call SingleCompile#SetPriority('html', 'chrome', 70)
     call SingleCompile#SetCompilerTemplate('html', 'opera', 'Opera', 
                 \'opera', '', '')
+    call SingleCompile#SetPriority('html', 'opera', 80)
     call SingleCompile#SetCompilerTemplate('html', 'konqueror',
                 \'Konqueror', 'konqueror', '', '')
     call SingleCompile#SetCompilerTemplate('html', 'arora',
@@ -820,6 +840,7 @@ function! s:Initialize() "{{{1
         call SingleCompile#SetCompilerTemplate('html', 'ie', 
                     \'Microsoft Internet Explorer', 'iexplore', '', '',
                     \function('s:DetectIe'))
+        call SingleCompile#SetPriority('html', 'firefox', 50)
     else
         call SingleCompile#SetCompilerTemplate('html', 'ie', 
                     \'Microsoft Internet Explorer', 'iexplore', '', '')
@@ -830,6 +851,7 @@ function! s:Initialize() "{{{1
                 \'ITT Visual Information Solutions '.
                 \'Interactive Data Language', 'idl',
                 \"-quiet -e '.run $(FILE_NAME)$'", '')
+    call SingleCompile#SetPriority('idlang', 'idl', 70)
     call SingleCompile#SetCompilerTemplate('idlang', 'gdl',
                 \'GNU Data Language incremental compiler',
                 \'gdl', "-quiet -e '.run $(FILE_NAME)$'", '')
@@ -841,6 +863,7 @@ function! s:Initialize() "{{{1
     call SingleCompile#SetOutfile('java', 'sunjdk', 
                 \'$(FILE_TITLE)$'.'.class')
     call SingleCompile#SetVimCompiler('java', 'sunjdk', 'javac')
+    call SingleCompile#SetPriority('java', 'sunjdk', 70)
     call SingleCompile#SetCompilerTemplate('java', 'gcj', 
                 \'GNU Java Compiler', 'gcj', '', 'java $(FILE_TITLE)$')
     call SingleCompile#SetOutfile('java', 'gcj', '$(FILE_TITLE)$'.'.class')
@@ -898,10 +921,15 @@ function! s:Initialize() "{{{1
     endif
 
     " Object-C
+    call SingleCompile#SetCompilerTemplate('objc', 'clang',
+                \ 'the Clang C and Objective-C compiler', 'clang',
+                \ '-g -o $(FILE_TITLE)$', l:common_run_command)
+    call SingleCompile#SetOutfile('objc', 'clang', l:common_out_file)
     call SingleCompile#SetCompilerTemplate('objc', 'gcc',
                 \'GNU Object-C Compiler', 'gcc', '-g -o $(FILE_TITLE)$',
                 \l:common_run_command)
     call SingleCompile#SetOutfile('objc', 'gcc', l:common_out_file)
+    call SingleCompile#SetPriority('objc', 'gcc', 80)
 
     " Pascal
     call SingleCompile#SetCompilerTemplate('pascal', 'fpc', 
@@ -927,14 +955,17 @@ function! s:Initialize() "{{{1
     " python
     call SingleCompile#SetCompilerTemplate('python', 'python', 'CPython',
                 \'python', '', '')
+    call SingleCompile#SetPriority('python', 'python', 50)
     call SingleCompile#SetCompilerTemplate('python', 'ironpython',
                 \'IronPython', 'ipy', '', '')
     call SingleCompile#SetCompilerTemplate('python', 'jython', 'Jython',
                 \'jython', '', '')
     call SingleCompile#SetCompilerTemplate('python', 'pypy', 'PyPy',
                 \'pypy', '', '')
+    call SingleCompile#SetPriority('python', 'pypy', 110)
     call SingleCompile#SetCompilerTemplate('python', 'python3', 
                 \'CPython 3', 'python3', '', '')
+    call SingleCompile#SetPriority('python', 'python3', 120)
 
     " r
     call SingleCompile#SetCompilerTemplate('r', 'R', 'R', 'R',
@@ -947,8 +978,10 @@ function! s:Initialize() "{{{1
     " sh
     call SingleCompile#SetCompilerTemplate('sh', 'sh', 
                 \'Bourne Shell', 'sh', '', '')
+    call SingleCompile#SetPriority('sh', 'sh', 80)
     call SingleCompile#SetCompilerTemplate('sh', 'bash', 
                 \'Bourne-Again Shell', 'bash', '', '')
+    call SingleCompile#SetPriority('sh', 'bash', 90)
     call SingleCompile#SetCompilerTemplate('sh', 'ksh', 
                 \'Korn Shell', 'ksh', '', '')
     call SingleCompile#SetCompilerTemplate('sh', 'zsh', 
@@ -975,10 +1008,13 @@ function! s:Initialize() "{{{1
     " xhtml
     call SingleCompile#SetCompilerTemplate('xhtml', 'firefox', 
                 \'Mozilla Firefox', 'firefox', '', '')
+    call SingleCompile#SetPriority('xhtml', 'firefox', 60)
     call SingleCompile#SetCompilerTemplate('xhtml', 'chrome', 
                 \'Google Chrome', 'google-chrome', '', '')
+    call SingleCompile#SetPriority('xhtml', 'chrome', 70)
     call SingleCompile#SetCompilerTemplate('xhtml', 'opera', 
                 \'Opera', 'opera', '', '')
+    call SingleCompile#SetPriority('xhtml', 'opera', 80)
     call SingleCompile#SetCompilerTemplate('xhtml', 'konqueror',
                 \'Konqueror', 'konqueror', '', '')
     call SingleCompile#SetCompilerTemplate('xhtml', 'arora',
@@ -989,6 +1025,7 @@ function! s:Initialize() "{{{1
         call SingleCompile#SetCompilerTemplate('xhtml', 'ie', 
                     \'Microsoft Internet Explorer', 'iexplore', '', '',
                     \function('s:DetectIe'))
+        call SingleCompile#SetPriority('xhtml', 'firefox', 50)
     else
         call SingleCompile#SetCompilerTemplate('xhtml', 'ie', 
                     \'Microsoft Internet Explorer', 'iexplore', '', '')
@@ -1099,6 +1136,13 @@ fun! SingleCompile#SetVimCompiler(lang_name, compiler, vim_compiler) " {{{2
 
     call s:SetCompilerSingleTemplate(a:lang_name, a:compiler,
                 \'vim-compiler', a:vim_compiler)
+endfunction
+
+function! SingleCompile#SetPriority(lang_name, compiler, priority) " {{{2
+    " set priority
+
+    call s:SetCompilerSingleTemplate(a:lang_name, a:compiler,
+                \ 'priority', a:priority)
 endfunction
 
 function! s:GetCompilerSingleTemplate(lang_name, compiler_name, key) " {{{1
@@ -1526,9 +1570,37 @@ function! s:CompileInternal(arg_list, async) " compile only {{{1
     return l:toret
 endfunction
 
+function! s:CompareCompilerPriority(compiler1, compiler2) " {{{1
+    " Compare the priorities of two compiler. The lang_name is determinted by
+    " s:lang_name_compare_compiler_priority (if it is presented) or &filetype
+
+    if exists('s:lang_name_compare_compiler_priority')
+        let l:lang_name = s:lang_name_compare_compiler_priority
+    else
+        let l:lang_name = &filetype
+    endif
+
+    if has_key(s:CompilerTemplate[l:lang_name][a:compiler1], 'priority')
+        let l:compiler1_priority =
+                    \ s:CompilerTemplate[l:lang_name][a:compiler1]['priority']
+    else
+        let l:compiler1_priority = 100
+    endif
+
+    if has_key(s:CompilerTemplate[l:lang_name][a:compiler2], 'priority')
+        let l:compiler2_priority =
+                    \ s:CompilerTemplate[l:lang_name][a:compiler2]['priority']
+    else
+        let l:compiler2_priority = 100
+    endif
+    
+    return l:compiler1_priority == l:compiler2_priority ? 0 : (
+                \ l:compiler1_priority > l:compiler2_priority ? 1 : -1)
+endfunction
 
 function! s:DetectCompiler(lang_name) " {{{1
-    " to detect compilers for one language. Return available compilers
+    " to detect compilers for one language. Return available compilers sorted
+    " by priority
 
     let l:toret = []
 
@@ -1557,6 +1629,10 @@ function! s:DetectCompiler(lang_name) " {{{1
             call add(l:toret, some_compiler)
         endif
     endfor
+
+    " sort detected compilers by priority
+    let s:lang_name_compare_compiler_priority = a:lang_name
+    call sort(l:toret, 's:CompareCompilerPriority')
 
     return l:toret
 endfunction
