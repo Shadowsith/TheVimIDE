@@ -1,5 +1,5 @@
 " File: autoload/SingleCompile.vim
-" Version: 2.9beta
+" Version: 2.9.1
 " check doc/SingleCompile.txt for more information
 
 
@@ -48,7 +48,7 @@ let s:run_result_tempfile = ''
 
 
 function! SingleCompile#GetVersion() " get the script version {{{1
-    return 290
+    return 291
 endfunction
 
 " util {{{1
@@ -827,6 +827,9 @@ function! s:Initialize() "{{{1
     call SingleCompile#SetCompilerTemplate('html', 'chrome', 
                 \'Google Chrome', 'google-chrome', '', '')
     call SingleCompile#SetPriority('html', 'chrome', 70)
+    call SingleCompile#SetCompilerTemplate('html', 'chromium',
+                \'Chromium', 'chromium', '', '')
+    call SingleCompile#SetPriority('html', 'chromium', 71)
     call SingleCompile#SetCompilerTemplate('html', 'opera', 'Opera', 
                 \'opera', '', '')
     call SingleCompile#SetPriority('html', 'opera', 80)
@@ -840,7 +843,7 @@ function! s:Initialize() "{{{1
         call SingleCompile#SetCompilerTemplate('html', 'ie', 
                     \'Microsoft Internet Explorer', 'iexplore', '', '',
                     \function('s:DetectIe'))
-        call SingleCompile#SetPriority('html', 'firefox', 50)
+        call SingleCompile#SetPriority('html', 'ie', 50)
     else
         call SingleCompile#SetCompilerTemplate('html', 'ie', 
                     \'Microsoft Internet Explorer', 'iexplore', '', '')
@@ -1012,6 +1015,9 @@ function! s:Initialize() "{{{1
     call SingleCompile#SetCompilerTemplate('xhtml', 'chrome', 
                 \'Google Chrome', 'google-chrome', '', '')
     call SingleCompile#SetPriority('xhtml', 'chrome', 70)
+    call SingleCompile#SetCompilerTemplate('xhtml', 'chromium',
+                \'Chromium', 'chromium', '', '')
+    call SingleCompile#SetPriority('xhtml', 'chromium', 71)
     call SingleCompile#SetCompilerTemplate('xhtml', 'opera', 
                 \'Opera', 'opera', '', '')
     call SingleCompile#SetPriority('xhtml', 'opera', 80)
@@ -1025,7 +1031,7 @@ function! s:Initialize() "{{{1
         call SingleCompile#SetCompilerTemplate('xhtml', 'ie', 
                     \'Microsoft Internet Explorer', 'iexplore', '', '',
                     \function('s:DetectIe'))
-        call SingleCompile#SetPriority('xhtml', 'firefox', 50)
+        call SingleCompile#SetPriority('xhtml', 'ie', 50)
     else
         call SingleCompile#SetCompilerTemplate('xhtml', 'ie', 
                     \'Microsoft Internet Explorer', 'iexplore', '', '')
