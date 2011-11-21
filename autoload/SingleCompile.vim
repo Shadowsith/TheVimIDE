@@ -1,5 +1,5 @@
 " File: autoload/SingleCompile.vim
-" Version: 2.9.1
+" Version: 2.9.2
 " check doc/SingleCompile.txt for more information
 
 
@@ -48,7 +48,7 @@ let s:run_result_tempfile = ''
 
 
 function! SingleCompile#GetVersion() " get the script version {{{1
-    return 291
+    return 292
 endfunction
 
 " util {{{1
@@ -548,7 +548,7 @@ function! s:Initialize() "{{{1
                     \ 'vim-compiler' : 'msvc'})
         call SingleCompile#SetCompilerTemplate('c', 'bcc', 
                     \'Borland C++ Builder', 'bcc32', 
-                    \'-o $(FILE_TITLE)$', l:common_run_command)
+                    \'-o$(FILE_TITLE)$', l:common_run_command)
         call SingleCompile#SetOutfile('c', 'bcc', l:common_out_file)
     endif
     call SingleCompile#SetCompilerTemplate('c', 'gcc', 'GNU C Compiler',
@@ -656,7 +656,7 @@ function! s:Initialize() "{{{1
                     \ 'priority' : 13,
                     \ 'vim-compiler' : 'msvc'})
         call SingleCompile#SetCompilerTemplate('cpp', 'bcc', 
-                    \'Borland C++ Builder','bcc32', '-o $(FILE_TITLE)$', 
+                    \'Borland C++ Builder','bcc32', '-o$(FILE_TITLE)$', 
                     \l:common_run_command)
         call SingleCompile#SetOutfile('cpp', 'bcc', l:common_out_file)
     endif
@@ -888,17 +888,22 @@ function! s:Initialize() "{{{1
         call SingleCompile#SetCompilerTemplate('tex', 'pdflatex', 'pdfLaTeX',
                     \'pdflatex', '-interaction=nonstopmode',
                     \'xdg-open "$(FILE_TITLE)$.pdf"')
-        call SingleCompile#SetCompilerTemplate('tex', 'latex', 'LaTeX',
-                    \'latex', '-interaction=nonstopmode',
-                    \'xdg-open "$(FILE_TITLE)$.dvi"')
     elseif has('win32')
         call SingleCompile#SetCompilerTemplate('tex', 'pdflatex', 'pdfLaTeX',
                     \'pdflatex', '-interaction=nonstopmode',
                     \'open "$(FILE_TITLE)$.pdf"')
+    endif
+    call SingleCompile#SetPriority('tex', 'pdflatex', 50)
+    if has('unix')
+        call SingleCompile#SetCompilerTemplate('tex', 'latex', 'LaTeX',
+                    \'latex', '-interaction=nonstopmode',
+                    \'xdg-open "$(FILE_TITLE)$.dvi"')
+    elseif has('win32')
         call SingleCompile#SetCompilerTemplate('tex', 'latex', 'LaTeX',
                     \'latex', '-interaction=nonstopmode',
                     \'open "$(FILE_TITLE)$.dvi"')
     endif
+    call SingleCompile#SetPriority('tex', 'latex', 80)
 
     " lisp
     call SingleCompile#SetCompilerTemplate('lisp', 'clisp', 'GNU CLISP',
@@ -1097,7 +1102,7 @@ function! SingleCompile#SetCompilerTemplateByDict(
     " settings functions below one by one is not needed.
 
     let l:key_list = ['name', 'detect_func_arg', 'flags', 'run',
-                \'detect_func', 'pre-do', 'post-do', 'out-file',
+                \'detect_func', 'pre-do', 'priority', 'post-do', 'out-file',
                 \'vim-compiler']
 
     for key in l:key_list

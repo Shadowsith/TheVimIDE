@@ -223,8 +223,9 @@ There are some supporting code in this plugin for Marc Weber's
 vim-addon-actions:
      http://github.com/MarcWeber/vim-addon-actions 
 
-If you find any bug, please report it to xuhdev@gmail.com or submit it on
-the issue tracker:
+Feedback is welcome. If you find any bug or have some good ideas to
+improve this plugin, please feel free to report it to xuhdev@gmail.com 
+or submit it on the issue tracker:
 https://bitbucket.org/xuhdev/singlecompile/issues
 
 If you've written some templates for some compilers or interpreters which are
@@ -234,7 +235,8 @@ built-in templates.
 
 
 Repository: 
-https://bitbucket.org/xuhdev/singlecompile
+mercurial repository on bitbucket.org: https://bitbucket.org/xuhdev/singlecompile
+git repository on github.com (it's a clone of the mercurial repo): https://github.com/xuhdev/SingleCompile
 
 An alternative repository maintained by vim-scripts on github.com:
 https://github.com/vim-scripts/SingleCompile
