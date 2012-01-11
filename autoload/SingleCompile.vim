@@ -1,5 +1,22 @@
+" Copyright (C) 2010-2012 Hong Xu
+
+" This file is part of SingleCompile.
+
+" SingleCompile is free software: you can redistribute it and/or modify
+" it under the terms of the GNU General Public License as published by
+" the Free Software Foundation, either version 3 of the License, or
+" (at your option) any later version.
+
+" SingleCompile is distributed in the hope that it will be useful,
+" but WITHOUT ANY WARRANTY; without even the implied warranty of
+" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+" GNU General Public License for more details.
+
+" You should have received a copy of the GNU General Public License
+" along with SingleCompile.  If not, see <http://www.gnu.org/licenses/>.
+
 " File: autoload/SingleCompile.vim
-" Version: 2.9.2
+" Version: 2.9.3
 " check doc/SingleCompile.txt for more information
 
 
@@ -48,7 +65,7 @@ let s:run_result_tempfile = ''
 
 
 function! SingleCompile#GetVersion() " get the script version {{{1
-    return 292
+    return 293
 endfunction
 
 " util {{{1
@@ -872,6 +889,9 @@ function! s:Initialize() "{{{1
     call SingleCompile#SetOutfile('java', 'gcj', '$(FILE_TITLE)$'.'.class')
 
     " javascript
+    call SingleCompile#SetCompilerTemplate('javascript', 'gjs',
+                \'Javascript Bindings for GNOME', 'gjs', '', '')
+    call SingleCompile#SetPriority('javascript', 'gjs', 120)
     call SingleCompile#SetCompilerTemplate('javascript', 'js',
                 \'SpiderMonkey, a JavaScript engine written in C',
                 \'js', '', '')

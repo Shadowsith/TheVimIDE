@@ -10,15 +10,16 @@ make command only use the "make" command? This plugin will help you out.
 
 Add these key-mappings to your vimrc:
 
- nmap <F9> :SCCompile<cr> 
+ nmap <F9> :SCCompile<cr>
  nmap <F10> :SCCompileRun<cr>
 
-If your file type is supported, then press F9 to compile your source file, and
-press F10 to compile and run your source file. If there is a compilation
-error, and the quickfix feature is enabled, then you could use ":cope"
-command to see the error list. You may also use ":SCChooseCompiler" command to
-choose a compiler if you have more than one kind of compiler available on you
-system.  ":SCViewResult" will show you the last run result.
+Note that the two lines here should not have any trailing space. If your file
+type is supported, then press F9 to compile your source file, and press F10 to
+compile and run your source file. If there is a compilation error, and the
+|quickfix| feature is enabled, then you could use |:cope| command to see the
+error list. You may also use ":SCChooseCompiler" command to choose a compiler
+if you have more than one kind of compiler available on you system.
+":SCViewResult" will show you the last run result.
 
 
 Features:
@@ -131,7 +132,9 @@ Java:
     sunjdk (Sun Java Development Kit)
 
 JavaScript:
+    gjs (Javascript Bindings for GNOME)
     js (SpiderMonkey, a JavaScript engine written in C)
+    node.js (node.js)
     rhino (Rhino, a JavaScript engine written in Java)
 
 ksh:
@@ -226,7 +229,8 @@ vim-addon-actions:
 Feedback is welcome. If you find any bug or have some good ideas to
 improve this plugin, please feel free to report it to xuhdev@gmail.com 
 or submit it on the issue tracker:
-https://bitbucket.org/xuhdev/singlecompile/issues
+
+https://github.com/xuhdev/SingleCompile/issues
 
 If you've written some templates for some compilers or interpreters which are
 not included as built-in template, and you think they are useful for other
@@ -236,10 +240,11 @@ built-in templates.
 
 Repository: 
 mercurial repository on bitbucket.org: https://bitbucket.org/xuhdev/singlecompile
-git repository on github.com (it's a clone of the mercurial repo): https://github.com/xuhdev/SingleCompile
+git repository on github.com: https://github.com/xuhdev/SingleCompile
 
 An alternative repository maintained by vim-scripts on github.com:
 https://github.com/vim-scripts/SingleCompile
 
 Follow xuhdev on twitter if you are interested in my development:
 http://twitter.com/xuhdev
+

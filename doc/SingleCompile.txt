@@ -1,22 +1,27 @@
 *SingleCompile.txt*
 
 File: SingleCompile.txt
-Version: 2.9.2
+Version: 2.9.3
 Original Author and Current Maintainer: H Xu <xuhdev@gmail.com>
-Last Change: 21 November 2011
+Last Change: 11 January 2011
 Description: Make it more convenient to compile or run a single source file.
-License: This program is free software: you can redistribute it and/or modify
-         it under the terms of the GNU General Public License as published by
-         the Free Software Foundation, either version 3 of the License, or
-         (at your option) any later version.
+License:
+    Copyright (C) 2010-2012 Hong Xu
 
-         This program is distributed in the hope that it will be useful,
-         but WITHOUT ANY WARRANTY; without even the implied warranty of
-         MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-         GNU General Public License for more details.
+    This file is part of SingleCompile.
 
-         You should have received a copy of the GNU General Public License
-         along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    SingleCompile is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SingleCompile is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SingleCompile.  If not, see <http://www.gnu.org/licenses/>.
 
 CONTENTS~
                                             *SingleCompile-contents*
@@ -46,15 +51,16 @@ make command only use the "make" command? This plugin will help you out.
 
 Add these key-mappings to your vimrc:
 >
- nmap <F9> :SCCompile<cr> 
+ nmap <F9> :SCCompile<cr>
  nmap <F10> :SCCompileRun<cr>
 <
-If your file type is supported, then press F9 to compile your source file, and
-press F10 to compile and run your source file. If there is a compilation
-error, and the |quickfix| feature is enabled, then you could use |:cope|
-command to see the error list. You may also use ":SCChooseCompiler" command to
-choose a compiler if you have more than one kind of compiler available on you
-system.  ":SCViewResult" will show you the last run result.
+Note that the two lines here should not have any trailing space. If your file
+type is supported, then press F9 to compile your source file, and press F10 to
+compile and run your source file. If there is a compilation error, and the
+|quickfix| feature is enabled, then you could use |:cope| command to see the
+error list. You may also use ":SCChooseCompiler" command to choose a compiler
+if you have more than one kind of compiler available on you system.
+":SCViewResult" will show you the last run result.
 
 
 Features:
@@ -167,6 +173,7 @@ Java:
     sunjdk (Sun Java Development Kit)
 
 JavaScript:
+    gjs (Javascript Bindings for GNOME)
     js (SpiderMonkey, a JavaScript engine written in C)
     rhino (Rhino, a JavaScript engine written in Java)
 
@@ -264,8 +271,8 @@ people, you could send me an email to inform me, and I'll put them in the
 built-in templates.
 
 
-Repository:
-https://bitbucket.org/xuhdev/singlecompile/src
+Mercurial repository on bitbucket.org: https://bitbucket.org/xuhdev/singlecompile
+Git repository on github.com: https://github.com/xuhdev/SingleCompile 
 
 Follow xuhdev on twitter if you are interested in my development:
 http://twitter.com/xuhdev
@@ -821,6 +828,7 @@ Java:
     sunjdk (Sun Java Development Kit)
 
 JavaScript:
+    gjs (Javascript Bindings for GNOME)
     js (SpiderMonkey, a JavaScript engine written in C)
     rhino (Rhino, a JavaScript engine written in Java)
 
