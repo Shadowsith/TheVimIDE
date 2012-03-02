@@ -16,7 +16,7 @@
 " along with SingleCompile.  If not, see <http://www.gnu.org/licenses/>.
 
 " File: autoload/SingleCompileAsync.vim
-" Version: 2.10.0beta
+" Version: 2.10.1beta
 " check doc/SingleCompile.txt for more information
 
 
@@ -68,7 +68,7 @@ class SingleCompileAsync:
     output = None
     # This value will be set below if we are on win32. For other systems,
     # leave this as None
-    startupinfo = None  
+    startupinfo = None
 
 # if we are on win32, we need to set STARTUPINFO before calling
 # subprocess.Popen() to make the console of the subprocess show minimized and
