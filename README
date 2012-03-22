@@ -3,6 +3,8 @@ This is a mirror of http://www.vim.org/scripts/script.php?script_id=3115
 This plugin is aimed at making it more convenient to compile or run a single
 source file without leaving vim.
 
+A short introduction is available here: http://hong-xu.github.com/blog/2012/03/07/use-singlecompile-to-compile-and-run-a-single-source-file-easily-in-vim/
+
 Consider this situation: you have just written a small c source file for a
 small test, but you have to write a Makefile to compile it or exit vim to
 compile it or compile it using "!gcc" without quickfix feature because vim's
@@ -239,8 +241,8 @@ built-in templates.
 
 
 Repository: 
-mercurial repository on bitbucket.org: https://bitbucket.org/xuhdev/singlecompile
 git repository on github.com: https://github.com/xuhdev/SingleCompile
+mercurial repository on bitbucket.org: https://bitbucket.org/xuhdev/singlecompile
 
 An alternative repository maintained by vim-scripts on github.com:
 https://github.com/vim-scripts/SingleCompile

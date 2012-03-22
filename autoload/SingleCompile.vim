@@ -16,7 +16,7 @@
 " along with SingleCompile.  If not, see <http://www.gnu.org/licenses/>.
 
 " File: autoload/SingleCompile.vim
-" Version: 2.10.1beta
+" Version: 2.10.2-beta
 " check doc/SingleCompile.txt for more information
 
 
@@ -68,30 +68,76 @@ function! SingleCompile#GetVersion() " get the script version {{{1
     " For example, 2.9.2 is corresponding to 292
     " From 2.10.0, the return value is: major * 1000 + minor * 10 + subminor
     " For example, 2.10.1 is corresponding to 2101
-    return 2101
+    return 2102
 endfunction
 
 " util {{{1
+function! s:GetCurrentShell() " {{{2
+" Get the name of the current shell according to &shell for UNIX. For example,
+" if &shell is '/bin/sh', the return value would be 'sh'.
+    if has('unix')
+        return strpart(&shell, strridx(&shell, '/') + 1)
+    endif
+endfunction
+
+function! s:IsShellSh(shell_name) " is the shell Bourne shell? {{2
+    if a:shell_name =~ '^sh' ||
+                \a:shell_name =~ '^bash' ||
+                \a:shell_name =~ '^ksh' ||
+                \a:shell_name =~ '^mksh' ||
+                \a:shell_name =~ '^pdksh' ||
+                \a:shell_name =~ '^zsh'
+        return 1
+    else
+        return 0
+    endif
+endfunction
+
+function! s:IsShellCsh(shell_name) " is the shell C Shell? {{2
+    if a:shell_name =~ '^csh' || a:shell_name =~ '^tcsh'
+        return 1
+    else
+        return 0
+    endif
+endfunction
+
+function! s:GetShellLastExitCodeVariable() " {{{2
+    " Get the variable that presents the exit code of last command.
+
+    if has('unix')
+
+        let l:cur_shell = s:GetCurrentShell()
+
+        if s:IsShellCsh(l:cur_shell)
+            return '$status'
+        elseif s:IsShellSh(l:cur_shell)
+            return '$?'
+        else
+            return ''
+        endif
+
+    elseif has('win32')
+        return '$?'
+    endif
+
+endfunction
+
 function! s:GetShellPipe(tee_used) " {{{2
     " get the shell pipe command according to it's platform. If a:tee_used is
     " set to nonzero, then the shell pipe contains "tee", otherwise "tee"
     " wouldn't be contained in the return value.
 
     if has('unix')
-        let l:cur_shell = strpart(&shell, strridx(&shell, '/') + 1)
 
-        if l:cur_shell =~ '^csh' || l:cur_shell =~ '^tcsh'
+        let l:cur_shell = s:GetCurrentShell()
+
+        if s:IsShellCsh(l:cur_shell)
             if a:tee_used
                 return '|& tee'
             else
                 return '>&'
             endif
-        elseif l:cur_shell =~ '^sh' ||
-                    \l:cur_shell =~ '^bash' ||
-                    \l:cur_shell =~ '^ksh' ||
-                    \l:cur_shell =~ '^mksh' ||
-                    \l:cur_shell =~ '^pdksh' ||
-                    \l:cur_shell =~ '^zsh'
+        elseif s:IsShellSh(l:cur_shell)
             if a:tee_used
                 return '2>&1| tee'
             else
@@ -1323,6 +1369,11 @@ function! SingleCompile#CompileAsync(...) " compile asynchronously {{{1
 endfunction
 
 function! s:CompileInternal(arg_list, async) " compile only {{{1
+    " Return 0 for compiling language successfully compiled;
+    " Return 1 for compiling language failed to be compiled;
+    " Return 2 for interpreting language successfully run;
+    " Return 3 for interpreting language failed to be run.
+
     call s:Initialize()
     let l:toret = 0
 
@@ -1479,7 +1530,11 @@ function! s:CompileInternal(arg_list, async) " compile only {{{1
                 echo ' '
                 echohl ErrorMsg | echo 'Error! Return value is '.v:shell_error
                             \| echohl None
-                let l:toret = 1
+                if s:IsLanguageInterpreting(l:cur_filetype)
+                    let l:toret = 3
+                else
+                    let l:toret = 1
+                endif
             endif
         endif
 
@@ -1499,9 +1554,31 @@ function! s:CompileInternal(arg_list, async) " compile only {{{1
             " call :compiler command to set vim compiler
             call s:SetGlobalVimCompiler(l:cur_filetype, l:chosen_compiler)
 
+            let l:exit_code_tempfile = tempname()
             let s:run_result_tempfile = tempname()
-            exec '!'.l:compile_cmd.' '.l:compile_args.' '.s:GetShellPipe(1).
-                        \' '.s:run_result_tempfile
+            " The output is put into s:run_result_tempfile, and exit code is
+            " written into l:exit_code_tempfile. The command should be
+            " something like this on bash:
+            "   !(compiler_cmd compile_args; echo $? >tmp1) | tee tmp2
+            exec '!('.l:compile_cmd.' '.l:compile_args.'; '.
+                        \ 'echo '.s:GetShellLastExitCodeVariable().' >'.
+                        \ l:exit_code_tempfile.') '.s:GetShellPipe(1).' '.
+                        \ s:run_result_tempfile
+
+            " if the exit code couldn't be obtained or the exit code is not 0,
+            " l:toret is set to 3 (this return value is for interpreting
+            " langauge only, means interpreting failed)
+            let l:exit_code_str = readfile(l:exit_code_tempfile)
+            if (len(l:exit_code_str) < 1) ||
+                        \ (len(l:exit_code_str) >= 1 &&
+                        \ str2nr(l:exit_code_str[0]))
+                echo ' '
+                echohl ErrorMsg
+                echo 'Interpreter exit code is '.l:exit_code_str[0]
+                echohl None
+
+                let l:toret = 3
+            endif
 
             cgetexpr readfile(s:run_result_tempfile)
 
@@ -1528,7 +1605,7 @@ function! s:CompileInternal(arg_list, async) " compile only {{{1
         " with error message highlighting and set the return value to 1
         if v:shell_error != 0
             echo ' '
-            echohl ErrorMsg | echo 'Return value is '.v:shell_error
+            echohl ErrorMsg | echo 'Compiler exit code is '.v:shell_error
                         \| echohl None
             let l:toret = 1
         endif
@@ -1539,9 +1616,9 @@ function! s:CompileInternal(arg_list, async) " compile only {{{1
         let &l:errorformat = l:old_errorformat
     endif
 
-    " if it's interpreting language, then return 2 (means do not call run if
-    " user uses SCCompileRun command
-    if s:IsLanguageInterpreting(l:cur_filetype)
+    " if it's interpreting language, and l:toret has not been set, then return
+    " 2 (means do not call run if user uses SCCompileRun command
+    if l:toret == 0 && s:IsLanguageInterpreting(l:cur_filetype)
         let l:toret = 2
     endif
 
@@ -1559,8 +1636,9 @@ function! s:CompileInternal(arg_list, async) " compile only {{{1
 
     " show the quickfix window if error occurs, quickfix is used and
     " g:SingleCompile_showquickfixiferror is set to nonzero
-    if l:toret == 1 && g:SingleCompile_showquickfixiferror &&
-                \s:ShouldQuickfixBeUsed()
+    if (l:toret == 1 || l:toret == 3) &&
+                \ g:SingleCompile_showquickfixiferror && 
+                \ s:ShouldQuickfixBeUsed()
         cope
     endif
 
@@ -1856,8 +1934,8 @@ fun! SingleCompile#ChooseCompiler(lang_name, ...) " choose a compiler {{{1
             return
         endif
 
-        " display current compiler
-        echo "Current Compiler: " .
+        " display current compiler/interpreter
+        echo "Current Compiler/Interpreter: " .
                     \ s:CompilerTemplate[a:lang_name]['chosen_compiler']
 
         let l:user_choose = inputlist( extend(['Detected compilers: '],
