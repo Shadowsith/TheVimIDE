@@ -16,7 +16,7 @@
 " along with SingleCompile.  If not, see <http://www.gnu.org/licenses/>.
 
 " File: autoload/SingleCompile.vim
-" Version: 2.10.2-beta
+" Version: 2.10.3
 " check doc/SingleCompile.txt for more information
 
 
@@ -68,7 +68,7 @@ function! SingleCompile#GetVersion() " get the script version {{{1
     " For example, 2.9.2 is corresponding to 292
     " From 2.10.0, the return value is: major * 1000 + minor * 10 + subminor
     " For example, 2.10.1 is corresponding to 2101
-    return 2102
+    return 2103
 endfunction
 
 " util {{{1
@@ -1528,8 +1528,7 @@ function! s:CompileInternal(arg_list, async) " compile only {{{1
             " with error message highlighting and set the return value to 1
             if v:shell_error != 0
                 echo ' '
-                echohl ErrorMsg | echo 'Error! Return value is '.v:shell_error
-                            \| echohl None
+                call s:ShowMessage('Error! Return value is '.v:shell_error)
                 if s:IsLanguageInterpreting(l:cur_filetype)
                     let l:toret = 3
                 else
@@ -1573,9 +1572,8 @@ function! s:CompileInternal(arg_list, async) " compile only {{{1
                         \ (len(l:exit_code_str) >= 1 &&
                         \ str2nr(l:exit_code_str[0]))
                 echo ' '
-                echohl ErrorMsg
-                echo 'Interpreter exit code is '.l:exit_code_str[0]
-                echohl None
+                call s:ShowMessage(
+                            \ 'Interpreter exit code is '.l:exit_code_str[0])
 
                 let l:toret = 3
             endif
@@ -1605,8 +1603,8 @@ function! s:CompileInternal(arg_list, async) " compile only {{{1
         " with error message highlighting and set the return value to 1
         if v:shell_error != 0
             echo ' '
-            echohl ErrorMsg | echo 'Compiler exit code is '.v:shell_error
-                        \| echohl None
+            call s:ShowMessage(
+                        \ 'Compiler exit code is '.v:shell_error)
             let l:toret = 1
         endif
 
