@@ -16,7 +16,7 @@
 " along with SingleCompile.  If not, see <http://www.gnu.org/licenses/>.
 
 " File: autoload/SingleCompile.vim
-" Version: 2.10.4
+" Version: 2.10.5
 " check doc/SingleCompile.txt for more information
 
 
@@ -72,7 +72,7 @@ function! SingleCompile#GetVersion() " get the script version {{{1
     " For example, 2.9.2 is corresponding to 292
     " From 2.10.0, the return value is: major * 1000 + minor * 10 + subminor
     " For example, 2.10.1 is corresponding to 2101
-    return 2104
+    return 2105
 endfunction
 
 " util {{{1
@@ -1272,6 +1272,10 @@ endfunction
 
 function! s:CompileRunInternal(comp_param, async) " {{{1
 
+    " save the current path, thus if quickfix switches to another file, we can
+    " still switch back to execute future code correctly
+    let l:cur_filepath = expand('%:p')
+
     " if async run is not available, give an error message and stop here.
     if a:async && empty(SingleCompileAsync#GetMode())
         call s:ShowMessage('Async mode is not available for your vim.')
@@ -1299,12 +1303,23 @@ function! s:CompileRunInternal(comp_param, async) " {{{1
     endif
 
 
+
+    let l:cur_filepath2 = expand('%:p')
+
+    if l:cur_filepath != l:cur_filepath2
+        exec 'edit ' . l:cur_filepath
+    endif
+
     " run the command and display the following messages only when the process
     " is successfully run.
     if !s:Run(a:async) && a:async
         echo 'SingleCompile: Now the program is running in background.'
         echo 'SingleCompile: you could use :SCViewResultAsync to see the '
                     \.'output if the program has terminated.'
+    endif
+
+    if l:cur_filepath != l:cur_filepath2
+        exec 'edit ' . l:cur_filepath2
     endif
 endfunction
 
