@@ -1,5 +1,7 @@
 This is a mirror of http://www.vim.org/scripts/script.php?script_id=3115
 
+Homepage: http://dev.hong.me/SingleCompile
+
 This plugin is aimed at making it more convenient to compile or run a single
 source file without leaving vim.
 
@@ -177,7 +179,7 @@ perl:
 PHP:
     php (PHP Command Line Interface 'CLI')
 
-python:
+Python:
     ironpython (IronPython)
     jython (Jython)
     pypy (PyPy)
@@ -187,7 +189,10 @@ python:
 R:
     R (R)
 
-ruby:
+reStructuredText:
+    rst2html (reST to HTML)
+
+Ruby:
     ruby (Ruby Interpreter)
     
 sh:
@@ -247,9 +252,6 @@ built-in templates.
 Repository: 
 git repository on github.com: https://github.com/xuhdev/SingleCompile
 mercurial repository on bitbucket.org: https://bitbucket.org/xuhdev/singlecompile
-
-An alternative repository maintained by vim-scripts on github.com:
-https://github.com/vim-scripts/SingleCompile
 
 Follow xuhdev on twitter if you are interested in my development:
 http://twitter.com/xuhdev

@@ -1,4 +1,5 @@
 " Copyright (C) 2010-2012 Hong Xu
+" Copyright © 2012 Martin Ueding <dev@martin-ueding.de>
 
 " This file is part of SingleCompile.
 
@@ -17,13 +18,15 @@
 
 " check doc/SingleCompile.txt for more information
 
-function! SingleCompile#templates#dosbatch#Initialize()
-    if has('win32')
-        let l:cmd_path = $SYSTEMROOT . '\System32\cmd.exe'
-
-        call SingleCompile#SetCompilerTemplate('dosbatch', 'dosbatch',
-                    \'DOS Batch', l:cmd_path, '/C', '')
-    endif
+function! SingleCompile#templates#rst#Initialize()
+    call SingleCompile#SetCompilerTemplate('rst', 'rst2html',
+                \ 'reST-to-HTML conversion tool',
+                \ 'rst2html',
+                \ '$(FILE_NAME)$ $(FILE_TITLE)$.html',
+                \ SingleCompile#GetDefaultOpenCommand() .
+                \ ' "$(FILE_TITLE)$.html"')
+    call SingleCompile#SetOutfile('rst', 'rst2html', '"$(FILE_TITLE)$.html"')
+    call SingleCompile#SetPriority('rst', 'rst2html', 50)
 endfunction
 
 "vim703: cc=78

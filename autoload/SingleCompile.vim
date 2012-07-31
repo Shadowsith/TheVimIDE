@@ -16,7 +16,7 @@
 " along with SingleCompile.  If not, see <http://www.gnu.org/licenses/>.
 
 " File: autoload/SingleCompile.vim
-" Version: 2.10.5
+" Version: 2.10.6
 " check doc/SingleCompile.txt for more information
 
 
@@ -72,7 +72,7 @@ function! SingleCompile#GetVersion() " get the script version {{{1
     " For example, 2.9.2 is corresponding to 292
     " From 2.10.0, the return value is: major * 1000 + minor * 10 + subminor
     " For example, 2.10.1 is corresponding to 2101
-    return 2105
+    return 2106
 endfunction
 
 " util {{{1
@@ -559,6 +559,7 @@ function! s:Initialize() "{{{1
                 \ 'ada',
                 \ 'bash',
                 \ 'c',
+                \ 'cmake',
                 \ 'cpp',
                 \ 'cs',
                 \ 'csh',
@@ -582,6 +583,7 @@ function! s:Initialize() "{{{1
                 \ 'php',
                 \ 'python',
                 \ 'r',
+                \ 'rst',
                 \ 'ruby',
                 \ 'sh',
                 \ 'tcl',
@@ -1029,7 +1031,9 @@ function! s:CompileInternal(arg_list, async) " compile only {{{1
             let l:old_makeprg = &g:makeprg
             let l:old_errorformat = &g:errorformat
 
-            " call :compiler command to set vim compiler
+            " call :compiler! command to set vim compiler. We use :compiler!
+            " but not :compiler because cgetexpr command uses global option
+            " value of errorformat
             call s:SetGlobalVimCompiler(l:cur_filetype, l:chosen_compiler)
 
             let l:exit_code_tempfile = tempname()
