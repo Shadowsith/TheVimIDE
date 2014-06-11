@@ -1,4 +1,4 @@
-" Copyright (C) 2010-2013 Hong Xu
+" Copyright (C) 2010-2014 Hong Xu
 
 " This file is part of SingleCompile.
 
@@ -79,7 +79,9 @@ endfunction
 function! SingleCompile#GetDefaultOpenCommand() " {{{2
 " Get the default open command. It is "open" on Windows and Mac OS X,
 " "xdg-open" on Linux and other UNIX systems.
-    if has('win32') || has('macunix')
+    if has('win32')
+        return 'start'
+    elseif has('macunix')
         return 'open'
     elseif has('unix')
         return 'xdg-open'
@@ -117,6 +119,10 @@ function! s:IsShellCsh(shell_name) " is the shell C Shell? {{2
     endif
 endfunction
 
+function! s:IsShellFish(shell_name) " is the shell FISH shell {{2
+    return a:shell_name =~ '^fish'
+endfunction
+
 function! s:GetShellLastExitCodeVariable() " {{{2
     " Get the variable that presents the exit code of last command.
 
@@ -124,7 +130,7 @@ function! s:GetShellLastExitCodeVariable() " {{{2
 
         let l:cur_shell = s:GetCurrentShell()
 
-        if s:IsShellCsh(l:cur_shell)
+        if s:IsShellCsh(l:cur_shell) || s:IsShellFish(l:cur_shell)
             return '$status'
         elseif s:IsShellSh(l:cur_shell)
             return '$?'
@@ -153,7 +159,7 @@ function! s:GetShellPipe(tee_used) " {{{2
             else
                 return '>&'
             endif
-        elseif s:IsShellSh(l:cur_shell)
+        elseif s:IsShellSh(l:cur_shell) || s:IsShellFish(l:cur_shell)
             if a:tee_used
                 return '2>&1| tee'
             else
@@ -516,11 +522,15 @@ function! s:Initialize() "{{{1
         let g:SingleCompile_quickfixwindowposition = 'botright'
     end
 
-    if !exists('g:SingleCompile_resultheight') ||
-                \type(g:SingleCompile_resultheight) != type(0) ||
-                \g:SingleCompile_resultheight <= 0
-        unlet! g:SingleCompile_resultheight
-        let g:SingleCompile_resultheight = 5
+    if !exists('g:SingleCompile_resultsize') ||
+                \type(g:SingleCompile_resultsize) != type(0) ||
+                \g:SingleCompile_resultsize <= 0
+        unlet! g:SingleCompile_resultsize
+        let g:SingleCompile_resultsize = 5
+    endif
+
+    if !exists('g:SingleCompile_split')
+        let g:SingleCompile_split = 'split'
     endif
 
     if !exists('g:SingleCompile_showquickfixiferror') ||
@@ -605,6 +615,7 @@ function! s:Initialize() "{{{1
                 \ 'c',
                 \ 'cmake',
                 \ 'cpp',
+                \ 'coffee',
                 \ 'cs',
                 \ 'csh',
                 \ 'd',
@@ -619,17 +630,21 @@ function! s:Initialize() "{{{1
                 \ 'javascript',
                 \ 'ksh',
                 \ 'lisp',
+                \ 'ls',
                 \ 'lua',
                 \ 'make',
                 \ 'markdown',
+                \ 'matlab',
                 \ 'objc',
                 \ 'pascal',
                 \ 'perl',
                 \ 'php',
                 \ 'python',
+                \ 'qml',
                 \ 'r',
                 \ 'rst',
                 \ 'ruby',
+                \ 'rust',
                 \ 'scala',
                 \ 'sh',
                 \ 'tcl',
@@ -905,6 +920,12 @@ function! s:CompileInternal(arg_list, async) " compile only {{{1
     " whether we should run asynchronously if we are working with an
     " interpreting language
     let l:async = a:async && !empty(SingleCompileAsync#GetMode())
+    if !l:async && executable('tee') && g:SingleCompile_usetee
+                \ && g:SingleCompile_showresultafterrun == 1
+        let l:show_result_after_run = 1
+    else
+        let l:show_result_after_run = 0
+    endif
 
     " save current file type. Don't use &filetype directly because after
     " 'make' and quickfix is working and the error is in another file,
@@ -1089,7 +1110,8 @@ function! s:CompileInternal(arg_list, async) " compile only {{{1
             " written into l:exit_code_tempfile. The command should be
             " something like this on bash:
             "   !(compiler_cmd compile_args; echo $? >tmp1) | tee tmp2
-            exec '!('.l:compile_cmd.' '.l:compile_args.'; '.
+            exec (l:show_result_after_run ? 'silent ' : '').
+                        \ '!('.l:compile_cmd.' '.l:compile_args.'; '.
                         \ 'echo '.s:GetShellLastExitCodeVariable().' >'.
                         \ l:exit_code_tempfile.') '.s:GetShellPipe(1).' '.
                         \ s:run_result_tempfile
@@ -1185,13 +1207,16 @@ function! s:CompileInternal(arg_list, async) " compile only {{{1
         endif
     endif
 
-    " if tee is available, and we are running an interpreting language source
-    " file, and we want to show the result window right after the run, and we
-    " are not running it asynchronously, then we call SingleCompile#ViewResult
-    if executable('tee') && g:SingleCompile_usetee
-                \&& l:toret == 2 && !l:async
-                \&& g:SingleCompile_showresultafterrun == 1
-        call SingleCompile#ViewResult(0)
+    " if we are running an interpreting language source file, and we want to
+    " show the result window right after the run, and we are not running it
+    " asynchronously, then we show or hide the result
+    if l:show_result_after_run
+        if l:toret == 2
+            call SingleCompile#ViewResult(0)
+            redraw!
+        elseif l:toret == 1 || l:toret == 3
+            call SingleCompile#CloseViewResult()
+        endif
     endif
 
     return l:toret
@@ -1289,6 +1314,12 @@ function! s:Run(async) " {{{1
 
     " whether we should use async mode
     let l:async = a:async && !empty(SingleCompileAsync#GetMode())
+    if !l:async && executable('tee') && g:SingleCompile_usetee
+                \ && g:SingleCompile_showresultafterrun == 1
+        let l:show_result_after_run = 1
+    else
+        let l:show_result_after_run = 0
+    endif
 
     if !(has_key(s:CompilerTemplate[l:cur_filetype][
                 \s:CompilerTemplate[l:cur_filetype]['chosen_compiler']],
@@ -1318,7 +1349,7 @@ function! s:Run(async) " {{{1
         endif
 
         try
-            exec '!'.l:run_cmd
+            exec (l:show_result_after_run ? 'silent ' : '').'!'.l:run_cmd
         catch
             call s:ShowMessage('Failed to execute "'.l:run_cmd.'"')
         endtry
@@ -1330,9 +1361,9 @@ function! s:Run(async) " {{{1
     " if tee is available, and we are running synchronously, and we want to
     " show the result window right after the run, then we call
     " SingleCompile#ViewResult
-    if !l:async && executable('tee') && g:SingleCompile_usetee
-                \&& g:SingleCompile_showresultafterrun == 1
+    if l:show_result_after_run
         call SingleCompile#ViewResult(0)
+        redraw!
     endif
 
     return l:ret_val
@@ -1557,15 +1588,15 @@ function! SingleCompile#ViewResult(async) " view the running result {{{1
     " if the __SINGLE_COMPILE_RUN_RESULT__ buffer doesn't exist, make one
     " else clear it, but leave it there to be refilled
     if l:result_bufnr == -1
-        exec 'rightbelow '.g:SingleCompile_resultheight.
-                    \'split __SINGLE_COMPILE_RUN_RESULT__'
+        exec 'rightbelow '.g:SingleCompile_resultsize.
+                    \g:SingleCompile_split.' __SINGLE_COMPILE_RUN_RESULT__'
         setl noswapfile buftype=nofile bufhidden=wipe foldcolumn=0 nobuflisted
     else
         let l:result_bufwinnr = bufwinnr(l:result_bufnr)
         exec l:result_bufwinnr.'wincmd w'
         let l:save_cursor = getpos(".")
         setl modifiable
-            exec "g/.*/d"
+        normal! ggdG
         setl nomodifiable
     endif
 
@@ -1576,6 +1607,7 @@ function! SingleCompile#ViewResult(async) " view the running result {{{1
     else
         call append(0, readfile(s:run_result_tempfile))
     endif
+    nnoremap <buffer> q :q<CR>
     setl nomodifiable
 
     if l:result_bufnr != -1
@@ -1583,7 +1615,16 @@ function! SingleCompile#ViewResult(async) " view the running result {{{1
     endif
 
     exec 'wincmd p'
+endfunction
 
+function! SingleCompile#CloseViewResult() " close the last result {{{1
+    let l:result_bufnr = bufnr('__SINGLE_COMPILE_RUN_RESULT__')
+    if l:result_bufnr != -1
+        exec bufwinnr(l:result_bufnr).'wincmd w'
+        if l:result_bufnr == bufnr('%') " if we got there
+            quit
+        endif
+    endif
 endfunction
 
 call s:Initialize() " {{{1 call the initialize function

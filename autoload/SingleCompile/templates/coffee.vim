@@ -1,4 +1,4 @@
-" Copyright (C) 2010-2012 Hong Xu
+" Copyright (C) 2013 Rack Lin
 
 " This file is part of SingleCompile.
 
@@ -17,10 +17,9 @@
 
 " check doc/SingleCompile.txt for more information
 
-function! SingleCompile#templates#go#Initialize()
-    call SingleCompile#SetCompilerTemplate('go', 'go', 'Go',
-                \ 'go', 'build -o $(FILE_EXEC)$', g:SingleCompile_common_run_command)
-    call SingleCompile#SetPriority('go', 'Go', 20)
+function! SingleCompile#templates#coffee#Initialize()
+    call SingleCompile#SetCompilerTemplate('coffee', 'coffee',
+                \'CoffeeScript', 'coffee', '-c $(FILE_NAME)$', 'coffee $(FILE_NAME)$')
 endfunction
 
 "vim703: cc=78

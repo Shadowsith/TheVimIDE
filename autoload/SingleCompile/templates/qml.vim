@@ -1,4 +1,4 @@
-" Copyright (C) 2010-2012 Hong Xu
+" Copyright (C) 2014 Francisco Lopes
 
 " This file is part of SingleCompile.
 
@@ -17,11 +17,13 @@
 
 " check doc/SingleCompile.txt for more information
 
-function! SingleCompile#templates#go#Initialize()
-    call SingleCompile#SetCompilerTemplate('go', 'go', 'Go',
-                \ 'go', 'build -o $(FILE_EXEC)$', g:SingleCompile_common_run_command)
-    call SingleCompile#SetPriority('go', 'Go', 20)
+function! SingleCompile#templates#qml#Initialize()
+    call SingleCompile#SetCompilerTemplate('qml', 'qmlviewer', 'qmlviewer',
+                \ 'qmlviewer', '', '')
+    call SingleCompile#SetCompilerTemplate('qml', 'qmlscene', 'qmlscene',
+                \ 'qmlscene', '', '')
 endfunction
 
 "vim703: cc=78
 "vim: et ts=4 tw=78 sw=4
+

@@ -1,4 +1,4 @@
-" Copyright (C) 2010-2012 Hong Xu
+" Copyright (C) 2013 Francisco Lopes
 
 " This file is part of SingleCompile.
 
@@ -17,10 +17,9 @@
 
 " check doc/SingleCompile.txt for more information
 
-function! SingleCompile#templates#go#Initialize()
-    call SingleCompile#SetCompilerTemplate('go', 'go', 'Go',
-                \ 'go', 'build -o $(FILE_EXEC)$', g:SingleCompile_common_run_command)
-    call SingleCompile#SetPriority('go', 'Go', 20)
+function! SingleCompile#templates#rust#Initialize()
+    call SingleCompile#SetCompilerTemplate('rust', 'rustc', 'Rust',
+                \ 'rustc', '-o $(FILE_TITLE)$', g:SingleCompile_common_run_command)
 endfunction
 
 "vim703: cc=78

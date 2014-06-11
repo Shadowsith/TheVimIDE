@@ -1,4 +1,4 @@
-" Copyright (C) 2010-2012 Hong Xu
+" Copyright (C) 2013 PAN, Myautsai
 
 " This file is part of SingleCompile.
 
@@ -17,10 +17,13 @@
 
 " check doc/SingleCompile.txt for more information
 
-function! SingleCompile#templates#go#Initialize()
-    call SingleCompile#SetCompilerTemplate('go', 'go', 'Go',
-                \ 'go', 'build -o $(FILE_EXEC)$', g:SingleCompile_common_run_command)
-    call SingleCompile#SetPriority('go', 'Go', 20)
+function! SingleCompile#templates#matlab#Initialize()
+    call SingleCompile#SetCompilerTemplate('matlab', 'matlab', 'MathWorks MATLAB',
+                \'matlab', '-nodisplay -nosplash -r $(FILE_TITLE)$,exit', '')
+    call SingleCompile#SetPriority('matlab', 'matlab', 50)
+    call SingleCompile#SetCompilerTemplate('matlab', 'octave', 'GNU Octave',
+                \'octave', '', '')
+    call SingleCompile#SetPriority('matlab', 'octave', 60)
 endfunction
 
 "vim703: cc=78

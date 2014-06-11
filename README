@@ -1,6 +1,6 @@
 This is a mirror of http://www.vim.org/scripts/script.php?script_id=3115
 
-Homepage: http://www.topbug.net/SingleCompile
+Homepage: http://singlecompile.topbug.net
 
 This plugin is aimed at making it more convenient to compile or run a single
 source file without leaving vim.
@@ -59,6 +59,7 @@ C:
     msvc80 (Microsoft Visual C++ 2005), Windows only
     msvc90 (Microsoft Visual C++ 2008), Windows only
     msvc100 (Microsoft Visual C++ 2010), Windows only
+    msvc110 (Microsoft Visual C++ 2012), Windows only
     open-watcom (Open Watcom C/C++32 Compiler)
     open64 (Open64 C Compiler), UNIX only
     pcc (Portable C Compiler)
@@ -76,6 +77,7 @@ C++:
     msvc80 (Microsoft Visual C++ 2005), Windows only
     msvc90 (Microsoft Visual C++ 2008), Windows only
     msvc100 (Microsoft Visual C++ 2010), Windows only
+    msvc110 (Microsoft Visual C++ 2012), Windows only
     open-watcom (Open Watcom C/C++32 Compiler)
     open64 (Open64 C++ Compiler), UNIX only
     sol-studio (Sun C++ Compiler(Sun Solaris Studio)), UNIX only
@@ -86,6 +88,9 @@ C#:
 
 cmake:
     cmake (cmake)
+
+CoffeeScript:
+    coffee (CoffeeScript)
 
 csh:
     csh (C Shell)
@@ -149,13 +154,16 @@ ksh:
 
 LaTeX:
     latex (LaTeX)
-    latexmk (Automatic LaTeX document generation routine)
     pdflatex (pdfLaTeX)
+    latexmk (Automatic LaTeX document generation routine)
 
 LISP:
     clisp (GNU CLISP)
     ecl (Embeddable Common-Lisp)
     gcl (GNU Common Lisp)
+
+LiveScript:
+    lsc (LiveScript)
 
 lua:
     lua (Lua Interpreter)
@@ -168,6 +176,12 @@ Makefile:
 Markdown:
     markdown (text-to-HTML conversion tool)
     rdiscount (Discount Markdown Processor for Ruby)
+    Markdown (Python implementation of the Markdown language)
+
+Matlab:
+    matlab (MathWorks MATLAB)
+        Note: For Matlab, I highly recommend you to try out vim-matlab-behave plugin: https://github.com/elmanuelito/vim-matlab-behave
+    octave (GNU Octave)
 
 Object-C:
     clang (the Clang C and Objective-C compiler)
@@ -183,26 +197,40 @@ perl:
 PHP:
     php (PHP Command Line Interface 'CLI')
 
-Python:
+python:
     ironpython (IronPython)
     jython (Jython)
     pypy (PyPy)
     python (Python Interpreter, usually the system default Python, no matter it is Python 2 or 3.)
     python2 (Python 2 Interpreter)
     python3 (Python 3 Interpreter)
-    
+
+QML:
+    qmlscene (QML Scene, for viewing QML based on QtQuick 2)
+    qmlviewer (QML Viewer, for viewing QML based on QtQuick 1)
+    Note: vim does not detect qml files out of the box.
+    See https://github.com/peterhoeg/vim-qml
+
 R:
     R (R)
 
 reStructuredText:
     rst2html (reST to HTML)
 
-Ruby:
+ruby:
     ruby (Ruby Interpreter)
+    jruby (Ruby on top of Java JVM, default mode)
+    jruby1.8 (Ruby on top of Java JVM, Ruby 1.8 mode)
+    jruby1.9 (Ruby on top of Java JVM, Ruby 1.9 mode)
+    jruby2.0 (Ruby on top of Java JVM, Ruby 2.0 mode, requires JRuby 1.7.4 or
+later)
+
+rust:
+    rustc (Rust compiler)
 
 scala:
     scala (Scala compiler)
-    Note: Vim does not detect scala files out of the box.
+    Note: vim does not detect scala files out the box.
     See https://github.com/bjartek/scala-vim-support
 
 sh:
@@ -221,11 +249,10 @@ tcsh:
 
 vb script:
     vb (VB Script Interpreter)
-    
+
 xhtml:
     arora (Arora)
     chrome (Google Chrome)
-    chromium (Chromium)
     epiphany (Epiphany)
     firefox (Mozilla Firefox)
     ie (Microsoft Internet Explorer)
@@ -234,8 +261,6 @@ xhtml:
 
 zsh:
     zsh (Z Shell)
-
-
 
 
 
@@ -260,6 +285,8 @@ built-in templates.
 
 
 Git Repository:  https://github.com/xuhdev/SingleCompile
+
+Check the wiki pages for some tips: https://github.com/xuhdev/SingleCompile/wiki/_pages
 
 Follow xuhdev on twitter if you are interested in my development:
 http://twitter.com/xuhdev

@@ -44,7 +44,7 @@ function! SingleCompile#templates#cpp#Initialize()
                     \ 'vim-compiler' : 'msvc'})
         call SingleCompile#SetCompilerTemplate('cpp', 'msvc90',
                     \ 'Microsoft Visual C++ 2008 (9.0)', 'cl90',
-                    \ '-o $(FILE_TITLE)$', g:SingleCompile_common_run_command,
+                    \ '/EHsc', g:SingleCompile_common_run_command,
                     \ function('SingleCompile#DetectMicrosoftVC'))
         call SingleCompile#SetCompilerTemplateByDict('cpp', 'msvc90', {
                     \ 'pre-do' : function('SingleCompile#PredoMicrosoftVC'),
@@ -54,13 +54,23 @@ function! SingleCompile#templates#cpp#Initialize()
                     \ 'vim-compiler' : 'msvc'})
         call SingleCompile#SetCompilerTemplate('cpp', 'msvc100',
                     \ 'Microsoft Visual C++ 2010 (10.0)', 'cl100',
-                    \ '-o $(FILE_TITLE)$', g:SingleCompile_common_run_command,
+                    \ '/EHsc', g:SingleCompile_common_run_command,
                     \ function('SingleCompile#DetectMicrosoftVC'))
         call SingleCompile#SetCompilerTemplateByDict('cpp', 'msvc100', {
                     \ 'pre-do' : function('SingleCompile#PredoMicrosoftVC'),
                     \ 'post-do' : function('SingleCompile#PostdoMicrosoftVC'),
                     \ 'out-file' : g:SingleCompile_common_out_file,
                     \ 'priority' : 13,
+                    \ 'vim-compiler' : 'msvc'})
+        call SingleCompile#SetCompilerTemplate('cpp', 'msvc110',
+                    \ 'Microsoft Visual C++ 2012 (11.0)', 'cl110',
+                    \ '/EHsc', g:SingleCompile_common_run_command,
+                    \ function('SingleCompile#DetectMicrosoftVC'))
+        call SingleCompile#SetCompilerTemplateByDict('cpp', 'msvc110', {
+                    \ 'pre-do' : function('SingleCompile#PredoMicrosoftVC'),
+                    \ 'post-do' : function('SingleCompile#PostdoMicrosoftVC'),
+                    \ 'out-file' : g:SingleCompile_common_out_file,
+                    \ 'priority' : 12,
                     \ 'vim-compiler' : 'msvc'})
         call SingleCompile#SetCompilerTemplate('cpp', 'bcc',
                     \'Borland C++ Builder','bcc32', '-o$(FILE_TITLE)$',
