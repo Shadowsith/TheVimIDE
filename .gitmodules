@@ -1,0 +1,15 @@
+[submodule "bundle/SingleCompile"]
+	path = bundle/SingleCompile
+	url = https://github.com/vim-scripts/SingleCompile.git
+[submodule "bundle/syntastic"]
+	path = bundle/syntastic
+	url = https://github.com/vim-syntastic/syntastic
+[submodule "bundle/rainbow"]
+	path = bundle/rainbow
+	url = https://github.com/luochen1990/rainbow.git
+[submodule "bundle/vim-mucomplete"]
+	path = bundle/vim-mucomplete
+	url = https://github.com/lifepillar/vim-mucomplete.git
+[submodule "vim-pathogen"]
+	path = vim-pathogen
+	url = https://github.com/tpope/vim-pathogen.git
