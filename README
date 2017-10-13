@@ -1,0 +1,293 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=3115
+
+Homepage: http://singlecompile.topbug.net
+
+This plugin is aimed at making it more convenient to compile or run a single
+source file without leaving vim.
+
+A short introduction is available here: http://www.topbug.net/blog/2012/03/07/use-singlecompile-to-compile-and-run-a-single-source-file-easily-in-vim/
+
+Consider this situation: you have just written a small c source file for a
+small test, but you have to write a Makefile to compile it or exit vim to
+compile it or compile it using "!gcc" without quickfix feature because vim's
+make command only use the "make" command? This plugin will help you out.
+
+Add these key-mappings to your vimrc:
+
+ nmap <F9> :SCCompile<cr>
+ nmap <F10> :SCCompileRun<cr>
+
+Note that the two lines here should not have any trailing space. If your file
+type is supported, then press F9 to compile your source file, and press F10 to
+compile and run your source file. If there is a compilation error, and the
+|quickfix| feature is enabled, then you could use |:cope| command to see the
+error list. You may also use ":SCChooseCompiler" command to choose a compiler
+if you have more than one kind of compiler available on you system.
+":SCViewResult" will show you the last run result.
+
+
+Features:
+1. Compile or run the source file quickly using quickfix feature and compiler feature of vim;
+2. Compilers and interpreters auto detecting;
+3. Fast switch between several installed compilers or interpreters;
+4. Multi-language support;
+5. Custom your own compiler/interpreter template;
+6. View the result of last run command at any time(requires "tee" command);
+7. Run the compiled program asynchronously and view the result at any time
+   (see :SCCompileRunAsync in the help file).
+
+
+Here is a list of built-in supported compilers or interpreter(For some
+compilers, you need to set the environment varibles correctly to make them
+available for SingleCompile):
+
+Ada:
+    gnat (GNAT)
+
+bash:
+    bash (Bourne-Again Shell)
+
+C:
+    bcc (Borland C++ Builder), Windows only
+    cc (UNIX C Compiler), UNIX only
+    ch (SoftIntegration Ch)
+    clang (the Clang C and Objective-C compiler)
+    gcc (GNU C Compiler)
+    icc (Intel C++ Compiler)
+    lcc (Little C Compiler)
+    msvc (Microsoft Visual C++ (In PATH)), Windows only
+    msvc80 (Microsoft Visual C++ 2005), Windows only
+    msvc90 (Microsoft Visual C++ 2008), Windows only
+    msvc100 (Microsoft Visual C++ 2010), Windows only
+    msvc110 (Microsoft Visual C++ 2012), Windows only
+    open-watcom (Open Watcom C/C++32 Compiler)
+    open64 (Open64 C Compiler), UNIX only
+    pcc (Portable C Compiler)
+    sol-studio (Sun C Compiler(Sun Solaris Studio)), UNIX only
+    tcc (Tiny C Compiler)
+    tcc-run (Tiny C Compiler with "-run" Flag)
+
+C++:
+    bcc (Borland C++ Builder), Windows Only
+    ch (SoftIntegration Ch)
+    clang (the Clang C and Objective-C compiler)
+    g++ (GNU C++ Compiler)
+    icc (Intel C++ Compiler)
+    msvc (Microsoft Visual C++ (In PATH)), Windows only
+    msvc80 (Microsoft Visual C++ 2005), Windows only
+    msvc90 (Microsoft Visual C++ 2008), Windows only
+    msvc100 (Microsoft Visual C++ 2010), Windows only
+    msvc110 (Microsoft Visual C++ 2012), Windows only
+    open-watcom (Open Watcom C/C++32 Compiler)
+    open64 (Open64 C++ Compiler), UNIX only
+    sol-studio (Sun C++ Compiler(Sun Solaris Studio)), UNIX only
+
+C#:
+    msvcs(Microsoft Visual C#), Windows Only
+    mono (Mono C# compiler)
+
+cmake:
+    cmake (cmake)
+
+CoffeeScript:
+    coffee (CoffeeScript)
+
+csh:
+    csh (C Shell)
+    tcsh (TENEX C Shell)
+
+D:
+    dmd (DMD Compiler)
+
+dos batch:
+    dosbatch (DOS Batch)
+
+erlang:
+    escript (Erlang Scripting Support)
+
+Fortran:
+    ftn95 (Silverfrost FTN95), Windows only
+    g77 (GNU Fortran 77 Compiler)
+    g95 (G95)
+    gfortran (GNU Fortran Compiler)
+    ifort (Intel Fortran Compiler)
+    open-watcom (Open Watcom Fortran 77/32 Compiler)
+    open64-f90 (Open64 Fortran 90 Compiler), UNIX only
+    open64-f95 (Open64 Fortran 95 Compiler), UNIX only
+    sol-studio-f77 (Sun Fortran 77 Compiler(Sun Solaris Studio)), UNIX only
+    sol-studio-f90 (Sun Fortran 90 Compiler(Sun Solaris Studio)), UNIX only
+    sol-studio-f95 (Sun Fortran 95 Compiler(Sun Solaris Studio)), UNIX only
+
+Go:
+    go (Go)
+
+Haskell:
+    ghc (Glasgow Haskell Compiler)
+    runhaskell (runhaskell)
+
+html:
+    arora (Arora)
+    chrome (Google Chrome)
+    chromium (Chromium)
+    epiphany (Epiphany)
+    firefox (Mozilla Firefox)
+    ie (Microsoft Internet Explorer)
+    konqueror (Konqueror)
+    opera (Opera)
+
+IDL(Interactive Data Language):
+    idl (ITT Visual Information Solutions Interactive Data Language)
+    gdl (GNU Data Language incremental compiler)
+
+Java:
+    gcj (GNU Java Compiler)
+    sunjdk (Sun Java Development Kit)
+
+JavaScript:
+    gjs (Javascript Bindings for GNOME)
+    js (SpiderMonkey, a JavaScript engine written in C)
+    node.js (node.js)
+    rhino (Rhino, a JavaScript engine written in Java)
+
+ksh:
+    ksh (Korn Shell)
+
+LaTeX:
+    latex (LaTeX)
+    pdflatex (pdfLaTeX)
+    latexmk (Automatic LaTeX document generation routine)
+
+LISP:
+    clisp (GNU CLISP)
+    ecl (Embeddable Common-Lisp)
+    gcl (GNU Common Lisp)
+
+LiveScript:
+    lsc (LiveScript)
+
+lua:
+    lua (Lua Interpreter)
+
+Makefile:
+    gmake (GNU Make)
+    nmake (Microsoft Program Maintenance Utility)
+    mingw32-make (MinGW32 Make)
+
+Markdown:
+    markdown (text-to-HTML conversion tool)
+    rdiscount (Discount Markdown Processor for Ruby)
+    Markdown (Python implementation of the Markdown language)
+
+Matlab:
+    matlab (MathWorks MATLAB)
+        Note: For Matlab, I highly recommend you to try out vim-matlab-behave plugin: https://github.com/elmanuelito/vim-matlab-behave
+    octave (GNU Octave)
+
+Object-C:
+    clang (the Clang C and Objective-C compiler)
+    gcc (GNU Object-C Compiler)
+
+Pascal:
+    fpc (Free Pascal Compiler)
+    gpc (GNU Pascal Compiler)
+
+perl:
+    perl (Perl Interpreter)
+
+PHP:
+    php (PHP Command Line Interface 'CLI')
+
+python:
+    ironpython (IronPython)
+    jython (Jython)
+    pypy (PyPy)
+    python (Python Interpreter, usually the system default Python, no matter it is Python 2 or 3.)
+    python2 (Python 2 Interpreter)
+    python3 (Python 3 Interpreter)
+
+QML:
+    qmlscene (QML Scene, for viewing QML based on QtQuick 2)
+    qmlviewer (QML Viewer, for viewing QML based on QtQuick 1)
+    Note: vim does not detect qml files out of the box.
+    See https://github.com/peterhoeg/vim-qml
+
+R:
+    R (R)
+
+reStructuredText:
+    rst2html (reST to HTML)
+
+ruby:
+    ruby (Ruby Interpreter)
+    jruby (Ruby on top of Java JVM, default mode)
+    jruby1.8 (Ruby on top of Java JVM, Ruby 1.8 mode)
+    jruby1.9 (Ruby on top of Java JVM, Ruby 1.9 mode)
+    jruby2.0 (Ruby on top of Java JVM, Ruby 2.0 mode, requires JRuby 1.7.4 or
+later)
+
+rust:
+    rustc (Rust compiler)
+
+scala:
+    scala (Scala compiler)
+    Note: vim does not detect scala files out the box.
+    See https://github.com/bjartek/scala-vim-support
+
+sh:
+    ash (Almquist Shell)
+    bash (Bourne-Again Shell)
+    dash (Debian Almquist Shell)
+    ksh (Korn Shell)
+    sh (Bourne Shell)
+    zsh (Z Shell)
+
+tcl:
+    tclsh (Simple shell containing Tcl interpreter)
+
+tcsh:
+    tcsh (TENEX C Shell)
+
+vb script:
+    vb (VB Script Interpreter)
+
+xhtml:
+    arora (Arora)
+    chrome (Google Chrome)
+    epiphany (Epiphany)
+    firefox (Mozilla Firefox)
+    ie (Microsoft Internet Explorer)
+    konqueror (Konqueror)
+    opera (Opera)
+
+zsh:
+    zsh (Z Shell)
+
+
+
+You can add your compiler or interpreter support if the compiler or 
+interpreter you want is not in the list. See details in the help file 
+SingleCompile.txt
+
+There are some supporting code in this plugin for Marc Weber's
+vim-addon-actions:
+     http://github.com/MarcWeber/vim-addon-actions 
+
+Feedback is welcome. If you find any bug or have some good ideas to
+improve this plugin, please feel free to report it to hong@topbug.net 
+or submit it on the issue tracker:
+
+https://github.com/xuhdev/SingleCompile/issues
+
+If you've written some templates for some compilers or interpreters which are
+not included as built-in template, and you think they are useful for other
+people, you could send me an email to inform me, and I'll put them in the
+built-in templates.
+
+
+Git Repository:  https://github.com/xuhdev/SingleCompile
+
+Check the wiki pages for some tips: https://github.com/xuhdev/SingleCompile/wiki/_pages
+
+Follow xuhdev on twitter if you are interested in my development:
+http://twitter.com/xuhdev
+
