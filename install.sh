@@ -1,4 +1,7 @@
 echo Installing shadows vim-plugin-collection
+echo Firstly pull all submodules:
+git submodule update --init --recursive
+git submodule update --recursive
 echo "Do you want to delete old vim-files? [y/n]"
 ask="a"
 while [ \( "$ask" != "y" \) -o \( "$ask" != "n" \) -o \( "$ask" != "Y" \) -o \( "$ask" != "N" \) ]
@@ -6,8 +9,8 @@ do
     read -r ask
     if [ \( $ask == "y" \) -o \( $ask == "Y" \)  ];
         then
-            #rm -f ~/.vimrc
-            #rm -rf ~/.vim/
+            rm -f ~/.vimrc
+            rm -rf ~/.vim/
             echo this would be done!
             break
     fi 
@@ -21,9 +24,10 @@ do
     fi
 done
 echo Adding pathogen to autoload:
-cp ./vim-pathogen/autoload/pathogen.vim ./autoload
+cp -a ./vim-pathogen/autoload ./autoload
 echo Copy/Rename vim-plugin-collection to ~/.vim/
-cp ../vim-plugin-collection ~/.vim/
+cp -a ../vim-plugin-collection ~/.vim/
 echo Copy .vimrc to .vimrc 
 cp ./.vimrc ~/.vimrc
+rm -rf ./autoload
 echo Finished!
