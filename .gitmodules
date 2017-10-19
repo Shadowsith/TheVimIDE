@@ -13,3 +13,6 @@
 [submodule "vim-pathogen"]
 	path = vim-pathogen
 	url = https://github.com/tpope/vim-pathogen.git
+[submodule "bundle/vim-syntax"]
+	path = bundle/vim-syntax
+	url = https://github.com/Shadowsith/vim-syntax.git
