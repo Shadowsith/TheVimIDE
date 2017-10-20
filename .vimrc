@@ -10,6 +10,7 @@ Plugin 'vim-scripts/SingleCompile'
 Plugin 'lifepillar/vim-mucomplete'
 Plugin 'lifepillar/pgsql.vim'
 Plugin 'lifepillar/vim-cheat40'
+Plugin 'octol/vim-cpp-enhanced-highlight'
 call vundle#end()
 syntax on
 set number
@@ -54,7 +55,17 @@ set belloff+=ctrlg " If Vim beeps during completion
 "pgsql Plugin
 "let g:sql_type_default = 'pgsql' "If you want use this plugin for all sql files
 
+"vim-cpp-enhanced-highlight
+let g:cpp_class_scope_highlight = 1
+let g:cpp_member_variable_highlight = 1
+let g:cpp_class_decl_highlight = 1
+let g:cpp_experimental_template_highlight = 1
+let g:cpp_concepts_highlight = 1
+
+
+
 "Vim buildin omnicompletion"
+
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS

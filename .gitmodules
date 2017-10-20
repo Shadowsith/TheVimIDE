@@ -25,3 +25,6 @@
 [submodule "bundle/vim-cheat40"]
 	path = bundle/vim-cheat40
 	url = https://github.com/lifepillar/vim-cheat40.git
+[submodule "bundle/vim-cpp-enhanced-highlight"]
+	path = bundle/vim-cpp-enhanced-highlight
+	url = https://github.com/octol/vim-cpp-enhanced-highlight.git
