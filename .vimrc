@@ -54,3 +54,8 @@ set belloff+=ctrlg " If Vim beeps during completion
 "pgsql Plugin
 "let g:sql_type_default = 'pgsql' "If you want use this plugin for all sql files
 
+"Vim buildin omnicompletion"
+autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS
