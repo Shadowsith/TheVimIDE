@@ -9,6 +9,7 @@ Plugin 'Shadowsith/vim-syntax'
 Plugin 'vim-scripts/SingleCompile'
 Plugin 'lifepillar/vim-mucomplete'
 Plugin 'lifepillar/pgsql.vim'
+Plugin 'lifepillar/vim-cheat40'
 call vundle#end()
 syntax on
 set number
