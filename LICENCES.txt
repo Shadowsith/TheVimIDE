@@ -1,0 +1,6 @@
+All Copyrights at the creators of the vim plugins:
+
+Following Licences are used/known:
+    Vundle: MIT Copyright (C) 2010 https://github.com/gmarik
+
+

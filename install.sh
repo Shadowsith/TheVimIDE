@@ -1,4 +1,4 @@
-echo Installing shadows vim-plugin-collection
+echo Installing Shadowsith/vim-plugin-collection
 echo Firstly pull all submodules:
 git submodule update --init --recursive
 git submodule update --recursive
@@ -23,11 +23,8 @@ do
             echo "Do you want to delete old vim-files? [y/n]"
     fi
 done
-echo Adding pathogen to autoload:
-cp -a ./vim-pathogen/autoload ./autoload
 echo Copy/Rename vim-plugin-collection to ~/.vim/
 cp -a ../vim-plugin-collection ~/.vim/
 echo Copy .vimrc to .vimrc 
 cp ./.vimrc ~/.vimrc
-rm -rf ./autoload
 echo Finished!

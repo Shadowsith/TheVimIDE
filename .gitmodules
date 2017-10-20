@@ -16,3 +16,9 @@
 [submodule "bundle/vim-syntax"]
 	path = bundle/vim-syntax
 	url = https://github.com/Shadowsith/vim-syntax.git
+[submodule "bundle/Vundle.vim"]
+	path = bundle/Vundle.vim
+	url = https://github.com/VundleVim/Vundle.vim.git
+[submodule "bundle/pgsql.vim"]
+	path = bundle/pgsql.vim
+	url = https://github.com/lifepillar/pgsql.vim.git

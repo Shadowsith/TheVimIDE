@@ -1,4 +1,15 @@
-execute pathogen#infect()
+set nocompatible
+filetype off 
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'vim-syntastic/syntastic'
+Plugin 'luochen1990/rainbow'
+Plugin 'Shadowsith/vim-syntax'
+Plugin 'vim-scripts/SingleCompile'
+Plugin 'lifepillar/vim-mucomplete'
+Plugin 'lifepillar/pgsql.vim'
+call vundle#end()
 syntax on
 set number
 set autoindent
@@ -39,4 +50,6 @@ set completeopt+=noselect
 set shortmess+=c   " Shut off completion messages
 set belloff+=ctrlg " If Vim beeps during completion
 
+"pgsql Plugin
+"let g:sql_type_default = 'pgsql' "If you want use this plugin for all sql files
 
