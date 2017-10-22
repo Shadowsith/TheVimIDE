@@ -1,4 +1,4 @@
-function muInit#Vimrc()
+function mucompleteInit#Vimrc()
         call vundle#begin()
         Plugin 'VundleVim/Vundle.vim'
         Plugin 'vim-syntastic/syntastic'
