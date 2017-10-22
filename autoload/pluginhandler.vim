@@ -1,8 +1,8 @@
-function compa#Check()
+function pluginhandler#Load() 
     let proof = expand('%:e')
     if proof != "c" || proof != "cpp" || proof != "php"
-        call muInit#Vimrc()
+        mucompleteInit#Vimrc()        
     else 
-        call completorInit#Vimrc() 
+        completorInit#Vimrc()
     endif
 endfunction 
