@@ -11,7 +11,7 @@ do
         then
             rm -f ~/.vimrc
             rm -rf ~/.vim/
-            echo this would be done!
+            echo This is be done!
             break
     fi 
     if [ \( $ask == "n" \) -o \( $ask == "N" \)  ];
@@ -19,10 +19,14 @@ do
             echo nothing has deleted, installtion aborted
             exit 1
         else
-            echo input was not correct
+            echo Input was not correct
             echo "Do you want to delete old vim-files? [y/n]"
     fi
 done
+echo Initialize vim-plug pluginmanager
+rm -rf ./autoload
+mkdir ./autoload
+cp ./vim-plug/plug.vim ./autoload/
 echo Copy/Rename vim-plugin-collection to ~/.vim/
 cp -a ../vim-plugin-collection ~/.vim/
 echo Copy .vimrc to .vimrc 
