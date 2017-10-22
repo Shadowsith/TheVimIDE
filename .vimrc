@@ -16,13 +16,14 @@ Plug 'vim-syntastic/syntastic'
 Plug 'luochen1990/rainbow'
 Plug 'Shadowsith/vim-syntax'
 Plug 'vim-scripts/SingleCompile'
-Plug 'lifepillar/vim-mucomplete', { 'for': ['css', 'html', 'php', 'vim', 'markdown', 'dict', 'text', 'xml'] }
+Plug 'lifepillar/vim-mucomplete', { 'for': ['css', 'html', 'php', 'vim', 'markdown', 'dict', 'text', 'xml', 'sh'] }
 Plug 'lifepillar/pgsql.vim'
 Plug 'lifepillar/vim-cheat40'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'maralla/completor.vim', { 'for': ['cpp', 'c'] }
 Plug 'scrooloose/nerdtree'
-Plug 'artur-shaik/vim-javacomplete2', { 'for': ['java'] }
+Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
+Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
 call plug#end()
 
 
@@ -53,9 +54,9 @@ nmap <F3> :set noai
 
 "µComplete for various filetypes
 set completeopt+=menuone
-autocmd FileType vim,css,html,php,markdown,dict,text,xml inoremap <expr> <c-e> mucomplete#popup_exit("\<c-e>")
-autocmd FileType vim,css,html,php,markdown,dict,text,xml inoremap <expr> <c-y> mucomplete#popup_exit("\<c-y>")
-autocmd FileType vim,css,html,php,markdown,dict,text,xml inoremap <expr>  <cr> mucomplete#popup_exit("\<cr>")
+autocmd FileType vim,css,html,php,markdown,dict,text,xml,sh inoremap <expr> <c-e> mucomplete#popup_exit("\<c-e>")
+autocmd FileType vim,css,html,php,markdown,dict,text,xml,sh inoremap <expr> <c-y> mucomplete#popup_exit("\<c-y>")
+autocmd FileType vim,css,html,php,markdown,dict,text,xml,sh inoremap <expr>  <cr> mucomplete#popup_exit("\<cr>")
 set completeopt+=noselect
 set shortmess+=c   " Shut off completion messages
 set belloff+=ctrlg " If Vim beeps during completion
@@ -100,11 +101,15 @@ vmap <leader>jg <Plug>(JavaComplete-Generate-AccessorGetter)
 vmap <leader>ja <Plug>(JavaComplete-Generate-AccessorSetterGetter)
 nmap <silent> <buffer> <leader>jn <Plug>(JavaComplete-Generate-NewClass)
 nmap <silent> <buffer> <leader>jN <Plug>(JavaComplete-Generate-ClassInFile)
-g:JavaComplete_LibsPath
-g:JavaComplete_SourcesPath
 
-
-
+"vim-lua-ftplugin for Lua-Autocompletion
+let g:lua_compiler_name = '/usr/bin/luac'
+let g:lua_check_syntax = 0
+let g:lua_ceck_gloabals = 0
+let g:lua_complete_omni = 1
+let g:lua_safe_omni_modules = 1
+let g:lua_safe_omni_modules = 1
+let g:lua_define_omnifunc = 0
 
 "pgsql Plugin
 "let g:sql_type_default = 'pgsql' "If you want use this plugin for all sql files
@@ -115,7 +120,6 @@ let g:cpp_member_variable_highlight = 1
 let g:cpp_class_decl_highlight = 1 
 let g:cpp_experimental_template_highlight = 1
 let g:cpp_concepts_highlight = 1
-
 
 "Vim buildin omnicompletion"
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP

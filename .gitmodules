@@ -40,3 +40,6 @@
 [submodule "bundle/vim-javacomplete2"]
 	path = bundle/vim-javacomplete2
 	url = https://github.com/artur-shaik/vim-javacomplete2.git
+[submodule "bundle/vim-lua-ftplugin"]
+	path = bundle/vim-lua-ftplugin
+	url = https://github.com/xolox/vim-lua-ftplugin.git
