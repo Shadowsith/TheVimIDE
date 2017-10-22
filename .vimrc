@@ -19,6 +19,7 @@ Plug 'lifepillar/vim-cheat40'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'maralla/completor.vim', { 'for': ['cpp', 'c'] }
 Plug 'scrooloose/nerdtree'
+Plug 'artur-shaik/vim-javacomplete2', { 'for': ['java'] }
 call plug#end()
 
 "Rainbow brakets
@@ -46,7 +47,7 @@ nmap <F2> :set nonu
 nmap <F2> :set ai
 nmap <F3> :set noai
 
-"µComplete
+"µComplete for various filetypes
 set completeopt+=menuone
 autocmd FileType vim,css,html,php inoremap <expr> <c-e> mucomplete#popup_exit("\<c-e>")
 autocmd FileType vim,css,html,php inoremap <expr> <c-y> mucomplete#popup_exit("\<c-y>")
@@ -55,8 +56,8 @@ set completeopt+=noselect
 set shortmess+=c   " Shut off completion messages
 set belloff+=ctrlg " If Vim beeps during completion
 
-"completor
-let g:completor_clang_binary='/usr/bin/clang'
+"completor for C-Familiy, JavaScript, Python
+let g:completor_clang_binary='/usr/bin/clang' "on Linux-Console: $ which clang
 autocmd FileType c,cpp  inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 autocmd FileType c,cpp  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 autocmd FileType c,cpp  inoremap <expr> <cr> pumvisible() ? "\<C-y>\<cr>" : "\<cr>"
@@ -67,9 +68,41 @@ if &completeopt !~# 'noinsert\|noselect'
     set completeopt+=noselect
 endif
 
+"vim-javacomplete2 for Java-Autocompletion
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
+nmap <leader>jI <Plug>(JavaComplete-Imports-AddMissing)
+nmap <leader>jR <Plug>(JavaComplete-Imports-RemoveUnused)
+nmap <leader>ji <Plug>(JavaComplete-Imports-AddSmart)
+nmap <leader>jii <Plug>(JavaComplete-Imports-Add)
+imap <C-j>I <Plug>(JavaComplete-Imports-AddMissing)
+imap <C-j>R <Plug>(JavaComplete-Imports-RemoveUnused)
+imap <C-j>i <Plug>(JavaComplete-Imports-AddSmart)
+imap <C-j>ii <Plug>(JavaComplete-Imports-Add)
+nmap <leader>jM <Plug>(JavaComplete-Generate-AbstractMethods)
+imap <C-j>jM <Plug>(JavaComplete-Generate-AbstractMethods)
+nmap <leader>jA <Plug>(JavaComplete-Generate-Accessors)
+nmap <leader>js <Plug>(JavaComplete-Generate-AccessorSetter)
+nmap <leader>jg <Plug>(JavaComplete-Generate-AccessorGetter)
+nmap <leader>ja <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+nmap <leader>jts <Plug>(JavaComplete-Generate-ToString)
+nmap <leader>jeq <Plug>(JavaComplete-Generate-EqualsAndHashCode)
+nmap <leader>jc <Plug>(JavaComplete-Generate-Constructor)
+nmap <leader>jcc <Plug>(JavaComplete-Generate-DefaultConstructor)
+imap <C-j>s <Plug>(JavaComplete-Generate-AccessorSetter)
+imap <C-j>g <Plug>(JavaComplete-Generate-AccessorGetter)
+imap <C-j>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+vmap <leader>js <Plug>(JavaComplete-Generate-AccessorSetter)
+vmap <leader>jg <Plug>(JavaComplete-Generate-AccessorGetter)
+vmap <leader>ja <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+nmap <silent> <buffer> <leader>jn <Plug>(JavaComplete-Generate-NewClass)
+nmap <silent> <buffer> <leader>jN <Plug>(JavaComplete-Generate-ClassInFile)
+g:JavaComplete_LibsPath
+g:JavaComplete_SourcesPath
+
+
+
 
 "pgsql Plugin
-
 "let g:sql_type_default = 'pgsql' "If you want use this plugin for all sql files
 
 "vim-cpp-enhanced-highlight
