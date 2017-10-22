@@ -9,4 +9,4 @@ set expandtab
 set smarttab
 
 set rtp+=~/.vim/bundle/Vundle.vim
-call compa#Check()
+call pluginhandler#Load()
