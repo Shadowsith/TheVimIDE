@@ -7,13 +7,16 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 set smarttab
+autocmd BufRead,BufNewFile *.xhtml set filetype=html
+autocmd BufRead,BufNewFile *.xmlx set filetype=xml
+autocmd BufRead,BufNewFile *.dict set filetype=dict
 call plug#begin('~/.vim/bundle')
 Plug 'VundleVim/Vundle.vim'
 Plug 'vim-syntastic/syntastic'
 Plug 'luochen1990/rainbow'
 Plug 'Shadowsith/vim-syntax'
 Plug 'vim-scripts/SingleCompile'
-Plug 'lifepillar/vim-mucomplete', { 'for': ['css', 'html', 'php', 'vim'] }
+Plug 'lifepillar/vim-mucomplete', { 'for': ['css', 'html', 'php', 'vim', 'markdown', 'dict', 'text', 'xml'] }
 Plug 'lifepillar/pgsql.vim'
 Plug 'lifepillar/vim-cheat40'
 Plug 'octol/vim-cpp-enhanced-highlight'
@@ -21,6 +24,7 @@ Plug 'maralla/completor.vim', { 'for': ['cpp', 'c'] }
 Plug 'scrooloose/nerdtree'
 Plug 'artur-shaik/vim-javacomplete2', { 'for': ['java'] }
 call plug#end()
+
 
 "Rainbow brakets
 let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
@@ -49,9 +53,9 @@ nmap <F3> :set noai
 
 "µComplete for various filetypes
 set completeopt+=menuone
-autocmd FileType vim,css,html,php inoremap <expr> <c-e> mucomplete#popup_exit("\<c-e>")
-autocmd FileType vim,css,html,php inoremap <expr> <c-y> mucomplete#popup_exit("\<c-y>")
-autocmd FileType vim,css,html,php inoremap <expr>  <cr> mucomplete#popup_exit("\<cr>")
+autocmd FileType vim,css,html,php,markdown,dict,text,xml inoremap <expr> <c-e> mucomplete#popup_exit("\<c-e>")
+autocmd FileType vim,css,html,php,markdown,dict,text,xml inoremap <expr> <c-y> mucomplete#popup_exit("\<c-y>")
+autocmd FileType vim,css,html,php,markdown,dict,text,xml inoremap <expr>  <cr> mucomplete#popup_exit("\<cr>")
 set completeopt+=noselect
 set shortmess+=c   " Shut off completion messages
 set belloff+=ctrlg " If Vim beeps during completion
