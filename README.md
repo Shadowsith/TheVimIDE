@@ -25,13 +25,13 @@ It is in a very early phase, so the installation or plugin-compatiblities could 
 * CSS
 * PHP
 * JavaScript 
+* Lua
 
 # Upcoming autocompleton
 
 * Python (Completor+Jedi)
 * JavaScript (Completor+npm+tern)
 * Rust (Completor+racer)
-* Lua (xolox/vim-lua-ftplugin)
 
 # Future autocompletions
 
