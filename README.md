@@ -15,6 +15,27 @@ It is in a very early phase, so the installation or plugin-compatiblities could 
 * __Clang__ for C-Familiy autocompletion
 * __Jedi__ for Python autocompletion
 * __npm__ for JavaScript autocompletion 
+* __maven__ to build Java autocompletion at your own
+
+## Working autocompletion
+
+* C/C++ 
+* Java 
+* HTML
+* CSS
+* PHP
+* JavaScript 
+
+# Upcoming autocompleton
+
+* Python (Completor+Jedi)
+* JavaScript (Completor+npm+tern)
+* Rust (Completor+racer)
+* Lua (xolox/vim-lua-ftplugin)
+
+# Future autocompletions
+
+* C# (if i can get a smart solution)
 
 
 ## FAQ:

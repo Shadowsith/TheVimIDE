@@ -105,12 +105,7 @@ nmap <silent> <buffer> <leader>jN <Plug>(JavaComplete-Generate-ClassInFile)
 
 "vim-lua-ftplugin for Lua-Autocompletion
 let g:lua_compiler_name = '/usr/bin/luac'
-let g:lua_check_syntax = 0
-let g:lua_ceck_gloabals = 0
 let g:lua_complete_omni = 1
-let g:lua_safe_omni_modules = 1
-let g:lua_safe_omni_modules = 1
-let g:lua_define_omnifunc = 0
 
 "pgsql Plugin
 "let g:sql_type_default = 'pgsql' "If you want use this plugin for all sql files
