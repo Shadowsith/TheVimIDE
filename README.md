@@ -11,6 +11,8 @@ It is in a very early phase, so the installation or plugin-compatiblities could 
 * Small Syntax Highlights by myself
 * Advanced Syntax Highlighting for: C++
 
+![Demo](https://asciinema.org/a/5c5heWdCvueximdH5wBd3Yz4G)
+
 ## Third Party Requirements:
 * __Clang__ for C-Familiy autocompletion
 * __Jedi__ for Python autocompletion
