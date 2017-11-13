@@ -82,3 +82,10 @@ function settingloader#VimOmniCompletion()
     autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 endfunction
 
+function settingloader#Snippets()
+    let g:UltiSnipsExpandTrigger="<tab>"
+    let g:UltiSnipsJumpForwardTrigger="<c-b>"
+    let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+endfunction
+
+

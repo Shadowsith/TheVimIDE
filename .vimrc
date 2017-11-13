@@ -7,25 +7,32 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 set smarttab
-autocmd BufRead,BufNewFile *.xhtml set filetype=html
-autocmd BufRead,BufNewFile *.xmlx set filetype=xml
-autocmd BufRead,BufNewFile *.dict set filetype=dict
-"autocmd BufRead,BufNewFile ^[^.]*$ set filetype=unknown
+
+"Handle autocompletion problems by loading plugins conditionally
+let $ac = expand('%:e') "read file extensions
+
 call plug#begin('~/.vim/bundle')
-Plug 'VundleVim/Vundle.vim'
+"Plug 'VundleVim/Vundle.vim'
 Plug 'vim-syntastic/syntastic'
 Plug 'luochen1990/rainbow'
 Plug 'Shadowsith/vim-syntax'
 Plug 'vim-scripts/SingleCompile'
-Plug 'lifepillar/vim-mucomplete', { 'for': ['css', 'html', 'php', 'vim', 'markdown', 'dict', 'text', 'xml', 'sh', 'java', 'csv', 'lua', 'make', 'unknown'] }
+
+"Mucomplete crashes with completor and javacomplete, so only plugs for other
+"filetypes
+if $ac != "c" || $ac != "cpp" || $ac != "c++" || $ac != "h" || $ac != "hpp"
+    Plug 'lifepillar/vim-mucomplete' ", { 'for': ['css', 'html', 'php', 'vim', 'markdown', 'dict', 'text', 'xml', 'sh', 'java', 'csv', 'lua', 'make', 'unknown'] }
+endif
 Plug 'lifepillar/pgsql.vim'
 Plug 'lifepillar/vim-cheat40'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'maralla/completor.vim', { 'for': ['cpp', 'c'] }
 Plug 'scrooloose/nerdtree'
 Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
-Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
-Plug 'xolox/vim-misc'
+Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' } "lua autocompletion
+Plug 'xolox/vim-misc' "needed for lua-autocompletion
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 call plug#end()
 
 
@@ -47,6 +54,7 @@ nmap <F1> :set nu
 nmap <F2> :set nonu
 nmap <F3> :set ai
 nmap <F4> :set noai
+nmap <S> :w
 
 "µComplete for various filetypes
 call settingloader#MuComplete()
@@ -68,4 +76,7 @@ call settingloader#CppEnhancedHighlight()
 
 "Vim buildin omnicompletion"
 call settingloader#VimOmniCompletion()
+
+"Vim snippets for many languages
+call settingloader#Snippets()
 
