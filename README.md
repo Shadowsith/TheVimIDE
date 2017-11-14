@@ -10,6 +10,8 @@ It is in a very early phase, so the installation or plugin-compatiblities could 
 * Nerdtree to have a integrated file manager 
 * Small Syntax Highlights by myself
 * Advanced Syntax Highlighting for: C++
+* Snippets for many languages 
+* Settingloader in autoload to prefend a to big .vimrc
 
 ![Demo](https://asciinema.org/a/5c5heWdCvueximdH5wBd3Yz4G)
 
