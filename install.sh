@@ -24,8 +24,6 @@ do
     fi
 done
 echo Initialize vim-plug pluginmanager
-rm -rf ./autoload
-mkdir ./autoload
 cp ./vim-plug/plug.vim ./autoload/
 echo Copy/Rename vim-plugin-collection to ~/.vim/
 cp -a ../vim-plugin-collection ~/.vim/
