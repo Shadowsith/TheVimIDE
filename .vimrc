@@ -33,6 +33,7 @@ Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' } "lua autocompletion
 Plug 'xolox/vim-misc' "needed for lua-autocompletion
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'majutsushi/tagbar'
 call plug#end()
 
 
