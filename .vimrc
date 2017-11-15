@@ -34,6 +34,7 @@ Plug 'xolox/vim-misc' "needed for lua-autocompletion
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'majutsushi/tagbar'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 call plug#end()
 
 
