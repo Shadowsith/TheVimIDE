@@ -86,3 +86,7 @@ function settingloader#Snippets()
     let g:UltiSnipsJumpForwardTrigger="<c-b>"
     let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 endfunction
+
+function settingloader#SearchTasks()
+    let g:searchtasks_list=["TODO", "FIXME", "XXX"]
+endfunction

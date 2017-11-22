@@ -83,3 +83,5 @@ call settingloader#VimOmniCompletion()
 "Vim snippets for many languages
 call settingloader#Snippets()
 
+"SearchTasks
+call settingloader#SearchTasks()

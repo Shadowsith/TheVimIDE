@@ -61,3 +61,6 @@
 [submodule "bundle/indentLine"]
 	path = bundle/indentLine
 	url = https://github.com/Yggdroot/indentLine.git
+[submodule "bundle/searchtasks.vim"]
+	path = bundle/searchtasks.vim
+	url = https://github.com/gilsondev/searchtasks.vim.git
