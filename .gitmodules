@@ -64,3 +64,6 @@
 [submodule "bundle/searchtasks.vim"]
 	path = bundle/searchtasks.vim
 	url = https://github.com/gilsondev/searchtasks.vim.git
+[submodule "bundle/vim-js-indent"]
+	path = bundle/vim-js-indent
+	url = https://github.com/jason0x43/vim-js-indent.git
