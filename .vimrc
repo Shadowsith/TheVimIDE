@@ -38,6 +38,7 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'Yggdroot/indentLine'
 Plug 'jason0x43/vim-js-indent'
 Plug 'Townk/vim-autoclose'
+Plug 'elmar-hinz/vim.typoscript' 
 call plug#end()
 
 
