@@ -39,6 +39,7 @@ Plug 'Yggdroot/indentLine'
 Plug 'jason0x43/vim-js-indent'
 Plug 'Townk/vim-autoclose'
 Plug 'elmar-hinz/vim.typoscript' 
+Plug 'nanotech/jellybeans.vim'
 call plug#end()
 
 

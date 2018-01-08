@@ -73,3 +73,6 @@
 [submodule "bundle/vim.typoscript"]
 	path = bundle/vim.typoscript
 	url = https://github.com/elmar-hinz/vim.typoscript.git
+[submodule "bundle/jellybeans.vim"]
+	path = bundle/jellybeans.vim
+	url = https://github.com/nanotech/jellybeans.vim.git
