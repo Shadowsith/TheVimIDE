@@ -20,13 +20,13 @@ Plug 'vim-scripts/SingleCompile'
 
 "Mucomplete crashes with completor and javacomplete, so only plugs for other
 "filetypes
-if $ac != "c" || $ac != "cpp" || $ac != "c++" || $ac != "h" || $ac != "hpp"
+if $ac != "c" || $ac != "cpp" || $ac != "c++" || $ac != "h" || $ac != "hpp" || $ac != "php"
     Plug 'lifepillar/vim-mucomplete' ", { 'for': ['css', 'html', 'php', 'vim', 'markdown', 'dict', 'text', 'xml', 'sh', 'java', 'csv', 'lua', 'make', 'unknown'] }
 endif
 Plug 'lifepillar/pgsql.vim'
 Plug 'lifepillar/vim-cheat40'
 Plug 'octol/vim-cpp-enhanced-highlight'
-Plug 'maralla/completor.vim', { 'for': ['cpp', 'c'] }
+Plug 'maralla/completor.vim', { 'for': ['cpp', 'c', 'php'] }
 Plug 'scrooloose/nerdtree'
 Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
 Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' } "lua autocompletion
@@ -40,6 +40,7 @@ Plug 'jason0x43/vim-js-indent'
 Plug 'Townk/vim-autoclose'
 Plug 'elmar-hinz/vim.typoscript' 
 Plug 'nanotech/jellybeans.vim'
+Plug 'shawncplus/phpcomplete.vim'
 call plug#end()
 
 

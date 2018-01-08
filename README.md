@@ -11,31 +11,52 @@ It is in a very early phase, so the installation or plugin-compatiblities could 
 * Small Syntax Highlights by myself
 * Advanced Syntax Highlighting for: C++
 * Snippets for many languages 
+* Autoclose brackets and quotation marks
 * Settingloader in autoload to prefend a to big .vimrc
 
-![Demo](https://asciinema.org/a/5c5heWdCvueximdH5wBd3Yz4G)
 
 ## Third Party Requirements:
-* __Clang__ for C-Familiy autocompletion
+* _Clang_ for C-Familiy autocompletion
 * __Jedi__ for Python autocompletion
 * __npm__ for JavaScript autocompletion 
 * __maven__ to build Java autocompletion at your own
+* [phpctags](https://github.com/vim-php/phpctags) for better PHP autocompletion experiance
 
 ## Working autocompletion
 
-* C/C++ 
-* Java 
-* HTML
-* CSS
-* PHP
-* JavaScript 
-* Lua
+* C/C++ (Completor) 
+* Java (JavaComplete2)
+* HTML (MuComplete)
+* CSS (MuComplete)
+* PHP (Completor)
+* JavaScript (MuComplete)
+* Lua (Lua ftp plugin)
 
-# Upcoming autocompleton
+## Upcoming autocompleton
 
 * Python (Completor+Jedi)
 * JavaScript (Completor+npm+tern)
 * Rust (Completor+racer)
+
+[//]: <d
+
+## Examples (ttyrecord)
+
+### C/C++
+
+### Java
+
+### Lua
+
+### HTML
+
+### CSS
+
+### PHP
+
+### JavaScript
+
+>
 
 # Future autocompletions
 
