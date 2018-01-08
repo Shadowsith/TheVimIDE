@@ -37,6 +37,7 @@ Plug 'majutsushi/tagbar'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'Yggdroot/indentLine'
 Plug 'jason0x43/vim-js-indent'
+Plug 'Townk/vim-autoclose'
 call plug#end()
 
 
