@@ -1,0 +1,13 @@
+{
+   "_comment": "This is a working example of a global autocompleton file",
+   "libs": [
+     "browser",
+     "jquery",
+     "react"
+   ],
+   "plugins": {
+       "doc_comment": null,
+       "angular": {},
+       "node": {}
+   }
+ }
