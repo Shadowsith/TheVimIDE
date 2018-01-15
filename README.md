@@ -16,11 +16,25 @@ It is in a very early phase, so the installation or plugin-compatiblities could 
 
 
 ## Third Party Requirements:
-* _Clang_ for C-Familiy autocompletion
+* __Clang__ for C-Familiy autocompletion
 * __Jedi__ for Python autocompletion
-* __npm__ for JavaScript autocompletion 
+* __npm, nodejs__ for (good) JavaScript autocompletion, default needs nothings
 * __maven__ to build Java autocompletion at your own
-* [phpctags](https://github.com/vim-php/phpctags) for better PHP autocompletion experiance
+* [__phpctags__](https://github.com/vim-php/phpctags) for better PHP autocompletion experience
+
+
+## Installing thrird party Requirements:
+
+### Clang, npm, nodejs, lua, maven:
+* Debian/Ubuntu: `sudo apt-get install clang nodejs npm lua5.3 liblua5.3 maven`
+* Arch Linux: `sudo pacman -S clang nodejs npm lua maven`
+
+The named OS above are tested
+
+## Plugins you need compile at your own:
+After running my install.sh or copy on your own got to:
+* .vim/bundle/tern_for_vim and call `npm install`
+* .vim/bundle/vim-javacomplete2/libs/javai and call `mvn compile`
 
 ## Working autocompletion
 
@@ -28,19 +42,16 @@ It is in a very early phase, so the installation or plugin-compatiblities could 
 * Java (JavaComplete2)
 * HTML (MuComplete)
 * CSS (MuComplete)
-* PHP (Completor)
-* JavaScript (MuComplete)
+* PHP (Completor+phpctags)
+* JavaScript (Competor+tern)
 * Lua (Lua ftp plugin)
 
 ## Upcoming autocompleton
 
 * Python (Completor+Jedi)
-* JavaScript (Completor+npm+tern)
 * Rust (Completor+racer)
 
-[//]: <d
-
-## Examples (ttyrecord)
+## Examples (ttyrecord) coming soon
 
 ### C/C++
 
@@ -56,7 +67,6 @@ It is in a very early phase, so the installation or plugin-compatiblities could 
 
 ### JavaScript
 
->
 
 # Future autocompletions
 
@@ -67,11 +77,9 @@ It is in a very early phase, so the installation or plugin-compatiblities could 
 
 Why I use different autocompletion plugins?
 * I have tested several plugins and each has pros and cons.
-  * µComplete is very good for most filetypes (e.g html,php,css), but it needs extra plugins for using C/C++ autocompletion and it was very slow. It also is very compatible with vim ommicompletions
-  * Completor on the other hand is very good for C/C++ (much faster than µComplete with clang-complete), Pyhton (Jedi) and Javascript
+  * µComplete is very good for most filetypes (e.g html,css), but it needs extra plugins for using C/C++ autocompletion and it was very slow. It also is very compatible with vim ommicompletions
+  * Completor on the other hand is very good for C/C++ (much faster than µComplete with clang-complete), PHP, Pyhton (Jedi) and Javascript
 
 Why I don't use YouCompleteMe?
 * YouCompleteMe is great but it is awful to install and I want to make a collection in mind of the KISS principle.
-
-
 

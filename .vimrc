@@ -41,6 +41,7 @@ Plug 'Townk/vim-autoclose'
 Plug 'elmar-hinz/vim.typoscript' 
 Plug 'nanotech/jellybeans.vim'
 Plug 'shawncplus/phpcomplete.vim'
+Plug 'ternjs/tern_for_vim'
 call plug#end()
 
 
