@@ -12,7 +12,8 @@
     }
   },
   "rotate": {
-    "!type": "fn(arg: string)"
+    "!type": "fn(arg: number)",
+    "!doc": "rotate a element by x degrees"
   },
   "someOtherGlobal": "string"
 }

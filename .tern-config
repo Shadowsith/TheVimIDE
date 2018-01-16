@@ -1,13 +1,20 @@
 {
-   "_comment": "This is a working example of a global autocompleton file",
-   "libs": [
-     "browser",
-     "jquery",
-     "react"
+    "_comment": "This is a working template for global autocompletion",
+    "_comment": "Don't make a ',' at the end of a list",
+
+    "_comment": "Put here json libs form ~/.vim/bundle/tern_for_vim/node_modules/tern/defs",
+    "libs": [
+        "browser",
+        "jquery",
+        "react"
    ],
+    "_comment": "Put here absolute paths of other *.js files",
+    "loadEagerly": [
+    ],
    "plugins": {
        "doc_comment": null,
        "angular": {},
+       "es_modules": {},
        "node": {}
    }
  }
