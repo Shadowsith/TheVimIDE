@@ -32,4 +32,6 @@ echo Copy/Rename vim-plugin-collection to ~/.vim/
 cp -a ./bundle ~/.config/nvim/bundle
 echo Copy .vimrc to .vimrc 
 cp ./.vimrc ~/.config/nvim/init.vim
+echo Copy .tern-config to ~/.tern-config
+cp ./.tern-config ~/.tern-config
 echo Finished!

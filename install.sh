@@ -27,6 +27,8 @@ echo Initialize vim-plug pluginmanager
 cp ./vim-plug/plug.vim ./autoload/
 echo Copy/Rename vim-plugin-collection to ~/.vim/
 cp -a ../vim-plugin-collection ~/.vim/
-echo Copy .vimrc to .vimrc 
+echo Copy .vimrc to ~/.vimrc 
 cp ./.vimrc ~/.vimrc
+echo Copy .tern-config to ~/.tern-config
+cp ./.tern-config ~/.tern-config
 echo Finished!
