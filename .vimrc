@@ -7,6 +7,7 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 set smarttab
+set laststatus=2
 
 "Handle autocompletion problems by loading plugins conditionally
 let $ac = expand('%:e') "read file extensions
@@ -42,6 +43,7 @@ Plug 'elmar-hinz/vim.typoscript'
 Plug 'nanotech/jellybeans.vim'
 Plug 'shawncplus/phpcomplete.vim'
 Plug 'ternjs/tern_for_vim'
+Plug 'itchyny/lightline.vim'
 call plug#end()
 
 
