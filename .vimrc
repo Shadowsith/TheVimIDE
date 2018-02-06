@@ -7,13 +7,14 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 set smarttab
-set laststatus=2
+set nosmd 
+set noru
+
 
 "Handle autocompletion problems by loading plugins conditionally
 let $ac = expand('%:e') "read file extensions
 
 call plug#begin('~/.vim/bundle')
-"Plug 'VundleVim/Vundle.vim'
 Plug 'vim-syntastic/syntastic'
 Plug 'luochen1990/rainbow'
 Plug 'Shadowsith/vim-syntax'
@@ -62,11 +63,12 @@ nmap <F9> :SCCompile<cr>
 nmap <F10> :SCCompileRun<cr>
 
 "Various Hotkeys
-nmap <F1> :set nu
-nmap <F2> :set nonu
-nmap <F3> :set ai
-nmap <F4> :set noai
-nmap <S> :w
+nmap <F2> :call hotkeys#LineNumbers()<cr>
+nmap <F3> :call hotkeys#AutoIndent()<cr>
+nmap <S-s> :w<cr>
+nmap <S-Right> :tabn<cr>
+nmap <S-Left> :tabp<cr>
+
 
 "µComplete for various filetypes
 call settingloader#MuComplete()
