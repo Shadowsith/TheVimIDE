@@ -46,6 +46,7 @@ Plug 'shawncplus/phpcomplete.vim'
 Plug 'ternjs/tern_for_vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'othree/html5.vim'
 call plug#end()
 
 
@@ -68,7 +69,6 @@ nmap <F3> :call hotkeys#AutoIndent()<cr>
 nmap <S-s> :w<cr>
 nmap <S-Right> :tabn<cr>
 nmap <S-Left> :tabp<cr>
-
 
 "µComplete for various filetypes
 call settingloader#MuComplete()
