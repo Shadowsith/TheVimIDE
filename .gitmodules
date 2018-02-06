@@ -82,6 +82,9 @@
 [submodule "bundle/tern_for_vim"]
 	path = bundle/tern_for_vim
 	url = https://github.com/ternjs/tern_for_vim
-[submodule "bundle/lightline.vim"]
-	path = bundle/lightline.vim
-	url = https://github.com/itchyny/lightline.vim.git
+[submodule "bundle/vim-airline"]
+	path = bundle/vim-airline
+	url = https://github.com/vim-airline/vim-airline
+[submodule "bundle/vim-airline-themes"]
+	path = bundle/vim-airline-themes
+	url = https://github.com/vim-airline/vim-airline-themes

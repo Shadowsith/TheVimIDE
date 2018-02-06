@@ -43,7 +43,8 @@ Plug 'elmar-hinz/vim.typoscript'
 Plug 'nanotech/jellybeans.vim'
 Plug 'shawncplus/phpcomplete.vim'
 Plug 'ternjs/tern_for_vim'
-Plug 'itchyny/lightline.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 call plug#end()
 
 
