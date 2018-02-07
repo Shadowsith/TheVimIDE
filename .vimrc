@@ -47,6 +47,9 @@ Plug 'ternjs/tern_for_vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'othree/html5.vim'
+Plug 'OmniSharp/omnisharp-vim', {'for': 'cs'}
+Plug 'Shougo/vimproc.vim', {'for' : 'cs'}
+Plug 'tpope/vim-dispatch', {'for' : 'cs'} 
 call plug#end()
 
 
@@ -96,3 +99,8 @@ call settingloader#Snippets()
 
 "SearchTasks
 call settingloader#SearchTasks()
+
+"OmniSharp
+if $ac == "cs"
+    settingloader#OmniSharp() 
+endif
