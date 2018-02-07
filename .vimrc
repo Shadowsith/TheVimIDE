@@ -52,6 +52,8 @@ Plug 'Shougo/vimproc.vim', {'for' : 'cs'}
 Plug 'tpope/vim-dispatch', {'for' : 'cs'} 
 call plug#end()
 
+"Vim-Airline
+call settingloader#Airline() 
 
 "Rainbow brakets
 let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
