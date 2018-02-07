@@ -16,13 +16,11 @@ endfunction
 
 function settingloader#MuComplete()
     set completeopt+=menuone
-    "autocmd FileType vim,css,html,php,markdown,dict,text,xml,sh,java,csv,lua,make,unkown inoremap <expr> <c-e> mucomplete#popup_exit("\<c-e>")
-    "autocmd FileType vim,css,html,php,markdown,dict,text,xml,sh,java,csv,lua,make,unkown inoremap <expr> <c-y> mucomplete#popup_exit("\<c-y>")
-    "autocmd FileType vim,css,html,php,markdown,dict,text,xml,sh,java,csv.lua,make,unkown inoremap <expr>  <cr> mucomplete#popup_exit("\<cr>")
     set completeopt+=noselect
     set completeopt+=noinsert 
     set shortmess+=c   " Shut off completion messages
     set belloff+=ctrlg " If Vim beeps during completion
+    let g:mucomplete#enable_auto_at_startup = 1
 endfunction 
 
 function settingloader#Completor()
@@ -84,6 +82,7 @@ endfunction
 function settingloader#VimOmniCompletion()
     autocmd FileType php set omnifunc=phpcomplete#CompletePHP
     autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+    "TODO must changed to tern
     autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
     autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 endfunction
