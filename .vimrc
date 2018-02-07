@@ -104,5 +104,5 @@ call settingloader#SearchTasks()
 
 "OmniSharp
 if $ac == "cs"
-    settingloader#OmniSharp() 
+    call settingloader#OmniSharp() 
 endif
