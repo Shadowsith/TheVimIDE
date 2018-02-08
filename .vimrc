@@ -50,6 +50,7 @@ Plug 'othree/html5.vim'
 Plug 'OmniSharp/omnisharp-vim', {'for': 'cs'}
 Plug 'Shougo/vimproc.vim', {'for' : 'cs'}
 Plug 'tpope/vim-dispatch', {'for' : 'cs'} 
+Plug '~/.vim/bundle/dbext'
 call plug#end()
 
 "Vim-Airline
