@@ -35,7 +35,7 @@ The named OS above are tested
 After execution of the install.sh script you can use the 
 other install scripts for plugins that you need to build. 
 * omnisharp__install.sh for C# autocompletion 
-* java__install.sh for Java
+* java_install.sh for Java
 * javascript_install.sh for Javascript
 
 ## Working autocompletion
@@ -76,14 +76,6 @@ I don't know why but then is works.
 
 ### JavaScript
 
-
-# The future of the vim-plugin-collection
-The VPC is a all in one solution but some people need only a part of it.
-When I have more time I will make a series of VIM-IDEs for webprogramming,
-compiler based programming and script based programming. 
-I will also rename the VPC to a name that fits better to a all in one IDE.
-
-
 ## FAQ:
 
 Why I use different autocompletion plugins?
@@ -99,4 +91,11 @@ Why I don't use YouCompleteMe?
     * I don't want to blow out the collection to hundrets of megabyte 
 * C# completion is not as smart then my solution 
 * Web programming is not supported
+
+## The future of the vim-plugin-collection
+The VPC is a all in one solution but some people need only a part of it.
+When I have more time I will make a series of VIM-IDEs for webprogramming,
+compiler based programming and script based programming. 
+I will also rename the VPC to a name that fits better to a all in one IDE.
+
 
