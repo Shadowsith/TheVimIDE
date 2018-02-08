@@ -32,24 +32,33 @@ It is in a very early phase, so the installation or plugin-compatiblities could 
 The named OS above are tested
 
 ## Plugins you need compile at your own:
-After running my install.sh or copy on your own got to:
-* .vim/bundle/tern_for_vim and call `npm install`
-* .vim/bundle/vim-javacomplete2/libs/javai and call `mvn compile`
+After execution of the install.sh script you can use the 
+other install scripts for plugins that you need to build. 
+* omnisharp__install.sh for C# autocompletion 
+* java__install.sh for Java
+* javascript_install.sh for Javascript
 
 ## Working autocompletion
 
-* C/C++ (Completor) 
+* C/C++ (Completor+clang) 
 * Java (JavaComplete2)
-* HTML (MuComplete)
+* HTML5 (MuComplete)
 * CSS (MuComplete)
 * PHP (Completor+phpctags)
 * JavaScript (Competor+tern)
 * Lua (Lua ftp plugin)
+* C# (MuComplete+OmniSharp-vim) 
 
 ## Upcoming autocompleton
 
 * Python (Completor+Jedi)
 * Rust (Completor+racer)
+
+## Knowing issuses 
+### C# omnicompletion does not work
+If C# completion does not work after executing the omnisharp_install script 
+you have to add a empty .sln (Visual Studio Solution) file to your C# projecti or working folder. 
+I don't know why but then is works. 
 
 ## Examples (ttyrecord) coming soon
 
@@ -68,18 +77,26 @@ After running my install.sh or copy on your own got to:
 ### JavaScript
 
 
-# Future autocompletions
-
-* C# (if i can get a smart solution)
+# The future of the vim-plugin-collection
+The VPC is a all in one solution but some people need only a part of it.
+When I have more time I will make a series of VIM-IDEs for webprogramming,
+compiler based programming and script based programming. 
+I will also rename the VPC to a name that fits better to a all in one IDE.
 
 
 ## FAQ:
 
 Why I use different autocompletion plugins?
 * I have tested several plugins and each has pros and cons.
-  * µComplete is very good for most filetypes (e.g html,css), but it needs extra plugins for using C/C++ autocompletion and it was very slow. It also is very compatible with vim ommicompletions
+  * µComplete is very good for most filetypes (e.g html,css), but it needs extra plugins for using C/C++ autocompletion and it was very slow. It also is very compatible with vim ommicompletions. The harmony between mucomplete and the OmniSharp-Server is also great.
   * Completor on the other hand is very good for C/C++ (much faster than µComplete with clang-complete), PHP, Pyhton (Jedi) and Javascript
 
 Why I don't use YouCompleteMe?
-* YouCompleteMe is great but it is awful to install and I want to make a collection in mind of the KISS principle.
+* YCM is a good solution if you are lazy to configurate vim like my vim-plugin-collection and on the other hand it works very well, but:
+* I and others users has sometimes build problems with YCM
+* The omnicomplete server ycmd can also make problems if it crashes (no autocompletion then) 
+* Basic install is much bigger then vim-plugin-collection (and it is only autocompletion) 
+    * I don't want to blow out the collection to hundrets of megabyte 
+* C# completion is not as smart then my solution 
+* Web programming is not supported
 
