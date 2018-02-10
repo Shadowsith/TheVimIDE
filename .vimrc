@@ -82,8 +82,8 @@ nmap <F10> :SCCompileRun<cr>
 nmap <F2> :call hotkeys#LineNumbers()<cr>
 nmap <F3> :call hotkeys#AutoIndent()<cr>
 nmap <S-s> :w<cr>
-nmap <S-Right> :tabn<cr>
-nmap <S-Left> :tabp<cr>
+nmap <C-Right> :tabn<cr>
+nmap <C-Left> :tabp<cr>
 
 "µComplete for various filetypes
 call settingloader#MuComplete()

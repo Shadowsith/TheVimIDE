@@ -82,8 +82,7 @@ endfunction
 function settingloader#VimOmniCompletion()
     autocmd FileType php set omnifunc=phpcomplete#CompletePHP
     autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-    "TODO must changed to tern
-    autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+    autocm FileType javascript set omnifunc=tern#Complete
     autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 endfunction
 
