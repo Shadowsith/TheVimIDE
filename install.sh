@@ -31,4 +31,73 @@ echo Copy .vimrc to ~/.vimrc
 cp ./.vimrc ~/.vimrc
 echo Copy .tern-config to ~/.tern-config
 cp ./.tern-config ~/.tern-config
+echo "Do you want to install Java autocompletion? [y/n]" 
+while [ \( "$ask" != "y" \) -o \( "$ask" != "n" \) -o \( "$ask" != "Y" \) -o \( "$ask" != "N" \) ]
+do
+    read -r ask
+    if [ \( $ask == "y" \) -o \( $ask == "Y" \)  ];
+        then
+            ./build/java_install.sh 
+            break
+    fi 
+    if [ \( $ask == "n" \) -o \( $ask == "N" \)  ];
+        then
+            break 
+        else
+            echo Input was not correct
+            echo "Do you want to install Java autocompletion? [y/n]"
+    fi
+done
+echo "Do you want to install JavaScript autocompletion? [y/n]"
+while [ \( "$ask" != "y" \) -o \( "$ask" != "n" \) -o \( "$ask" != "Y" \) -o \( "$ask" != "N" \) ]
+do
+    read -r ask
+    if [ \( $ask == "y" \) -o \( $ask == "Y" \)  ];
+        then
+            ./build/javascript_tern_install.sh  
+            break
+    fi 
+    if [ \( $ask == "n" \) -o \( $ask == "N" \)  ];
+        then
+            break 
+        else
+            echo Input was not correct
+            echo "Do you want to install JavaScript autocompletion? [y/n]"
+    fi
+done
+echo "Do you want to install C# autocompletion? [y/n]"
+while [ \( "$ask" != "y" \) -o \( "$ask" != "n" \) -o \( "$ask" != "Y" \) -o \( "$ask" != "N" \) ]
+do
+    read -r ask
+    if [ \( $ask == "y" \) -o \( $ask == "Y" \)  ];
+        then
+            ./build/omnisharp_install.sh  
+            break
+    fi 
+    if [ \( $ask == "n" \) -o \( $ask == "N" \)  ];
+        then
+            break 
+        else
+            echo Input was not correct
+            echo "Do you want to install C# autocompletion? [y/n]"
+    fi
+done
+echo "Do you want to install Vim-Tagbar (shows a function bar at the left side)? [y/n]"
+while [ \( "$ask" != "y" \) -o \( "$ask" != "n" \) -o \( "$ask" != "Y" \) -o \( "$ask" != "N" \) ]
+do
+    read -r ask
+    if [ \( $ask == "y" \) -o \( $ask == "Y" \)  ];
+        then
+            ./build/tagbar_ctags_install.sh  
+            break
+    fi 
+    if [ \( $ask == "n" \) -o \( $ask == "N" \)  ];
+        then
+            break 
+        else
+            echo Input was not correct
+            echo "Do you want to install Vim-Tagbar (shows a function bar at the left side)? [y/n]"
+    fi
+done
 echo Finished!
+exit 0

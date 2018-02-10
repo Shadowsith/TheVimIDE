@@ -1,5 +1,5 @@
 echo Installing ctags to see Methods of file
-cd ctags 
+cd ../ctags 
 ./autogen.sh 
 ./configure 
 make 
