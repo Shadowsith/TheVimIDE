@@ -106,3 +106,12 @@
 [submodule "bundle/clickable.vim"]
 	path = bundle/clickable.vim
 	url = https://github.com/gu-fan/clickable.vim.git
+[submodule "bundle/DidYouMean"]
+	path = bundle/DidYouMean
+	url = https://github.com/EinfachToll/DidYouMean.git
+[submodule "bundle/vim-commentary"]
+	path = bundle/vim-commentary
+	url = https://github.com/tpope/vim-commentary.git
+[submodule "bundle/vimwiki"]
+	path = bundle/vimwiki
+	url = https://github.com/vimwiki/vimwiki.git

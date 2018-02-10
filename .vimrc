@@ -52,7 +52,10 @@ Plug 'OmniSharp/omnisharp-vim', {'for': 'cs'}
 Plug 'Shougo/vimproc.vim', {'for' : 'cs'}
 Plug 'tpope/vim-dispatch', {'for' : 'cs'} 
 Plug '~/.vim/bundle/dbext'
-Plug 'https://github.com/gu-fan/clickable.vim.git'
+Plug 'gu-fan/clickable.vim'
+Plug 'EinfachToll/DidYouMean'
+Plug 'tpope/vim-commentary'
+Plug 'vimwiki/vimwiki'
 call plug#end()
 
 "Vim-Airline (Userinterface)
