@@ -9,6 +9,7 @@ set expandtab
 set smarttab
 set nosmd 
 set noru
+set splitbelow 
 
 
 "Handle autocompletion problems by loading plugins conditionally
@@ -51,9 +52,10 @@ Plug 'OmniSharp/omnisharp-vim', {'for': 'cs'}
 Plug 'Shougo/vimproc.vim', {'for' : 'cs'}
 Plug 'tpope/vim-dispatch', {'for' : 'cs'} 
 Plug '~/.vim/bundle/dbext'
+Plug 'https://github.com/gu-fan/clickable.vim.git'
 call plug#end()
 
-"Vim-Airline
+"Vim-Airline (Userinterface)
 call settingloader#Airline() 
 
 "Rainbow brakets
@@ -61,6 +63,10 @@ let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 
 "Nerdtree
 map <C-n> :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+"Tagbar 
+map <C-t> :TagbarToggle<CR>
 
 "Syntatisc
 call settingloader#Syntastic()
