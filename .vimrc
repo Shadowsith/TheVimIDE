@@ -57,6 +57,7 @@ Plug 'EinfachToll/DidYouMean'
 Plug 'tpope/vim-commentary'
 Plug 'vimwiki/vimwiki'
 Plug 'ap/vim-css-color'
+Plug 'MattesGroeger/vim-bookmarks'
 call plug#end()
 
 "Vim-Airline (Userinterface)

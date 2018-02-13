@@ -121,3 +121,6 @@
 [submodule "bundle/vim-css-color"]
 	path = bundle/vim-css-color
 	url = https://github.com/ap/vim-css-color.git
+[submodule "bundle/vim-bookmarks"]
+	path = bundle/vim-bookmarks
+	url = https://github.com/MattesGroeger/vim-bookmarks.git
