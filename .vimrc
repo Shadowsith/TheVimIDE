@@ -69,6 +69,8 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 "Tagbar 
 map <C-t> :TagbarToggle<CR>
+let g:tagbar_phpctags_bin='/usr/bin/phpctags'
+let g:tagbar_phpctags_memory_limit = '256M'
 
 "Syntatisc
 call settingloader#Syntastic()

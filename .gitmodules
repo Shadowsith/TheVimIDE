@@ -112,3 +112,6 @@
 [submodule "bundle/vimwiki"]
 	path = bundle/vimwiki
 	url = https://github.com/vimwiki/vimwiki.git
+[submodule "bundle/tagbar-phpctags.vim"]
+	path = bundle/tagbar-phpctags.vim
+	url = https://github.com/vim-php/tagbar-phpctags.vim.git
