@@ -52,7 +52,6 @@ Plug 'OmniSharp/omnisharp-vim', {'for': 'cs'}
 Plug 'Shougo/vimproc.vim', {'for' : 'cs'}
 Plug 'tpope/vim-dispatch', {'for' : 'cs'} 
 Plug '~/.vim/bundle/dbext'
-Plug 'gu-fan/clickable.vim'
 Plug 'EinfachToll/DidYouMean'
 Plug 'tpope/vim-commentary'
 Plug 'vimwiki/vimwiki'
