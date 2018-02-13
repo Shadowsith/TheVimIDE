@@ -56,6 +56,7 @@ Plug '~/.vim/bundle/dbext'
 Plug 'EinfachToll/DidYouMean'
 Plug 'tpope/vim-commentary'
 Plug 'vimwiki/vimwiki'
+Plug 'ap/vim-css-color'
 call plug#end()
 
 "Vim-Airline (Userinterface)
