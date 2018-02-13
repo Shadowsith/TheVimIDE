@@ -31,6 +31,7 @@ Plug 'lifepillar/vim-cheat40'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'maralla/completor.vim', { 'for': ['cpp', 'c', 'php'] }
 Plug 'scrooloose/nerdtree'
+Plug 'jistr/vim-nerdtree-tabs'
 Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
 Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' } "lua autocompletion
 Plug 'xolox/vim-misc' "needed for lua-autocompletion
@@ -64,7 +65,7 @@ call settingloader#Airline()
 let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 
 "Nerdtree
-map <C-n> :NERDTreeToggle<CR>
+map <C-n> :NERDTreeTabsToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 "Tagbar 
