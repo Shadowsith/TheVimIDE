@@ -17,7 +17,6 @@ endfunction
 function settingloader#MuComplete()
     set completeopt+=menuone
     set completeopt+=noselect
-    set completeopt+=noinsert 
     set shortmess+=c   " Shut off completion messages
     set belloff+=ctrlg " If Vim beeps during completion
 endfunction 
