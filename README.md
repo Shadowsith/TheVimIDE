@@ -67,6 +67,7 @@ I don't know why but then is works.
 ### Java
 
 ### Lua
+![](gifs/lua_demo.gif)
 
 ### HTML
 
