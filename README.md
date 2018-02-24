@@ -2,9 +2,20 @@
 This collection several useful tools to make your programming with vim easier.
 It is in a very early phase, so the installation or plugin-compatiblities could be buggy
 
-# Table of Contents
-1. [Major Features](#major_features)  
+## Table of Contents
 
+<span style="font-size:larger;"> 
+1. [Major Features](#major_features)  
+2. [Minor Features](#minor_features)
+3. [Third Party Requirements](#third_party) 
+4. [Compileable Plugins](#compile) 
+5. [Working Autocompletion](#auto)
+6. [Upcoming Autocompletion](#upcomingauto) 
+7. [Knowing Issues](#issues) 
+8. [Examples](#examples) 
+9. [FAQ](#faq) 
+10. [Project Future](#future)
+</span> 
 
 ## Major Features <a name="major_features"></a> 
 
@@ -19,33 +30,34 @@ It is in a very early phase, so the installation or plugin-compatiblities could 
 * Autoclose brackets and quotation marks
 * Settingloader in autoload to prefend a to big .vimrc
 
-## Minor Features
+## Minor Features <a name="minor_features"></a> 
 
 
-## Third Party Requirements:
+## Third Party Requirements: <a name="third_party"></a> 
+
 * __Clang__ for C-Familiy autocompletion
 * __Jedi__ for Python autocompletion
 * __npm, nodejs__ for (good) JavaScript autocompletion, default needs nothings
 * __maven__ to build Java autocompletion at your own
 * [__phpctags__](https://github.com/vim-php/phpctags) for better PHP autocompletion experience
 
+### Installing third party Requirements:
 
-## Installing thrird party Requirements:
-
-### Clang, npm, nodejs, lua, maven:
+#### Clang, npm, nodejs, lua, maven:
 * Debian/Ubuntu: `sudo apt-get install clang nodejs npm lua5.3 liblua5.3 maven`
 * Arch Linux: `sudo pacman -S clang nodejs npm lua maven`
 
 The named OS above are tested
 
-## Plugins you need compile at your own:
+## Plugins you need compile at your own: <a name="compile"></a> 
+
 After execution of the install.sh script you can use the 
 other install scripts for plugins that you need to build. 
 * omnisharp__install.sh for C# autocompletion 
 * java_install.sh for Java
 * javascript_install.sh for Javascript
 
-## Working autocompletion
+## Working autocompletion: <a name="auto"></a> 
 
 * C/C++ (Completor+clang) 
 * Java (JavaComplete2)
@@ -56,18 +68,18 @@ other install scripts for plugins that you need to build.
 * Lua (Lua ftp plugin)
 * C# (MuComplete+OmniSharp-vim) 
 
-## Upcoming autocompleton
+## Upcoming autocompleton: <a name="upcomingauto"></a> 
 
 * Python (Completor+Jedi)
 * Rust (Completor+racer)
 
-## Knowing issuses 
-### C# omnicompletion does not work
+## Knowing issuses: <a name="issues"></a> 
+### C# omnicompletion does not work:
 If C# completion does not work after executing the omnisharp_install script 
 you have to add a empty .sln (Visual Studio Solution) file to your C# projecti or working folder. 
 I don't know why but then is works. 
 
-## Examples (ttyrecord) coming soon
+## Examples (ttyrecord) coming soon: <a name="examples"></a> 
 
 ### C/C++
 
@@ -84,7 +96,7 @@ I don't know why but then is works.
 
 ### JavaScript
 
-## FAQ:
+## FAQ: <a name="faq"></a> 
 
 Why I use different autocompletion plugins?
 * I have tested several plugins and each has pros and cons.
@@ -100,7 +112,7 @@ Why I don't use YouCompleteMe?
 * C# completion is not as smart then my solution 
 * Web programming is not supported
 
-## The future of the vim-plugin-collection
+## The future of the vim-plugin-collection: <a name="future"></a> 
 The VPC is a all in one solution but some people need only a part of it.
 When I have more time I will make a series of VIM-IDEs for webprogramming,
 compiler based programming and script based programming. 
