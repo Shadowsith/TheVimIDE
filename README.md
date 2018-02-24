@@ -3,8 +3,6 @@ This collection several useful tools to make your programming with vim easier.
 It is in a very early phase, so the installation or plugin-compatiblities could be buggy
 
 ## Table of Contents
-
-<span style="font-size:larger;"> 
 1. [Major Features](#major_features)  
 2. [Minor Features](#minor_features)
 3. [Third Party Requirements](#third_party) 
@@ -15,7 +13,6 @@ It is in a very early phase, so the installation or plugin-compatiblities could 
 8. [Examples](#examples) 
 9. [FAQ](#faq) 
 10. [Project Future](#future)
-</span> 
 
 ## Major Features <a name="major_features"></a> 
 
