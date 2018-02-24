@@ -3,10 +3,10 @@ This collection several useful tools to make your programming with vim easier.
 It is in a very early phase, so the installation or plugin-compatiblities could be buggy
 
 # Table of Contents
-1. [Major Features](#major features)  
+1. [Major Features](#major_features)  
 
 
-## Major Features
+## Major Features <a name="major_features"></a> 
 
 * vim-plug, add plugins in a easy way and perevents on autocompletion conflicts
 * rainbow bracklets to show which paranthesis are which block 
