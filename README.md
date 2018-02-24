@@ -2,6 +2,8 @@
 This collection several useful tools to make your programming with vim easier.
 It is in a very early phase, so the installation or plugin-compatiblities could be buggy
 
+![](gifs/intro.png)
+
 ## Table of Contents
 1. [Major Features](#major_features)  
 2. [Minor Features](#minor_features)
@@ -33,12 +35,11 @@ It is in a very early phase, so the installation or plugin-compatiblities could 
 * [rainbow bracklets](https://github.com/luochen1990/rainbow) to highlight brackets 
 * [identLine](https://github.com/Yggdroot/indentLine) (Highlights line indentation) 
 * [autoclose](https://github.com/Townk/vim-autoclose) brackets and quotation marks
-* [Commentary](https://github.com/tpope/vim-commentary.git) faster 
+* [Commentary](https://github.com/tpope/vim-commentary.git) faster comment out lines
 * [VimWiki](https://github.com/vimwiki/vimwiki) (A wiki system for vim) 
 * [DidYouMean](https://github.com/EinfachToll/DidYouMean) asks for the right file to open when similiar files exists
 * Smart hotkeys (using same hotkey to toggle on or of a feature) 
 * Small Syntax Highlights by myself
-
 
 ## Third Party Requirements: <a name="third_party"></a> 
 

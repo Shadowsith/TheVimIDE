@@ -11,7 +11,6 @@ set nosmd
 set noru
 set splitbelow 
 
-
 "Handle autocompletion problems by loading plugins conditionally
 let $ac = expand('%:e') "read file extensions
 
@@ -59,6 +58,8 @@ Plug 'vimwiki/vimwiki'
 Plug 'ap/vim-css-color'
 Plug 'MattesGroeger/vim-bookmarks'
 call plug#end()
+
+colorscheme jellybeans
 
 "Vim-Airline (Userinterface)
 call settingloader#Airline() 
