@@ -16,18 +16,28 @@ It is in a very early phase, so the installation or plugin-compatiblities could 
 
 ## Major Features <a name="major_features"></a> 
 
-* vim-plug, add plugins in a easy way and perevents on autocompletion conflicts
-* rainbow bracklets to show which paranthesis are which block 
-* Syntastic to for test-compiling and show syntax errors during programming
-* SimpleCompile to run fast test compilings without closing vim
-* Nerdtree to have a integrated file manager 
-* Small Syntax Highlights by myself
-* Advanced Syntax Highlighting for: C++
-* Snippets for many languages 
-* Autoclose brackets and quotation marks
-* Settingloader in autoload to prefend a to big .vimrc
+* [vim-plug](https://github.com/junegunn/vim-plug) to add plugins in a easy way 
+* [vim-airline](https://github.com/vim-airline/vim-airline) for a modern user interface (+ [themes](https://github.com/vim-airline/vim-airline-themes))
+* Multi language autocompletion with help of [completor](https://github.com/maralla/completor.vim) and [mucomplete](https://github.com/lifepillar/vim-mucomplete) (see below for which languages are supported)
+* [NERDTree](https://github.com/scrooloose/nerdtree) and [NERDTree-Tabs](https://github.com/jistr/vim-nerdtree-tabs) to have a integrated file manager 
+* [Tagbar](https://github.com/majutsushi/tagbar) to show your functions, classes and variables in a list and jump to them fast  
+* [Syntastic](https://github.com/vim-syntastic/syntastic) to for showing syntax errors during programming
+* [SingleCompile](https://github.com/vim-scripts/SingleCompile) to run fast test compilings without closing vim
+* [UtilSnips](https://github.com/SirVer/ultisnips) and [vim-snippets](https://github.com/honza/vim-snippets) support for many languages 
+* Advanced syntax highlighting for [C++](https://github.com/octol/vim-cpp-enhanced-highlight), [PGSQL](https://github.com/lifepillar/pgsql.vim) and [HTML5](https://github.com/othree/html5.vim) 
+* Settingloader in ./autoload to prefend a to big .vimrc and plugin incompatibilities  
 
 ## Minor Features <a name="minor_features"></a> 
+
+* [jellybeans](https://github.com/nanotech/jellybeans.vim)
+* [rainbow bracklets](https://github.com/luochen1990/rainbow) to highlight brackets 
+* [identLine](https://github.com/Yggdroot/indentLine) (Highlights line indentation) 
+* [autoclose](https://github.com/Townk/vim-autoclose) brackets and quotation marks
+* [Commentary](https://github.com/tpope/vim-commentary.git) faster 
+* [VimWiki](https://github.com/vimwiki/vimwiki) (A wiki system for vim) 
+* [DidYouMean](https://github.com/EinfachToll/DidYouMean) asks for the right file to open when similiar files exists
+* Smart hotkeys (using same hotkey to toggle on or of a feature) 
+* Small Syntax Highlights by myself
 
 
 ## Third Party Requirements: <a name="third_party"></a> 
