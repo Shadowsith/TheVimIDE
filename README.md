@@ -1,7 +1,12 @@
 # vim-plugin-collection
-
 This collection several useful tools to make your programming with vim easier.
 It is in a very early phase, so the installation or plugin-compatiblities could be buggy
+
+# Table of Contents
+1. [Major Features](#major features)  
+
+
+## Major Features
 
 * vim-plug, add plugins in a easy way and perevents on autocompletion conflicts
 * rainbow bracklets to show which paranthesis are which block 
@@ -13,6 +18,8 @@ It is in a very early phase, so the installation or plugin-compatiblities could 
 * Snippets for many languages 
 * Autoclose brackets and quotation marks
 * Settingloader in autoload to prefend a to big .vimrc
+
+## Minor Features
 
 
 ## Third Party Requirements:
