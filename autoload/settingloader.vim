@@ -22,10 +22,12 @@ function settingloader#MuComplete()
 endfunction 
 
 function settingloader#Completor()
-    let g:completor_clang_binary='/usr/bin/clang' "on Linux-Console: $ which clang
-    autocmd FileType c,cpp  inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-    autocmd FileType c,cpp  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-    autocmd FileType c,cpp  inoremap <expr> <cr> pumvisible() ? "\<C-y>\<cr>" : "\<cr>"
+    let g:completor_clang_binary='/usr/bin/clang' "on Linux console: $ which clang
+    let g:completor_python_binary='/usr/bin/python3' "on Linux console: $ which python3 
+    let g:completor_node_binary = '/usr/bin/node' "on Linux console: $ which node
+    autocmd FileType c,cpp,php,py,js inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+    autocmd FileType c,cpp,php,py,js inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+    autocmd FileType c,cpp,php,py,js inoremap <expr> <cr> pumvisible() ? "\<C-y>\<cr>" : "\<cr>"
     set completeopt-=longest
     set completeopt+=menuone
     set completeopt-=menu
@@ -80,7 +82,7 @@ endfunction
 function settingloader#VimOmniCompletion()
     autocmd FileType php set omnifunc=phpcomplete#CompletePHP
     autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-    autocm FileType javascript set omnifunc=tern#Complete
+    "autocm FileType javascript set omnifunc=tern#Complete
     autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 endfunction
 

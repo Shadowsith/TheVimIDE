@@ -52,8 +52,8 @@ It is in a very early phase, so the installation or plugin-compatiblities could 
 ### Installing third party Requirements:
 
 #### Clang, npm, nodejs, lua, maven:
-* Debian/Ubuntu: `sudo apt-get install clang nodejs npm lua5.3 liblua5.3 maven`
-* Arch Linux: `sudo pacman -S clang nodejs npm lua maven`
+* Debian/Ubuntu: `sudo apt-get install clang nodejs python3 npm lua5.3 liblua5.3 maven`, for jedi: `sudo pip3 install`
+* Arch Linux: `sudo pacman -S clang nodejs python npm lua maven`, for jedi: `sudo pip3 install`
 
 The named OS above are tested
 
@@ -75,10 +75,10 @@ other install scripts for plugins that you need to build.
 * JavaScript (Competor+tern)
 * Lua (Lua ftp plugin)
 * C# (MuComplete+OmniSharp-vim) 
+* Python (Completor+Jedi)
 
 ## Upcoming autocompleton: <a name="upcomingauto"></a> 
 
-* Python (Completor+Jedi)
 * Rust (Completor+racer)
 
 ## Knowing issuses: <a name="issues"></a> 
