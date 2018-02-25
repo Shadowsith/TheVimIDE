@@ -98,6 +98,7 @@ I don't know why but then is works.
 ![](gifs/lua_demo.gif)
 
 ### HTML
+![](gifs/html_demo.gif)
 
 ### CSS
 
