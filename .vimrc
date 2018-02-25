@@ -60,6 +60,14 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'alvan/vim-closetag'
 call plug#end()
 
+let g:jellybeans_overrides = {
+\    'Todo': { 'guifg': '303030', 'guibg': 'f0f000',
+\              'ctermfg': 'Black', 'ctermbg': 'Yellow',
+\              'attr': 'bold' },
+\    'Statement': { 'guifg': 'fff187'},
+\    'background': { 'guibg': '000000' },
+\}
+
 colorscheme jellybeans
 
 "Vim-Airline (Userinterface)
