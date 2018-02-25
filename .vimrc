@@ -22,13 +22,13 @@ Plug 'vim-scripts/SingleCompile'
 
 "Mucomplete crashes with completor and javacomplete, so only plugs for other
 "filetypes
-if $ac != "c" || $ac != "cpp" || $ac != "c++" || $ac != "h" || $ac != "hpp" || $ac != "php"
-    Plug 'lifepillar/vim-mucomplete' ", { 'for': ['css', 'html', 'php', 'vim', 'markdown', 'dict', 'text', 'xml', 'sh', 'java', 'csv', 'lua', 'make', 'unknown'] }
+if $ac != "c" || $ac != "cpp" || $ac != "c++" || $ac != "h" || $ac != "hpp" || $ac != "php" || $ac != "js" || $ac != "py"
+    Plug 'lifepillar/vim-mucomplete' 
 endif
 Plug 'lifepillar/pgsql.vim'
 Plug 'lifepillar/vim-cheat40'
 Plug 'octol/vim-cpp-enhanced-highlight'
-Plug 'maralla/completor.vim', { 'for': ['cpp', 'c', 'php'] }
+Plug 'maralla/completor.vim', { 'for': ['cpp', 'c', 'php', 'js', 'py'] }
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
@@ -56,7 +56,8 @@ Plug 'tpope/vim-commentary'
 Plug 'vimwiki/vimwiki'
 Plug 'ap/vim-css-color'
 Plug 'MattesGroeger/vim-bookmarks'
-Plug 'https://github.com/jiangmiao/auto-pairs'
+Plug 'jiangmiao/auto-pairs' 
+Plug 'alvan/vim-closetag'
 call plug#end()
 
 colorscheme jellybeans
