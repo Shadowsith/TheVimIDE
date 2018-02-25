@@ -34,7 +34,7 @@ It is in a very early phase, so the installation or plugin-compatiblities could 
 * [jellybeans](https://github.com/nanotech/jellybeans.vim)
 * [rainbow bracklets](https://github.com/luochen1990/rainbow) to highlight brackets 
 * [identLine](https://github.com/Yggdroot/indentLine) (Highlights line indentation) 
-* [autoclose](https://github.com/Townk/vim-autoclose) brackets and quotation marks
+* [auto-pair](https://github.com/jiangmiao/auto-pairs) to autoclose brackets and quotation marks
 * [Commentary](https://github.com/tpope/vim-commentary.git) faster comment out lines
 * [VimWiki](https://github.com/vimwiki/vimwiki) (A wiki system for vim) 
 * [DidYouMean](https://github.com/EinfachToll/DidYouMean) asks for the right file to open when similiar files exists

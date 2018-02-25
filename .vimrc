@@ -40,7 +40,6 @@ Plug 'majutsushi/tagbar'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'Yggdroot/indentLine'
 Plug 'jason0x43/vim-js-indent'
-Plug 'Townk/vim-autoclose'
 Plug 'elmar-hinz/vim.typoscript' 
 Plug 'nanotech/jellybeans.vim'
 Plug 'shawncplus/phpcomplete.vim'
@@ -57,6 +56,7 @@ Plug 'tpope/vim-commentary'
 Plug 'vimwiki/vimwiki'
 Plug 'ap/vim-css-color'
 Plug 'MattesGroeger/vim-bookmarks'
+Plug 'https://github.com/jiangmiao/auto-pairs'
 call plug#end()
 
 colorscheme jellybeans
