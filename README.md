@@ -31,7 +31,7 @@ It is in a very early phase, so the installation or plugin-compatiblities could 
 
 ## Minor Features <a name="minor_features"></a> 
 
-* [jellybeans](https://github.com/nanotech/jellybeans.vim)
+* [jellybeans](https://github.com/nanotech/jellybeans.vim) color scheme
 * [rainbow bracklets](https://github.com/luochen1990/rainbow) to highlight brackets 
 * [identLine](https://github.com/Yggdroot/indentLine) (Highlights line indentation) 
 * [auto-pair](https://github.com/jiangmiao/auto-pairs) to autoclose brackets and quotation marks
@@ -39,6 +39,8 @@ It is in a very early phase, so the installation or plugin-compatiblities could 
 * [Commentary](https://github.com/tpope/vim-commentary.git) faster comment out lines
 * [VimWiki](https://github.com/vimwiki/vimwiki) (A wiki system for vim) 
 * [DidYouMean](https://github.com/EinfachToll/DidYouMean) asks for the right file to open when similiar files exists
+* [Search Tasks](https://github.com/gilsondev/searchtasks.vim) for searching TODO, FIXME or other tags in your project 
+* [Bookmarks](https://github.com/MattesGroeger/vim-bookmarks) to toggle and go through bookmarks in your file/project
 * Smart hotkeys (using same hotkey to toggle on or of a feature) 
 * Small Syntax Highlights by myself
 
