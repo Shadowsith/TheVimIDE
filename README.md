@@ -26,7 +26,7 @@ It is in a very early phase, so the installation or plugin-compatiblities could 
 * [Syntastic](https://github.com/vim-syntastic/syntastic) to for showing syntax errors during programming
 * [SingleCompile](https://github.com/vim-scripts/SingleCompile) to run fast test compilings without closing vim
 * [UtilSnips](https://github.com/SirVer/ultisnips) and [vim-snippets](https://github.com/honza/vim-snippets) support for many languages 
-* Advanced syntax highlighting for [C++](https://github.com/octol/vim-cpp-enhanced-highlight), [PGSQL](https://github.com/lifepillar/pgsql.vim) and [HTML5](https://github.com/othree/html5.vim) 
+* Advanced syntax highlighting for [C++](https://github.com/octol/vim-cpp-enhanced-highlight), [PGSQL](https://github.com/lifepillar/pgsql.vim), [HTML5](https://github.com/othree/html5.vim) and [CSS](https://github.com/ap/vim-css-color)
 * Settingloader in ./autoload to prefend a to big .vimrc and plugin incompatibilities  
 
 ## Minor Features <a name="minor_features"></a> 
@@ -35,7 +35,7 @@ It is in a very early phase, so the installation or plugin-compatiblities could 
 * [rainbow bracklets](https://github.com/luochen1990/rainbow) to highlight brackets 
 * [identLine](https://github.com/Yggdroot/indentLine) (Highlights line indentation) 
 * [auto-pair](https://github.com/jiangmiao/auto-pairs) to autoclose brackets and quotation marks
-* [closetag](https://github.com/alvan/vim-closetag) to autoclose (x)html/xml "<tags>" 
+* [closetag](https://github.com/alvan/vim-closetag) to autoclose (x)html/xml tags
 * [Commentary](https://github.com/tpope/vim-commentary.git) faster comment out lines
 * [VimWiki](https://github.com/vimwiki/vimwiki) (A wiki system for vim) 
 * [DidYouMean](https://github.com/EinfachToll/DidYouMean) asks for the right file to open when similiar files exists
@@ -69,13 +69,13 @@ other install scripts for plugins that you need to build.
 ## Working autocompletion: <a name="auto"></a> 
 
 * C/C++ (Completor+clang) 
-* Java (JavaComplete2)
+* [Java](https://github.com/artur-shaik/vim-javacomplete2) (JavaComplete2)
 * HTML5 (MuComplete)
 * CSS (MuComplete)
-* PHP (Completor+phpctags)
-* JavaScript (Competor+tern)
-* Lua (Lua ftp plugin)
-* C# (MuComplete+OmniSharp-vim) 
+* [PHP](https://github.com/shawncplus/phpcomplete.vim) (Completor+phpctags)
+* [JavaScript](https://github.com/ternjs/tern_for_vim) (Competor+tern)
+* [Lua](https://github.com/xolox/vim-lua-ftplugin) (Lua ftp plugin)
+* [C#](https://github.com/OmniSharp/omnisharp-vim) (MuComplete+OmniSharp-vim) 
 * Python (Completor+Jedi)
 
 ## Upcoming autocompleton: <a name="upcomingauto"></a> 
