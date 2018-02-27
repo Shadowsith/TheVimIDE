@@ -6,8 +6,14 @@ if [ "$npm" = "$path" ]
     then
         echo Found maven
         echo Build vim-javacomplete2
-        cd ~/.vim/bundle/vim-javacomplete2/libs/javavi/
-        mvn compile 
+        if [ \($1 == "vim" \) -o \( $1 == "" \) ]; 
+            then
+                cd ~/.vim/bundle/vim-javacomplete2/libs/javavi/
+                mvn compile 
+            else
+                cd ~/.config/nvim/bundle/vim-javacomplete2/libs/javavi/
+                mvn compile 
+        fi
         exit 0
     else
         echo maven is not installed!

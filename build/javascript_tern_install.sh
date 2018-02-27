@@ -6,8 +6,14 @@ if [ "$npm" = "$path" ]
     then
         echo Found npm
         echo Build tern
-        cd ~/.vim/bundle/tern_for_vim/
-        npm install
+        if [ \($1 == "vim" \) -o \( $1 == "" \) ]; 
+            then
+                cd ~/.vim/bundle/tern_for_vim/
+                npm install
+            else
+                cd ~/.config/nvim/bundle/tern_for_vim
+                npm install
+        fi
         exit 0
     else
         echo npm is not installed!
