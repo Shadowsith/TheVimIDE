@@ -60,6 +60,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'alvan/vim-closetag'
 Plug 'maksimr/vim-jsbeautify'
 call plug#end()
+call plug#helptags() 
 
 let g:jellybeans_overrides = {
 \    'Todo': { 'guifg': '303030', 'guibg': 'f0f000',
