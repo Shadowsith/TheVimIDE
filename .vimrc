@@ -58,6 +58,7 @@ Plug 'ap/vim-css-color'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'jiangmiao/auto-pairs' 
 Plug 'alvan/vim-closetag'
+Plug 'maksimr/vim-jsbeautify'
 call plug#end()
 
 let g:jellybeans_overrides = {
