@@ -2,6 +2,14 @@
 This collection several useful tools to make your programming with vim easier.
 It is in a very early phase, so the installation or plugin-compatiblities could be buggy
 
+<!--
+ _____ _        __     ___           ___ ____  _____ 
+|_   _| |__   __\ \   / (_)_ __ ___ |_ _|  _ \| ____|
+  | | | '_ \ / _ \ \ / /| | '_ ` _ \ | || | | |  _|  
+  | | | | | |  __/\ V / | | | | | | || || |_| | |___ 
+  |_| |_| |_|\___| \_/  |_|_| |_| |_|___|____/|_____|
+-->
+
 ![](gifs/intro.png)
 
 ## Table of Contents
