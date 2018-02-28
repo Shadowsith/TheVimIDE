@@ -10,24 +10,40 @@ ooooooooooooo oooo                  oooooo     oooo  o8o                    oooo
     o888o     o888o o888o `Y8bod8P'       `8'       o888o o888o o888o o888o o888o o888bood8P'   o888ooooood8
 </pre>
 -------------------------------------------------------------------------------------------------------------
-Formaly known as my own vim-plugin-collection, this project has reached a status of a integrated development 
-enviroment for the Vim edtior. This project is still in progress and will get some more features in the feature. 
-
 ![](gifs/intro.png)
+!Warning: This project is under active development!
+----
+1. [Introduction](#introduction) 
+2. [Features](#features)
+2.1. [Major Features](#major_features)  
+2.2. [Minor Features](#minor_features)
+2.3. [Working Autocompletion](#auto)
+2.4. [Upcoming Autocompletion](#upcomingauto) 
 
-## Table of Contents
-1. [Major Features](#major_features)  
-2. [Minor Features](#minor_features)
-3. [Third Party Requirements](#third_party) 
-4. [Compileable Plugins](#compile) 
-5. [Working Autocompletion](#auto)
-6. [Upcoming Autocompletion](#upcomingauto) 
-7. [Knowing Issues](#issues) 
-8. [Examples](#examples) 
-9. [FAQ](#faq) 
-10. [Project Future](#future)
+3. [Installation](#installation) 
+3.1. [Requirements](#requirements)  
+3.2. [Compileable Plugins](#compile) 
+4. [Knowing issues](#issues) 
+5. [Examples](#examples) 
+6. [FAQ](#faq) 
+7. [Project future](#future)
+-----------------------------------------
+## Introduction <a name="introduction"></a>
+TheVimIDE has the target to be a fully functional integrated development enviroment for the [Vim](www.vim.org) and [NeoVim](https://neovim.io/) editors. 
+The offspring of TheVimIDE was a small plugin collection to make my daily work with Vim more comfortable. Over time and other IDEs as inspirations I 
+had the idea to make Vim step by step to an IDE with all the features like autocompletion, syntax checking and many other features that makes programming
+easier and faster. 
 
-## Major Features <a name="major_features"></a> 
+TheVimIDE has five major targets: 
+* Combine fastness of a texteditor with comfort of IDE features
+* Support as many popular languages as possible
+* To be easy to configure
+* To be fully functional out of the box 
+* To be expandable and forkable 
+
+## Features <a name="features"></a> 
+Below you can the the most considerable featrues
+### Major Features <a name="major_features"></a> 
 
 * [vim-plug](https://github.com/junegunn/vim-plug) to add plugins in a easy way 
 * [vim-airline](https://github.com/vim-airline/vim-airline) for a modern user interface (+ [themes](https://github.com/vim-airline/vim-airline-themes))
@@ -40,7 +56,7 @@ enviroment for the Vim edtior. This project is still in progress and will get so
 * Advanced syntax highlighting for [C++](https://github.com/octol/vim-cpp-enhanced-highlight), [PGSQL](https://github.com/lifepillar/pgsql.vim), [HTML5](https://github.com/othree/html5.vim) and [CSS](https://github.com/ap/vim-css-color)
 * Settingloader in ./autoload to prefend a to big .vimrc and plugin incompatibilities  
 
-## Minor Features <a name="minor_features"></a> 
+### Minor Features <a name="minor_features"></a> 
 
 * [jellybeans](https://github.com/nanotech/jellybeans.vim) color scheme
 * [rainbow bracklets](https://github.com/luochen1990/rainbow) to highlight brackets 
@@ -55,31 +71,7 @@ enviroment for the Vim edtior. This project is still in progress and will get so
 * Smart hotkeys (using same hotkey to toggle on or of a feature) 
 * Small Syntax Highlights by myself
 
-## Third Party Requirements: <a name="third_party"></a> 
-
-* __Clang__ for C-Familiy autocompletion
-* __Jedi__ for Python autocompletion
-* __npm, nodejs__ for (good) JavaScript autocompletion, default needs nothings
-* __maven__ to build Java autocompletion at your own
-* [__phpctags__](https://github.com/vim-php/phpctags) for better PHP autocompletion experience
-
-### Installing third party Requirements:
-
-#### Clang, npm, nodejs, lua, maven:
-* Debian/Ubuntu: `sudo apt-get install clang nodejs python3 npm lua5.3 liblua5.3 maven`, for jedi: `sudo pip3 install`
-* Arch Linux: `sudo pacman -S clang nodejs python npm lua maven`, for jedi: `sudo pip3 install`
-
-The named OS above are tested
-
-## Plugins you need compile at your own: <a name="compile"></a> 
-
-After execution of the install.sh script you can use the 
-other install scripts for plugins that you need to build. 
-* omnisharp__install.sh for C# autocompletion 
-* java_install.sh for Java
-* javascript_install.sh for Javascript
-
-## Working autocompletion: <a name="auto"></a> 
+### Working autocompletion: <a name="auto"></a> 
 
 * C/C++ (Completor+clang) 
 * [Java](https://github.com/artur-shaik/vim-javacomplete2) (JavaComplete2)
@@ -91,9 +83,34 @@ other install scripts for plugins that you need to build.
 * [C#](https://github.com/OmniSharp/omnisharp-vim) (MuComplete+OmniSharp-vim) 
 * Python (Completor+Jedi)
 
-## Upcoming autocompleton: <a name="upcomingauto"></a> 
+### Upcoming autocompleton: <a name="upcomingauto"></a> 
 
 * Rust (Completor+racer)
+
+## Installaton
+All you need to do is to run the ./install.sh for Vim or ./install-neovim.sh for NeoVim. 
+You will be asked if you want to build/install a view features to get the whole functionality. 
+### Third Party Requirements: <a name="requirements"></a> 
+You need to install these third party programs for the mentioned features: 
+* __Clang__ for C-Familiy autocompletion
+* __Jedi__ for Python autocompletion
+* __npm, nodejs__ for (good) JavaScript autocompletion, default needs nothings
+* __maven__ to build Java autocompletion at your own
+* [__phpctags__](https://github.com/vim-php/phpctags) for better PHP autocompletion experience
+
+#### Installing third party Requirements:
+* Debian/Ubuntu: `sudo apt-get install clang nodejs python3 npm lua5.3 liblua5.3 maven`, for jedi: `sudo pip3 install`
+* Arch Linux: `sudo pacman -S clang nodejs python npm lua maven`, for jedi: `sudo pip3 install`
+
+The named OS above are tested
+
+### Plugins you need compile at your own: <a name="compile"></a> 
+
+After execution of the install.sh script you can use the 
+other install scripts in ./build for plugins that you need to build. 
+* omnisharp__install.sh for C# autocompletion 
+* java_install.sh for Java
+* javascript_install.sh for Javascript
 
 ## Knowing issuses: <a name="issues"></a> 
 ### C# omnicompletion does not work:
@@ -135,8 +152,4 @@ Why I don't use YouCompleteMe?
 * C# completion is not as smart then my solution 
 * Web programming is not supported
 
-## The future of the vim-plugin-collection: <a name="future"></a> 
-The VPC is a all in one solution but some people need only a part of it.
-When I have more time I will make a series of VIM-IDEs for webprogramming,
-compiler based programming and script based programming. 
-I will also rename the VPC to a name that fits better to a all in one IDE.
+## Project future: <a name="future"></a> 
