@@ -1,6 +1,6 @@
 I present you:
 
-<!-- language: lang-none
+<pre>
 ----------------------------------------------------------------------------------------------------------------
 
 ooooooooooooo oooo                  oooooo     oooo  o8o                    ooooo oooooooooo.   oooooooooooo
@@ -11,7 +11,7 @@ ooooooooooooo oooo                  oooooo     oooo  o8o                    oooo
      888       888   888  888    .o      `888'       888   888   888   888   888   888     d88'  888       o
     o888o     o888o o888o `Y8bod8P'       `8'       o888o o888o o888o o888o o888o o888bood8P'   o888ooooood8
 
--->
+</pre>
 ------------------------------------------------------------------------------------------------------------------
 Formaly known as my own vim-plugin-collection, this project has reached a status of a integrated development 
 enviroment for the Vim edtior. This project is still in progress and will get some more features in the feature. 
