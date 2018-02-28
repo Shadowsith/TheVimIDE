@@ -1,14 +1,17 @@
-# vim-plugin-collection
-This collection several useful tools to make your programming with vim easier.
-It is in a very early phase, so the installation or plugin-compatiblities could be buggy
+I present you:
+----------------------------------------------------------------------------------------------------------------
 
-<!--
- _____ _        __     ___           ___ ____  _____ 
-|_   _| |__   __\ \   / (_)_ __ ___ |_ _|  _ \| ____|
-  | | | '_ \ / _ \ \ / /| | '_ ` _ \ | || | | |  _|  
-  | | | | | |  __/\ V / | | | | | | || || |_| | |___ 
-  |_| |_| |_|\___| \_/  |_|_| |_| |_|___|____/|_____|
--->
+ooooooooooooo oooo                  oooooo     oooo  o8o                    ooooo oooooooooo.   oooooooooooo
+8'   888   `8 `888                   `888.     .8'   `"'                    `888' `888'   `Y8b  `888'     `8
+     888       888 .oo.    .ooooo.    `888.   .8'   oooo  ooo. .oo.  .oo.    888   888      888  888        
+     888       888P"Y88b  d88' `88b    `888. .8'    `888  `888P"Y88bP"Y88b   888   888      888  888oooo8   
+     888       888   888  888ooo888     `888.8'      888   888   888   888   888   888      888  888    "   
+     888       888   888  888    .o      `888'       888   888   888   888   888   888     d88'  888       o
+    o888o     o888o o888o `Y8bod8P'       `8'       o888o o888o o888o o888o o888o o888bood8P'   o888ooooood8
+
+------------------------------------------------------------------------------------------------------------------
+Formaly known as my own vim-plugin-collection, this project has reached a status of a integrated development 
+enviroment for the Vim edtior. This project is still in progress and will get some more features in the feature. 
 
 ![](gifs/intro.png)
 
