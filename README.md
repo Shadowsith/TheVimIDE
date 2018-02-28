@@ -15,19 +15,21 @@ ooooooooooooo oooo                  oooooo     oooo  o8o                    oooo
 ----
 1. [Introduction](#introduction) 
 2. [Features](#features)
-    2.1. [Major Features](#major_features)  
-    2.2. [Minor Features](#minor_features)
-    2.3. [Working Autocompletion](#auto)
-    2.4. [Upcoming Autocompletion](#upcomingauto) 
+2.1. [Major Features](#majorfeatures)  
+2.2. [Minor Features](#minorfeatures)
+2.3. [Working Autocompletion](#auto)
+2.4. [Upcoming Autocompletion](#upcomingauto) 
 3. [Installation](#installation) 
-    3.1. [Requirements](#requirements)  
-    3.2. [Compileable Plugins](#compile) 
+3.1. [Requirements](#requirements)  
+3.2. [Compileable Plugins](#compile) 
 4. [Knowing issues](#issues) 
 5. [Examples](#examples) 
 6. [FAQ](#faq) 
 7. [Project future](#future)
 -----------------------------------------
-## Introduction <a name="introduction"></a>
+<a name="introduction"></a>
+
+## 1\. Introduction
 TheVimIDE has the target to be a fully functional integrated development enviroment for the [Vim](www.vim.org) and [NeoVim](https://neovim.io/) editors. 
 The offspring of TheVimIDE was a small plugin collection to make my daily work with Vim more comfortable. Over time and other IDEs as inspirations I 
 had the idea to make Vim step by step to an IDE with all the features like autocompletion, syntax checking and many other features that makes programming
@@ -40,9 +42,14 @@ TheVimIDE has five major targets:
 * To be fully functional out of the box 
 * To be expandable and forkable 
 
-## Features <a name="features"></a> 
-Below you can the the most considerable featrues
-### Major Features <a name="major_features"></a> 
+<a name="features"></a> 
+
+## 2\. Features 
+Below you can the the most considerable features.
+
+<a name="majorfeatures"></a> 
+
+### 2.1\. Major Features
 
 * [vim-plug](https://github.com/junegunn/vim-plug) to add plugins in a easy way 
 * [vim-airline](https://github.com/vim-airline/vim-airline) for a modern user interface (+ [themes](https://github.com/vim-airline/vim-airline-themes))
@@ -55,7 +62,9 @@ Below you can the the most considerable featrues
 * Advanced syntax highlighting for [C++](https://github.com/octol/vim-cpp-enhanced-highlight), [PGSQL](https://github.com/lifepillar/pgsql.vim), [HTML5](https://github.com/othree/html5.vim) and [CSS](https://github.com/ap/vim-css-color)
 * Settingloader in ./autoload to prefend a to big .vimrc and plugin incompatibilities  
 
-### Minor Features <a name="minor_features"></a> 
+<a name="minorfeatures"></a> 
+
+### 2.2\. Minor Features 
 
 * [jellybeans](https://github.com/nanotech/jellybeans.vim) color scheme
 * [rainbow bracklets](https://github.com/luochen1990/rainbow) to highlight brackets 
@@ -70,7 +79,9 @@ Below you can the the most considerable featrues
 * Smart hotkeys (using same hotkey to toggle on or of a feature) 
 * Small Syntax Highlights by myself
 
-### Working autocompletion: <a name="auto"></a> 
+<a name="auto"></a> 
+
+### 2.3\. Working autocompletion
 
 * C/C++ (Completor+clang) 
 * [Java](https://github.com/artur-shaik/vim-javacomplete2) (JavaComplete2)
@@ -82,14 +93,21 @@ Below you can the the most considerable featrues
 * [C#](https://github.com/OmniSharp/omnisharp-vim) (MuComplete+OmniSharp-vim) 
 * Python (Completor+Jedi)
 
-### Upcoming autocompleton: <a name="upcomingauto"></a> 
+<a name="upcomingauto"></a> 
+
+### 2.4\. Upcoming autocompleton: 
 
 * Rust (Completor+racer)
 
-## Installaton
+<a name="installation"></a> 
+
+## 3\. Installation
 All you need to do is to run the ./install.sh for Vim or ./install-neovim.sh for NeoVim. 
 You will be asked if you want to build/install a view features to get the whole functionality. 
-### Third Party Requirements: <a name="requirements"></a> 
+
+<a name="requirements"></a> 
+
+### 3.1\. Requirements
 You need to install these third party programs for the mentioned features: 
 * __Clang__ for C-Familiy autocompletion
 * __Jedi__ for Python autocompletion
@@ -103,7 +121,9 @@ You need to install these third party programs for the mentioned features:
 
 The named OS above are tested
 
-### Plugins you need compile at your own: <a name="compile"></a> 
+<a name="compile"></a> 
+
+### Plugins you need compile at your own:
 
 After execution of the install.sh script you can use the 
 other install scripts in ./build for plugins that you need to build. 
@@ -111,13 +131,17 @@ other install scripts in ./build for plugins that you need to build.
 * java_install.sh for Java
 * javascript_install.sh for Javascript
 
-## Knowing issuses: <a name="issues"></a> 
+<a name="issues"></a> 
+
+## 4\. Knowing issuses
 ### C# omnicompletion does not work:
 If C# completion does not work after executing the omnisharp_install script 
 you have to add a empty .sln (Visual Studio Solution) file to your C# projecti or working folder. 
 I don't know why but then is works. 
 
-## Examples (ttyrecord) coming soon: <a name="examples"></a> 
+<a name="examples"></a> 
+
+## 5\. Examples:
 
 ### C/C++
 
@@ -135,7 +159,9 @@ I don't know why but then is works.
 
 ### JavaScript
 
-## FAQ: <a name="faq"></a> 
+<a name="faq"></a> 
+
+## 6\. FAQ
 
 Why I use different autocompletion plugins?
 * I have tested several plugins and each has pros and cons.
@@ -151,4 +177,6 @@ Why I don't use YouCompleteMe?
 * C# completion is not as smart then my solution 
 * Web programming is not supported
 
-## Project future: <a name="future"></a> 
+<a name="future"></a> 
+
+## 7\. Project future
