@@ -62,15 +62,8 @@ Plug 'maksimr/vim-jsbeautify'
 call plug#end()
 call plug#helptags() 
 
-let g:jellybeans_overrides = {
-\    'Todo': { 'guifg': '303030', 'guibg': 'f0f000',
-\              'ctermfg': 'Black', 'ctermbg': 'Yellow',
-\              'attr': 'bold' },
-\    'Statement': { 'guifg': 'fff187'},
-\    'background': { 'guibg': '000000' },
-\}
-
-colorscheme jellybeans
+"Jellybeans colorscheme
+call settingloader#Jellybeans()
 
 "Vim-Airline (Userinterface)
 call settingloader#Airline() 

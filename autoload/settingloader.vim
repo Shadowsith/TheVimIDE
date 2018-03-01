@@ -4,6 +4,17 @@ function settingloader#Airline()
     let g:airline#extensions#tabline#left_alt_sep = '|'
 endfunction
 
+function settingloader#Jellybeans()
+    let g:jellybeans_overrides = {
+    \    'Todo': { 'guifg': '303030', 'guibg': 'f0f000',
+    \              'ctermfg': 'Black', 'ctermbg': 'Yellow',
+    \              'attr': 'bold' },
+    \    'Statement': { 'guifg': 'fff187'},
+    \    'background': { 'guibg': '000000' },
+    \}
+    colorscheme jellybeans
+endfunction
+
 function settingloader#Syntastic() 
     set statusline+=%#warningmsg#
     set statusline+=%{SyntasticStatuslineFlag()}
