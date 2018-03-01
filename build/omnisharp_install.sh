@@ -6,16 +6,18 @@ if [ "$mono" = "$path" ]
     then
         echo Found mono 
         echo Installing OmniSharp autocompletion...
-        if [ \($1 == "vim" \) -o \( $1 == "" \) ]; 
+        if [ \($1 == "vim" \) -o \( $1 == "" \) ]: 
             then
                 echo Build vimproc.vim 
-                make -C ~/.vim/bundle/vimproc.vim/
+                cd ~/.vim/bundle/vimproc.vim/
+                make 
                 echo Build OmniSharp Server
                 cd ~/.vim/bundle/omnisharp-vim/server/
                 xbuild 
             else
                 echo Build vimproc.vim 
-                make -C ~/.config/nvim/bundle/vimproc.vim/ 
+                cd ~/.config/nvim/bundle/vimproc.vim/ 
+                make
                 echo Build OmniSharp Server
                 cd ~/.config/nvim/bundle/omnisharp-vim/server/ 
                 xbuild 

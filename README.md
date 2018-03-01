@@ -1,6 +1,5 @@
+------
 <pre>
--------------------------------------------------------------------------------------------------------------
-
 ooooooooooooo oooo                  oooooo     oooo  o8o                    ooooo oooooooooo.   oooooooooooo
 8'   888   `8 `888                   `888.     .8'   `"'                    `888' `888'   `Y8b  `888'     `8
      888       888 .oo.    .ooooo.    `888.   .8'   oooo  ooo. .oo.  .oo.    888   888      888  888        
@@ -108,6 +107,14 @@ You will be asked if you want to build/install a view features to get the whole 
 <a name="requirements"></a> 
 
 ### 3.1\. Requirements
+First of all make sure that your Vim / Neovim editor is compiled with python2 and python3 support. 
+* For Arch Linux (and derivates) Vim is by default compiled with python support. 
+* For Ubuntu/Debian install vim-nox
+
+Upgrade Neovim (all Linux plattforms): 
+* sudo pip2 install --upgrade neovim
+* sudo pip3 install --upgrade neovim
+
 You need to install these third party programs for the mentioned features: 
 * __Clang__ for C-Familiy autocompletion
 * __Jedi__ for Python autocompletion
@@ -137,7 +144,11 @@ other install scripts in ./build for plugins that you need to build.
 ### C# omnicompletion does not work:
 If C# completion does not work after executing the omnisharp_install script 
 you have to add a empty .sln (Visual Studio Solution) file to your C# projecti or working folder. 
-I don't know why but then is works. 
+I don't know why but then it works. 
+
+### C# Compiling error with magic number 542
+This is a bug that occurs on gui-based terminals when ncurses 6.1 is installed. 
+A hotfix for this bug is to run the build/omnisharp_install.sh with the xterm terminal. 
 
 <a name="examples"></a> 
 
