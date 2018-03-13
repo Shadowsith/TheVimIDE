@@ -10,6 +10,7 @@ function settingloader#Jellybeans()
     \              'ctermfg': 'Black', 'ctermbg': 'Yellow',
     \              'attr': 'bold' },
     \    'Statement': { 'guifg': 'fff187'},
+    \    'cOperator': { 'guifg': 'fff187'},
     \    'background': { 'guibg': '000000' },
     \}
     colorscheme jellybeans
