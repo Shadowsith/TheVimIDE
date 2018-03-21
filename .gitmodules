@@ -130,3 +130,6 @@
 [submodule "bundle/vim-jsbeautify"]
 	path = bundle/vim-jsbeautify
 	url = https://github.com/maksimr/vim-jsbeautify.git
+[submodule "bundle/vimtex"]
+	path = bundle/vimtex
+	url = https://github.com/lervag/vimtex.git

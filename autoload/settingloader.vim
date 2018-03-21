@@ -11,8 +11,14 @@ function settingloader#Jellybeans()
     \              'attr': 'bold' },
     \    'Statement': { 'guifg': 'fff187'},
     \    'cOperator': { 'guifg': 'fff187'},
+    \    'Function': { 'guifg': '80bfff' },
+    \    'Type': { 'guifg': 'b3ffb3' },
+    \    'StorageClass': { 'guifg': '99ffd6' },
+    \    'Title': { 'guifg': 'f0b3ff' },
+    \    'Special': { 'guifg': 'ebccff' },
+    \    'String': { 'guifg': 'ff99bb' }, 
     \    'background': { 'guibg': '000000' },
-    \}
+    \}    
     colorscheme jellybeans
 endfunction
 

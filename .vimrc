@@ -59,6 +59,7 @@ Plug 'MattesGroeger/vim-bookmarks'
 Plug 'jiangmiao/auto-pairs' 
 Plug 'alvan/vim-closetag'
 Plug 'maksimr/vim-jsbeautify'
+Plug 'lervag/vimtex'
 call plug#end()
 call plug#helptags() 
 
