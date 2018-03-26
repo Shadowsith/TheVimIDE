@@ -60,6 +60,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'alvan/vim-closetag'
 Plug 'maksimr/vim-jsbeautify'
 Plug 'lervag/vimtex'
+Plug 'xolox/vim-notes'
 call plug#end()
 call plug#helptags() 
 
@@ -71,6 +72,10 @@ call settingloader#Airline()
 
 "Rainbow brakets
 let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
+
+"Vim Notes
+let g:notes_directories = ['~/.notesvim']
+
 
 "Nerdtree
 map <C-n> :NERDTreeTabsToggle<CR>
