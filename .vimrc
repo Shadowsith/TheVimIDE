@@ -61,6 +61,7 @@ Plug 'alvan/vim-closetag'
 Plug 'maksimr/vim-jsbeautify'
 Plug 'lervag/vimtex'
 Plug 'xolox/vim-notes'
+Plug 'Shougo/denite.nvim'
 call plug#end()
 call plug#helptags() 
 
