@@ -64,6 +64,7 @@ Plug 'xolox/vim-notes'
 Plug 'Shougo/denite.nvim'
 Plug 'terryma/vim-expand-region'
 Plug '~/.vim/bundle/Conque-GDB'
+Plug 'vim-vdebug/vdebug', {'for' : ['py', 'php'] }
 call plug#end()
 call plug#helptags() 
 
@@ -99,9 +100,14 @@ nmap <F10> :SCCompileRun<cr>
 "Various Hotkeys
 nmap <F2> :call hotkeys#LineNumbers()<cr>
 nmap <F3> :call hotkeys#AutoIndent()<cr>
+nmap <F4> :call hotkeys#IndentLine()<cr> 
 nmap <S-s> :w<cr>
 nmap <C-Right> :tabn<cr>
 nmap <C-Left> :tabp<cr>
+
+"Aliases
+call alias#SetupCommandAlias("GDB","ConqueGdb -q")
+call alias#SetupCommandAlias("gdb","ConqueGdb -q")
 
 "µComplete for various filetypes
 call settingloader#MuComplete()

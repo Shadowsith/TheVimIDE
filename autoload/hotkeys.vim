@@ -24,3 +24,15 @@ function hotkeys#AutoIndent()
     endif
 endfunction
 
+let g:indentLine = 0
+function hotkeys#IndentLine()
+    if g:indentLine == 0
+        exec IndentLinesDisable  
+        let g:indentLine = 1
+        echo "IndentLines off"
+    else
+        exec IndentLinesEnable 
+        let g:indentLine = 0
+        echo "IndentLines on"
+    endif
+endfunction 
