@@ -1,5 +1,4 @@
-thevimide.txt 
-thevimide
+*thevimide.txt* Out of the Box IDE for Vim8/Neovim
 
 
 ==============================================================================

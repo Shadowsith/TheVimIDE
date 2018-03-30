@@ -1,4 +1,4 @@
-echo Installing Shadowsith/vim-plugin-collection
+echo Installing TheVimIDE
 echo Firstly pull all submodules:
 git submodule update --init --recursive
 git submodule update --recursive
@@ -11,7 +11,7 @@ do
         then
             rm -f ~/.vimrc
             rm -rf ~/.vim/
-            echo This is be done!
+            echo The old vim files have been deleted!
             break
     fi 
     if [ \( $ask == "n" \) -o \( $ask == "N" \)  ];
@@ -24,13 +24,15 @@ do
     fi
 done
 echo Initialize vim-plug pluginmanager
-cp ./vim-plug/plug.vim ./autoload/
+cp -f ./vim-plug/plug.vim ./autoload/
 echo Copy/Rename vim-plugin-collection to ~/.vim/
 cp -a ../vim-plugin-collection ~/.vim/
 echo Copy .vimrc to ~/.vimrc 
 cp ./.vimrc ~/.vimrc
+rm -f ~/.vim/.vimrc 
 echo Copy .tern-config to ~/.tern-config
 cp ./.tern-config ~/.tern-config
+rm -f ~/.vim/.tern-config 
 echo "Do you want to install Java autocompletion? [y/n]" 
 while [ \( "$ask" != "y" \) -o \( "$ask" != "n" \) -o \( "$ask" != "Y" \) -o \( "$ask" != "N" \) ]
 do

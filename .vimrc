@@ -62,6 +62,7 @@ Plug 'maksimr/vim-jsbeautify'
 Plug 'lervag/vimtex'
 Plug 'xolox/vim-notes'
 Plug 'Shougo/denite.nvim'
+Plug 'terryma/vim-expand-region'
 call plug#end()
 call plug#helptags() 
 

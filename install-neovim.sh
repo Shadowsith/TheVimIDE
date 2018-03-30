@@ -15,12 +15,12 @@ do
             rm -rf ~/.local/share/nvim/site/autoload/
             mkdir -p ~/.config/nvim
             mkdir -p ~/.local/share/nvim/site
-            echo This is be done!
+            echo The old neovim files have been deleted!
             break
     fi 
     if [ \( $ask == "n" \) -o \( $ask == "N" \)  ];
         then
-            echo nothing has deleted, installtion aborted
+            echo Nothing has been deleted, installtion aborted!
             exit 1
         else
             echo Input was not correct
