@@ -139,3 +139,6 @@
 [submodule "bundle/denite.nvim"]
 	path = bundle/denite.nvim
 	url = https://github.com/Shougo/denite.nvim
+[submodule "bundle/vim-expand-region"]
+	path = bundle/vim-expand-region
+	url = https://github.com/terryma/vim-expand-region.git
