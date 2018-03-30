@@ -142,3 +142,6 @@
 [submodule "bundle/vim-expand-region"]
 	path = bundle/vim-expand-region
 	url = https://github.com/terryma/vim-expand-region.git
+[submodule "bundle/vdebug"]
+	path = bundle/vdebug
+	url = https://github.com/vim-vdebug/vdebug.git
