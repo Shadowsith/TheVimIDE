@@ -63,6 +63,7 @@ Plug 'lervag/vimtex'
 Plug 'xolox/vim-notes'
 Plug 'Shougo/denite.nvim'
 Plug 'terryma/vim-expand-region'
+Plug '~/.vim/bundle/Conque-GDB'
 call plug#end()
 call plug#helptags() 
 
