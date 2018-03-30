@@ -21,10 +21,12 @@ ooooooooooooo oooo                  oooooo     oooo  o8o                    oooo
 3. [Installation](#installation) 
     1. [Requirements](#requirements)  
     2. [Compileable Plugins](#compile) 
-4. [Knowing issues](#issues) 
-5. [Examples](#examples) 
-6. [FAQ](#faq) 
-7. [Project future](#future)
+4. [Syntax Checkers](#syntaxcheckers)
+5. [Debugger](#debugger) 
+6. [Knowing issues](#issues) 
+7. [Examples](#examples) 
+8. [FAQ](#faq) 
+9. [Project future](#future)
 -----------------------------------------
 <a name="introduction"></a>
 
@@ -139,9 +141,34 @@ other install scripts in ./build for plugins that you need to build.
 * java_install.sh for Java
 * javascript_install.sh for Javascript
 
+<a name="syntaxcheckers"></a> 
+
+## 4\. Syntax Checkers
+The default syntax checkers for following languages are:
+* JavaScript: Jshint, sudo npm install -g jshint 
+* Python: flake8, sudo pip install flake8
+
+If you want to change the checker of a language:
+Edit Settingloader#Syntastic() at ~/.vim/autoload/settingloader.vim 
+Change: let g:syntastic_yourlanguage_checkers = ['yourchecker'] 
+
+<a name="debugger"></a> 
+
+## 5\. Debugger
+Following debugger engines are installed by default: 
+* ConqueGdb for C/C++ (gdb must be installed)
+  * Call it with :ConqueGdb binaryfile -q 
+* Vdbug, Debugger for Python, PHP, Ruby and Pearl (JavaScript is not working at this time)
+
+For ConqueGdb I will write shorter command aliases.
+
+Vdbug has a very good frontend but needs thrid party requirements for every single language. 
+I will write serveral install scripts to make the installation of them very easy.
+Until then you need to read the help under: :help VdbugSetUp 
+
 <a name="issues"></a> 
 
-## 4\. Knowing issuses
+## 6\. Knowing issuses
 ### C# omnicompletion does not work:
 If C# completion does not work after executing the omnisharp_install script 
 you have to add a empty .sln (Visual Studio Solution) file to your C# projecti or working folder. 
@@ -153,7 +180,7 @@ A hotfix for this bug is to run the build/omnisharp_install.sh with the xterm te
 
 <a name="examples"></a> 
 
-## 5\. Examples:
+## 7\. Examples:
 
 ### C/C++
 
@@ -173,7 +200,7 @@ A hotfix for this bug is to run the build/omnisharp_install.sh with the xterm te
 
 <a name="faq"></a> 
 
-## 6\. FAQ
+## 8\. FAQ
 
 Why I use different autocompletion plugins?
 * I have tested several plugins and each has pros and cons.
@@ -191,4 +218,4 @@ Why I don't use YouCompleteMe?
 
 <a name="future"></a> 
 
-## 7\. Project future
+## 9\. Project future
