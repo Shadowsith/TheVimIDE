@@ -31,7 +31,7 @@ echo Initialize vim-plug pluginmanager
 cp ./vim-plug/plug.vim ./autoload/
 cp -a ./autoload/ ~/.local/share/nvim/site/autoload/
 echo Copy/Rename vim-plugin-collection to ~/.config/nvim/
-cp -a ./bundle ~/.config/nvim/bundle
+cp -a ./bundle/* ~/.config/nvim/bundle
 echo Copy .vimrc to .vimrc 
 cp ./.vimrc ~/.config/nvim/init.vim
 echo Copy .tern-config to ~/.tern-config

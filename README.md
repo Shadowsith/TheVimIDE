@@ -126,8 +126,8 @@ You need to install these third party programs for the mentioned features:
 * [__phpctags__](https://github.com/vim-php/phpctags) for better PHP autocompletion experience
 
 #### Installing third party Requirements:
-* Debian/Ubuntu: `sudo apt-get install clang nodejs python3 npm lua5.3 liblua5.3 maven`, for jedi: `sudo pip3 install`
-* Arch Linux: `sudo pacman -S clang nodejs python npm lua maven`, for jedi: `sudo pip3 install`
+* Debian/Ubuntu: `sudo apt-get install clang nodejs python3 npm lua5.3 liblua5.3 maven`, for jedi: `sudo pip3 install jedi`
+* Arch Linux: `sudo pacman -S clang nodejs python npm lua maven`, for jedi: `sudo pip3 install jedi`
 
 The named OS above are tested
 
@@ -145,12 +145,12 @@ other install scripts in ./build for plugins that you need to build.
 
 ## 4\. Syntax Checkers
 The default syntax checkers for following languages are:
-* JavaScript: Jshint, sudo npm install -g jshint 
-* Python: flake8, sudo pip install flake8
+* JavaScript: Jshint, install it with `sudo npm install -g jshint`
+* Python: flake8, install it with `sudo pip install flake8` 
 
 If you want to change the checker of a language:
 Edit Settingloader#Syntastic() at ~/.vim/autoload/settingloader.vim 
-Change: let g:syntastic_yourlanguage_checkers = ['yourchecker'] 
+Change: `let g:syntastic_yourlanguage_checkers = ['yourchecker']` 
 
 <a name="debugger"></a> 
 

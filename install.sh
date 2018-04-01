@@ -11,6 +11,7 @@ do
         then
             rm -f ~/.vimrc
             rm -rf ~/.vim/
+            mkdir ~/.vim/
             echo The old vim files have been deleted!
             break
     fi 
@@ -25,8 +26,8 @@ do
 done
 echo Initialize vim-plug pluginmanager
 cp -f ./vim-plug/plug.vim ./autoload/
-echo Copy/Rename vim-plugin-collection to ~/.vim/
-cp -a ../vim-plugin-collection ~/.vim/
+echo Copy/Rename TheVimIDE to ~/.vim/
+cp -a ./* ~/.vim/
 echo Copy .vimrc to ~/.vimrc 
 cp ./.vimrc ~/.vimrc
 rm -f ~/.vim/.vimrc 
