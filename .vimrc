@@ -22,13 +22,13 @@ Plug 'vim-scripts/SingleCompile'
 
 "Mucomplete crashes with completor and javacomplete, so only plugs for other
 "filetypes
-if $ac != "c" || $ac != "cpp" || $ac != "c++" || $ac != "h" || $ac != "hpp" || $ac != "php" || $ac != "js" || $ac != "py"
+if $ac != "c" || $ac != "cpp" || $ac != "c++" || $ac != "h" || $ac != "hpp" || $ac != "js" || $ac != "py"
     Plug 'lifepillar/vim-mucomplete' 
 endif
 Plug 'lifepillar/pgsql.vim'
 Plug 'lifepillar/vim-cheat40'
 Plug 'octol/vim-cpp-enhanced-highlight'
-Plug 'maralla/completor.vim', { 'for': ['cpp', 'c', 'php', 'js', 'py'] }
+Plug 'maralla/completor.vim', { 'for': ['cpp', 'c', 'js', 'py'] }
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
