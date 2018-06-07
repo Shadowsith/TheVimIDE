@@ -1,0 +1,12 @@
+# clear
+# add
+expect
+tclsh
+abc
+# reset
+expect
+tclsh
+# all clear
+# all reset
+expect
+tclsh

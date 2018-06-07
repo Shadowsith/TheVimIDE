@@ -1,0 +1,2 @@
+x	input.dtd	/^<![%x;[$/;"	p	roles:condition	end:5
+xhtml-struct.mod	input.dtd	/^<!ENTITY % xhtml-struct.mod$/;"	p	roles:def	end:4

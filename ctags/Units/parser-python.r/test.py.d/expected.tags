@@ -1,0 +1,3 @@
+main	input.py	/^def main():$/;"	f
+var	input.py	/^var = 'hi'$/;"	v
+var2	input.py	/^var2 = 'hi' # blah = blah$/;"	v

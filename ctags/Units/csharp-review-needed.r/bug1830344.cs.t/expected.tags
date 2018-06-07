@@ -1,0 +1,2 @@
+C	input.cs	/^public class C {$/;"	c
+m	input.cs	/^	public void m() {$/;"	m	class:C

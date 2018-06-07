@@ -1,0 +1,17 @@
+coffeetags
+cygwin
+docutils
+editorconfig
+jansson
+libaspell
+libc
+libjansson
+libseccomp
+libxml
+libxml2
+libyaml
+mingw
+seccomp
+#
+incref
+decref

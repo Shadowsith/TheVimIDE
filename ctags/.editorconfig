@@ -1,0 +1,21 @@
+root = true
+
+[*]
+end_of_line = lf
+insert_final_newline = true
+
+[*.{c,h,sh}]
+indent_size = 4
+indent_style = tab
+trim_trailing_whitespace = true
+
+[*.rst*]
+indent_size = 4
+indent_style = tab
+trim_trailing_whitespace = true
+
+[win32/*]
+end_of_line = crlf
+
+[win32/*.vcxproj*]
+insert_final_newline = false

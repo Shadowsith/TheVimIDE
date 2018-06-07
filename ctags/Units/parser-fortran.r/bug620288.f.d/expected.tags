@@ -1,0 +1,2 @@
+bar	input.f	/^	double precision function bar(/;"	f
+foo	input.f	/^	integer function foo(/;"	f

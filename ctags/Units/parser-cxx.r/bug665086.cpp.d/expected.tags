@@ -1,0 +1,3 @@
+C12	input.cpp	/^    class C12{}$/;"	c	namespace:N1::N2	file:
+N1	input.cpp	/^namespace N1$/;"	n	file:
+N2	input.cpp	/^  namespace N2$/;"	n	namespace:N1	file:

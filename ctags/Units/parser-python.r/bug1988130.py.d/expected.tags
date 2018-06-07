@@ -1,0 +1,2 @@
+main	input.py	/^def main():$/;"	f
+testFunc	input.py	/^def testFunc():$/;"	f

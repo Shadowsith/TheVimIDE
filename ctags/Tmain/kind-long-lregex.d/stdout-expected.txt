@@ -1,0 +1,6 @@
+# definition
+d       definition yes     no      0      NONE   definitions
+# disabling
+d       definition no      no      0      NONE   definitions
+# enabling again
+d       definition yes     no      0      NONE   definitions

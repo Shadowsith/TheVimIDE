@@ -1,0 +1,4 @@
+a  regex
+b  regex [off]
+c  regex [off]
+d  regex

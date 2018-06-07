@@ -1,0 +1,4 @@
+--extras=+qp
+--output-format=e-ctags
+--pseudo-tags=TAG_OUTPUT_MODE
+

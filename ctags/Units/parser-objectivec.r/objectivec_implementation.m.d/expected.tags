@@ -1,0 +1,13 @@
+FileTree	input.m	/^@implementation FileTree$/;"	I
+FolderTree	input.m	/^@implementation FolderTree$/;"	I
+addChild:	input.m	/^{$/;"	m	implementation:FolderTree
+createFileList:atPlace:	input.m	/^{$/;"	c	implementation:FolderTree
+createLayoutTree	input.m	/^{$/;"	m	implementation:FileTree
+createLayoutTree	input.m	/^{$/;"	m	implementation:FolderTree
+dealloc	input.m	/^{$/;"	m	implementation:FileTree
+dealloc	input.m	/^{$/;"	m	implementation:FolderTree
+getDiskSize	input.m	/^{$/;"	m	implementation:FileTree
+initWithName:andSize:atPlace:	input.m	/^{$/;"	m	implementation:FileTree
+initWithName:atPlace:	input.m	/^{$/;"	m	implementation:FileTree
+initWithName:atPlace:	input.m	/^{$/;"	m	implementation:FolderTree
+populateChildList:	input.m	/^{$/;"	m	implementation:FolderTree

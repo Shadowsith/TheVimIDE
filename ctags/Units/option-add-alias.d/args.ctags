@@ -1,0 +1,2 @@
+--alias-python=+serpent
+--guess-language-eagerly

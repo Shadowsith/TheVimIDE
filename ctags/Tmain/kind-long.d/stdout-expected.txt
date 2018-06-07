@@ -1,0 +1,2 @@
+L       label      yes     no      0      C      goto labels
+d       macro      no      no      1      C      macro definitions

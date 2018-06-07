@@ -1,0 +1,4 @@
+--c++-kinds=+cfl
+--fields=+SsKe
+--fields-c++=+{template}{captures}
+--sort=no

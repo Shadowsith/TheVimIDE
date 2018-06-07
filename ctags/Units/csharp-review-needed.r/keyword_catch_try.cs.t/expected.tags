@@ -1,0 +1,3 @@
+Main	input.cs	/^   public static void Main() $/;"	m	class:MyClass
+MyClass	input.cs	/^class MyClass $/;"	c
+MyFn	input.cs	/^   public void MyFn(string s) $/;"	m	class:MyClass

@@ -1,0 +1,2 @@
+myOverride	input.mxml	/^			public override function myOverride():void$/;"	f
+save	input.mxml	/^			private function save():void$/;"	f

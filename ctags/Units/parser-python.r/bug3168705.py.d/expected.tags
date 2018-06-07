@@ -1,0 +1,3 @@
+A	input.py	/^class A:$/;"	c
+func1	input.py	/^    def func1():$/;"	m	class:A
+func2	input.py	/^    def func2():$/;"	m	class:A

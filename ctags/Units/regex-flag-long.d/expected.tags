@@ -1,0 +1,4 @@
+a	input.dummy	/^define:a$/;"	d
+b	input.dummy	/^Define:b$/;"	d
+c	input.dummy	/^DEFINE:c$/;"	d
+d	input.dummy	/^definE:d$/;"	d
