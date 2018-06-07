@@ -151,3 +151,6 @@
 [submodule "bundle/winresizer"]
 	path = bundle/winresizer
 	url = https://github.com/simeji/winresizer.git
+[submodule "bundle/vim-search-pulse"]
+	path = bundle/vim-search-pulse
+	url = https://github.com/inside/vim-search-pulse.git

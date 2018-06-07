@@ -54,6 +54,7 @@ Plug 'tpope/vim-dispatch', {'for' : 'cs'}
 Plug '~/.vim/bundle/dbext'
 Plug 'EinfachToll/DidYouMean'
 Plug 'simeji/winresizer'
+Plug 'inside/vim-search-pulse'
 Plug 'tpope/vim-commentary'
 Plug 'vimwiki/vimwiki'
 Plug 'ap/vim-css-color'
