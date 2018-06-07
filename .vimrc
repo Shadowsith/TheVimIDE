@@ -47,6 +47,7 @@ Plug 'shawncplus/phpcomplete.vim'
 Plug 'ternjs/tern_for_vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'ludovicchabant/vim-gutentags'
 Plug 'othree/html5.vim'
 Plug 'OmniSharp/omnisharp-vim', {'for': 'cs'}
 Plug 'Shougo/vimproc.vim', {'for' : 'cs'}

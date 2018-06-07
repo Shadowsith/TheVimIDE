@@ -154,3 +154,6 @@
 [submodule "bundle/vim-search-pulse"]
 	path = bundle/vim-search-pulse
 	url = https://github.com/inside/vim-search-pulse.git
+[submodule "bundle/vim-gutentags"]
+	path = bundle/vim-gutentags
+	url = https://github.com/ludovicchabant/vim-gutentags.git
