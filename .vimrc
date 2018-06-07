@@ -53,6 +53,7 @@ Plug 'Shougo/vimproc.vim', {'for' : 'cs'}
 Plug 'tpope/vim-dispatch', {'for' : 'cs'} 
 Plug '~/.vim/bundle/dbext'
 Plug 'EinfachToll/DidYouMean'
+Plug 'simeji/winresizer'
 Plug 'tpope/vim-commentary'
 Plug 'vimwiki/vimwiki'
 Plug 'ap/vim-css-color'

@@ -148,3 +148,6 @@
 [submodule "bundle/kotlin-vim"]
 	path = bundle/kotlin-vim
 	url = https://github.com/udalov/kotlin-vim.git
+[submodule "bundle/winresizer"]
+	path = bundle/winresizer
+	url = https://github.com/simeji/winresizer.git
