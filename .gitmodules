@@ -145,3 +145,6 @@
 [submodule "bundle/lexima.vim"]
 	path = bundle/lexima.vim
 	url = https://github.com/cohama/lexima.vim.git
+[submodule "bundle/kotlin-vim"]
+	path = bundle/kotlin-vim
+	url = https://github.com/udalov/kotlin-vim.git
