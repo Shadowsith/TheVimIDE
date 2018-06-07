@@ -1,0 +1,8 @@
+set nocompatible
+filetype plugin indent on
+syntax enable
+
+set completeopt=menu,preview
+
+let &rtp = '~/.vim/bundle/vimtex,' . &rtp
+let &rtp = '~/.vim/bundle/vimtex/after,' . &rtp

@@ -1,0 +1,81 @@
+let s:expect = themis#helper('expect')
+
+syntax on
+filetype plugin indent on
+set noswapfile
+
+function! Expect(v)
+  return s:expect(a:v)
+endfunction
+
+function! Visible(s)
+  let s = substitute(a:s, ' ', '_', 'g')
+  let s = substitute(s, '\t', '>---', 'g')
+  let s = substitute(s, '\r', '<CR>\r', 'g')
+  let s = substitute(s, '\n', '<NL>\n', 'g')
+  return s
+endfunction
+
+call themis#helper#expect#define_matcher('to_be_displayed', '
+\ getline(1, "$") ==# (type(a:1) ==# type([]) ? a:1 : [a:1])
+\ ', '
+\ "Expected is \n" . Visible(join(a:1, "\n")) . "\nbut actual is\n" . Visible(join(getline(1, "$"), "\n"))
+\ ')
+
+function! s:contains(dict, dict2)
+  for key in keys(a:dict2)
+    if !has_key(a:dict, key) || (type(a:dict[key]) ==# type(a:dict2[key]) ? a:dict[key] !=# a:dict2[key] : a:dict[key] !=# [a:dict2[key]])
+      return 0
+    endif
+  endfor
+  return 1
+endfunction
+
+function! ToBeOrderedAs(rule, rule_order_list)
+  if len(a:rule) != len(a:rule_order_list)
+    return 0
+  endif
+  for i in range(len(a:rule))
+    if !s:contains(a:rule[i], a:rule_order_list[i])
+      return 0
+    endif
+  endfor
+  return 1
+endfunction
+
+function! ErrorMsgOnToBeOrderedAs(_1, _2, rule, rule_order_list)
+  let results = []
+  for i in range(min([len(a:rule), len(a:rule_order_list)]))
+    if s:contains(a:rule[i], a:rule_order_list[i])
+      call add(results, 1)
+    else
+      call add(results, 0)
+    endif
+  endfor
+  return printf("Expected\n%s\nto be orderd as\n%s\norder matches: %s", string(a:rule), string(a:rule_order_list), string(results))
+endfunction
+
+call themis#helper#expect#define_matcher('to_be_ordered_as', function('ToBeOrderedAs'), function('ErrorMsgOnToBeOrderedAs'))
+
+function! CmdlineInputHook()
+  let g:inner_input = getcmdline()
+  return ''
+endfunction
+
+function! CmdlineInput(str)
+  execute 'normal ' . a:str . "\<C-r>=CmdlineInputHook\<C-v>(\<C-v>)\<CR>"
+  return a:str
+endfunction
+
+call themis#helper#expect#define_matcher('to_change_cmdline_as', 'g:inner_input ==# a:2', '"Expected " . g:inner_input . " to change to " . a:2')
+
+function! ToChangeInputAs(input, shown)
+  %delete _
+  execute 'normal i' . a:input . "\<Esc>"
+  return join(getline(1, '$'), "\n") ==# a:shown
+endfunction
+
+call themis#helper#expect#define_matcher('to_change_input_as',
+\ function('ToChangeInputAs'), '
+\ "Expected is \n" . Visible(a:2) . "\nbut actual is\n" . Visible(join(getline(1, "$"), "\n"))
+\ ')

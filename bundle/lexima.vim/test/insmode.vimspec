@@ -1,0 +1,238 @@
+call themis#helper('command')
+Describe In insert mode,
+
+  Before all
+    new | only!
+  End
+
+  After each
+    new | only!
+  End
+
+  Context leave rules
+
+    Before each
+      setlocal nocindent smartindent
+      call lexima#clear_rules()
+      call lexima#add_rule({'char': '{', 'input_after': '}'})
+      call lexima#add_rule({'char': '*', 'at': '{\%#}', 'input_after': '*'})
+    End
+
+    It can leave one
+      call lexima#add_rule({'char': '*', 'at': '\%#\*}', 'leave': 1})
+      execute "normal i{**;\<Esc>"
+      call Expect(['{**;}']).to_be_displayed()
+    End
+
+    It can leave two
+      call lexima#add_rule({'char': '}', 'at': '\%#\*}', 'leave': 2})
+      execute "normal i{*};\<Esc>"
+      call Expect(['{**};']).to_be_displayed()
+    End
+
+    It can leave till specified char
+      call lexima#add_rule({'char': '}', 'at': '\%#\*}', 'leave': '}'})
+      execute "normal i{*};\<Esc>"
+      call Expect(['{**};']).to_be_displayed()
+    End
+
+    It can leave over cr
+      call lexima#add_rule({'char': '<cr>', 'at': '*[{\%#', 'input_after': '<CR>'})
+      call lexima#add_rule({'char': '<CR>', 'at': '{\%#}', 'input_after': '<CR>'})
+      call lexima#add_rule({'char': '}', 'leave': 1})
+      execute "normal i{\<CR>;}\<Esc>"
+      call Expect(['{', "\t;", '}']).to_be_displayed()
+    End
+
+    It can leave till specified char over cr
+      call lexima#add_rule({'char': '<CR>', 'at': '{\%#}', 'input_after': '<CR>'})
+      call lexima#add_rule({'char': '}', 'leave': '}'})
+      execute "normal i{\<CR>;}\<Esc>"
+      call Expect(['{', "\t;", '}']).to_be_displayed()
+    End
+
+    It can leave till specified char over cr
+      call lexima#add_rule({'char': '<CR>', 'at': '{\%#}', 'input_after': '<CR>'})
+      call lexima#add_rule({'char': '}', 'leave': '}'})
+      execute "normal o{\<CR>{\<CR>hoge{}}\<Esc>"
+      normal! G.
+      call Expect(['', '{', "\t{", "\t\thoge{}", "\t}", '}', '{', "\t{", "\t\thoge{}", "\t}", '}']).to_be_displayed()
+    End
+
+    It can leave till end of line
+      call lexima#add_rule({'char': '"', 'input_after': '"'})
+      call lexima#add_rule({'char': '<CR>', 'at': '{\%#}', 'input_after': '<CR>'})
+      call lexima#add_rule({'char': '}', 'leave': '}'})
+      execute "normal o{\<CR>{\<CR>hoge{\"foo{\<C-r>=lexima#insmode#leave_till_eol('')\<CR>;\<Esc>"
+      call Expect(['', '{', "\t{", "\t\thoge{\"foo{}\"};", "\t}", '}']).to_be_displayed()
+      normal! G.
+      call Expect(['', '{', "\t{", "\t\thoge{\"foo{}\"};", "\t}", '}', '{', "\t{", "\t\thoge{\"foo{}\"};", "\t}", '}']).to_be_displayed()
+    End
+
+  End
+
+  Context except rules
+
+    Before each
+      new
+      only!
+      setlocal filetype=ruby
+
+      call lexima#clear_rules()
+      let except = '^\(\s*\).\+\n\%(\1\s.*\n\)*\1}'
+      call lexima#add_rule({'char': '<CR>', 'at': '{\%#', 'input': '<CR>', 'input_after': '<CR>}', 'except': except})
+    End
+
+    It can except applying the rule by cursor context
+      let lines = ["\tloop {", "\t\tfoo", "\t}"]
+      put =lines
+      1delete _
+      execute "normal ggA\<CR>bar\<Esc>"
+      call Expect(["\tloop {", "\t\tbar", "\t\tfoo", "\t}"]).to_be_displayed()
+    End
+
+    It works on normal situation
+      let lines = ["\tloop {"]
+      put =lines
+      1delete _
+      execute "normal ggA\<CR>bar\<Esc>"
+      call Expect(["\tloop {", "\t\tbar", "\t}"]).to_be_displayed()
+    End
+
+  End
+
+  Context delete rules
+
+    Before each
+      new
+      only!
+      call lexima#clear_rules()
+    End
+
+    It can delete one character
+      call lexima#add_rule({'char': '(', 'input_after': ')'})
+      call lexima#add_rule({'char': '<BS>', 'at': '(\%#)', 'delete': 1})
+      execute "normal ohoge(\<BS>\<Esc>"
+      call Expect(['', 'hoge']).to_be_displayed()
+      normal .
+      call Expect(['', 'hoge', 'hoge']).to_be_displayed()
+    End
+
+  End
+
+  Context filetype rules
+
+    Before all
+      call lexima#clear_rules()
+      let s:save_default_rules = g:lexima#default_rules
+      let g:lexima_no_default_rules = 1
+      call lexima#add_rule({'char': '(', 'input_after': ')'})
+      call lexima#add_rule({'char': '(', 'input_after': 'Ruby!)', 'filetype': 'ruby'})
+      call lexima#add_rule({'char': '(', 'input_after': 'Java script?)', 'filetype': 'javascript'})
+    End
+
+    It is triggered in suitable filetype
+      execute "normal i(\<Esc>"
+      call Expect(['()']).to_be_displayed()
+      enew!
+      setlocal filetype=ruby
+      execute "normal i(\<Esc>"
+      call Expect(['(Ruby!)']).to_be_displayed()
+      enew!
+      setlocal filetype=javascript
+      execute "normal i(\<Esc>"
+      call Expect(['(Java script?)']).to_be_displayed()
+    End
+
+    It falls back to default rule
+      setlocal filetype=ocaml
+      execute "normal i(\<Esc>"
+      call Expect(['()']).to_be_displayed()
+    End
+
+  End
+
+  Context syntax rules
+
+    Before all
+      call lexima#clear_rules()
+      let s:save_default_rules = g:lexima#default_rules
+      let g:lexima_no_default_rules = 1
+      call lexima#add_rule({'char': '"', 'input_after': '"'})
+      call lexima#add_rule({'char': '%', 'input': '%%', 'syntax': 'String'})
+      setlocal filetype=vim
+    End
+
+    It is triggered in suitable syntax
+      execute "normal ilet x = %\"%\<Esc>"
+      call Expect(['let x = %"%%"']).to_be_displayed()
+    End
+
+  End
+
+  Context altanative keys
+
+    It can be defined
+      call lexima#add_rule({'char': '(', 'input_after': ')'})
+      call lexima#add_rule({'char': '<BS>', 'at': '(\%#)', 'delete': 1})
+      call lexima#insmode#define_altanative_key('<C-h>', '<BS>')
+      call Expect("(").to_change_input_as('()')
+      call Expect("(\<C-h>").to_change_input_as('')
+    End
+
+  End
+
+  Context map pre-hook
+
+    Before all
+      call lexima#set_default_rules()
+    End
+
+    It can be triggered before key pressed
+      call lexima#insmode#map_hook('before', '(', '*')
+      call Expect("(").to_change_input_as('*()')
+      call lexima#insmode#map_hook('before', '[', "\<C-r>=1+1\<CR>")
+      call Expect("[").to_change_input_as('2[]')
+    End
+
+  End
+
+  Context map post-hook
+
+    Before all
+      call lexima#set_default_rules()
+    End
+
+    It can be triggered after key pressed
+      call lexima#insmode#map_hook('after', '(', '+')
+      call Expect("(").to_change_input_as('(+)')
+      call lexima#insmode#map_hook('after', '[', "\<C-r>=1+2\<CR>")
+      call Expect("[").to_change_input_as('[3]')
+    End
+
+  End
+
+  Context abbreviation expansion
+
+    Before all
+      iabbrev foo bar
+      call lexima#set_default_rules()
+    End
+
+    After all
+      iunabbrev foo
+    End
+
+    It can be triggered after key pressed
+      if v:version <= 703 && !has('patch489')
+        Skip "abbreviation expansion is enabled at Vim 7.3.489 or later"
+      endif
+      call Expect('foo ').to_change_input_as('bar ')
+      call Expect('foo(').to_change_input_as('bar()')
+      call Expect("foo'").to_change_input_as("bar'")
+      call Expect("foo\<CR>").to_change_input_as("bar\n")
+    End
+
+  End
+
+End

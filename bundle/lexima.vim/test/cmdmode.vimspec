@@ -1,0 +1,78 @@
+Describe In commandline mode,
+
+  Before each
+    call lexima#clear_rules()
+  End
+
+  It works well on any commandline mode if mode is c
+    call lexima#add_rule({'char': '(', 'at': 'hoge\%#', 'input': '{', 'input_after': '}', 'mode': 'c'})
+    call lexima#add_rule({'char': '<BS>', 'at': '{\%#}', 'input': '<BS><Del>', 'mode': 'c'})
+    call Expect(CmdlineInput(":(")).to_change_cmdline_as("(")
+    call Expect(CmdlineInput(":hoge((")).to_change_cmdline_as("hoge{(}")
+    call Expect(CmdlineInput("/hoge((")).to_change_cmdline_as("hoge{(}")
+    call Expect(CmdlineInput("?hoge((")).to_change_cmdline_as("hoge{(}")
+    call Expect(CmdlineInput(":hoge(\<BS>")).to_change_cmdline_as("hoge")
+  End
+
+  It works well when special key is input
+    call lexima#add_rule({'at': '^\%#', 'char': '/', 'input': '<BS>:Unite line', 'mode': '/'})
+    call Expect(CmdlineInput("//")).to_change_cmdline_as("Unite line")
+  End
+
+  It works well on forward search mode if mode is /
+    call lexima#add_rule({'char': '(', 'at': 'hoge\%#', 'input': '{', 'input_after': '}', 'mode': '/'})
+    call Expect(CmdlineInput(":hoge((")).to_change_cmdline_as("hoge((")
+    call Expect(CmdlineInput("/hoge((")).to_change_cmdline_as("hoge{(}")
+    call Expect(CmdlineInput("?hoge((")).to_change_cmdline_as("hoge((")
+  End
+
+  It works well on backward search mode if mode is ?
+    call lexima#add_rule({'char': '(', 'at': 'hoge\%#', 'input': '{', 'input_after': '}', 'mode': '?'})
+    call Expect(CmdlineInput(":hoge((")).to_change_cmdline_as("hoge((")
+    call Expect(CmdlineInput("/hoge((")).to_change_cmdline_as("hoge((")
+    call Expect(CmdlineInput("?hoge((")).to_change_cmdline_as("hoge{(}")
+  End
+
+  It works well on search mode if mode is /?
+    call lexima#add_rule({'char': '(', 'at': 'hoge\%#', 'input': '{', 'input_after': '}', 'mode': '/?'})
+    call Expect(CmdlineInput(":hoge((")).to_change_cmdline_as("hoge((")
+    call Expect(CmdlineInput("/hoge((")).to_change_cmdline_as("hoge{(}")
+    call Expect(CmdlineInput("?hoge((")).to_change_cmdline_as("hoge{(}")
+  End
+
+  It does not affect on insertmode
+    call lexima#add_rule({'char': '(', 'at': 'hoge\%#', 'input': '{', 'input_after': '}', 'mode': ':/?'})
+    %delete _
+    execute "normal ihoge(\<Esc>"
+    call Expect(['hoge(']).to_be_displayed()
+  End
+
+  It can leave
+    call lexima#add_rule({'char': '(', 'input_after': ')', 'mode': 'c'})
+    call lexima#add_rule({'char': ')', 'at': '\%#)', 'leave': 1, 'mode': 'c'})
+    call lexima#add_rule({'char': '<Space>', 'at': '(\%#)', 'input_after': '<Space>', 'mode': 'c'})
+    call lexima#add_rule({'char': ')', 'at': '\%# )', 'leave': ')', 'mode': 'c'})
+    call Expect(CmdlineInput(":hoge(:);")).to_change_cmdline_as("hoge(:);")
+    call Expect(CmdlineInput(":hoge( :);")).to_change_cmdline_as("hoge( : );")
+  End
+
+  It can delete
+    call lexima#add_rule({'char': '(', 'input_after': ')', 'mode': 'c'})
+    call lexima#add_rule({'char': '<BS>', 'at': '(\%#)', 'delete': 1, 'mode': 'c'})
+    call Expect(CmdlineInput(":(")).to_change_cmdline_as('()')
+    call Expect(CmdlineInput(":(\<BS>")).to_change_cmdline_as('')
+  End
+
+  Context altanative keys
+
+    It can be defined
+      call lexima#add_rule({'char': '(', 'input_after': ')', 'mode': 'c'})
+      call lexima#add_rule({'char': '<BS>', 'at': '(\%#)', 'delete': 1, 'mode': 'c'})
+      call lexima#cmdmode#define_altanative_key('<C-h>', '<BS>')
+      call Expect(CmdlineInput(":(")).to_change_cmdline_as('()')
+      call Expect(CmdlineInput(":(\<C-h>")).to_change_cmdline_as('')
+    End
+
+  End
+
+End

@@ -1,0 +1,52 @@
+*searchtasks.vim*	Plugin for searching occurrences in the tasks with TODO,
+    FIXME and XXX
+
+Author:  Gilson Filho <http://gilsondev.com>
+
+|searchtasks-introduction|		Introduction
+|searchtasks-commands|		General Commands
+|searchtasks-configuration|		Configurations
+
+This plugin is only available if 'compatible' is not set.
+
+{Vi does not have any of this}
+
+INTRODUCTION					*searchtasks-introduction* *searchtasks*
+
+When you develop, it is likely that inserts comments that serves
+as a reminder of what needs to improve, implement, or withdraw future.
+You also have situations where you need to put a comment from a hack
+who made or an encoding that need a better fix.
+
+For it is common to use labels TODO, FIXME and XXX in comments.
+But how does all of them to look in a directory containing your source code?
+
+This plugin help and do a scan of all kinds of comments that matches the labels used.
+
+GENERAL COMMANDS				*searchtasks-commands*
+
+						*searchtasks-:SearchTasks*
+:SearchTasks <directory>	The only global command.  Search occurrences  in directory and list window matches. For example: >
+
+    :SearchTasks /home/user/projects/app/*.py
+    :SearchTasks **/*.php
+    :SearchTasks *.c
+<
+
+						*searchtasks-:SearchTasksGrep*
+:SearchTasksGrep <directory>	The only global command.  Search occurrences with :grep in directory and list window matches. For example: >
+
+    :SearchTasksGrep /home/user/projects/app/*.py
+    :SearchTasksGrep **/*.php
+    :SearchTasksGrep *.c
+<
+
+
+CONFIGURATIONS					*searchtasks-configurations*
+
+If you want to change or enter new labels for searchtask search, just enter the following in your configuration .vimrc: >
+
+    let g:searchtasks_list=["TODO", "FIXME", "XXX"]
+<
+
+vim:tw=78:ts=8:ft=help:norl:

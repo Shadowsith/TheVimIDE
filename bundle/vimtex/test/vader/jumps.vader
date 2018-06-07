@@ -1,0 +1,113 @@
+Given tex (LaTeX example 1):
+  \documentclass{article}
+  \begin{document}
+
+  \chapter{section 1}
+  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+  tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+  vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+  no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
+  \chapter{section 2}
+  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+  tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+  vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+  no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
+  \chapter{section 3}
+  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+  tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+  vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+  no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
+  \chapter{section 4}
+  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+  tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+  vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+  no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
+  \chapter{section 5}
+  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+  tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+  vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+  no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
+  \end{document}
+
+Execute (jumps: ]]):
+  normal ]]
+  Assert line('.') == 4
+
+  normal gg3]]
+  Assert line('.') == 16
+
+Execute (jumps: ][):
+  normal ][
+  Assert line('.') == 9
+
+  normal 16G2][
+  Assert line('.') == 27
+
+  normal 28G][
+  Assert line('.') == 33
+
+  normal ][
+  Assert line('.') == 34
+
+Execute (jumps: []):
+  normal G[]
+  Assert line('.') == 33
+
+  normal G2[]
+  Assert line('.') == 27
+
+  normal 8G[]
+  Assert line('.') == 1
+
+Execute (jumps: [[):
+  normal 33G[[
+  Assert line('.') == 28
+
+  normal 3[[
+  Assert line('.') == 10
+
+Given tex (LaTeX example 2):
+  \chapter{section 1}
+    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+  tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+  vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+  no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
+  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+  tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+  vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+  no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
+  \chapter{section 2}
+    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+  tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+  vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+  no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
+  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+  tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+  vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+  no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
+Execute (jumps: d][):
+  normal! j^
+  normal d][
+
+Expect tex (LaTeX example 2 - result):
+  \chapter{section 1}
+  \chapter{section 2}
+    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+  tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+  vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+  no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
+  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+  tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+  vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+  no sea takimata sanctus est Lorem ipsum dolor sit amet.
+

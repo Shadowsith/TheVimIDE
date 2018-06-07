@@ -1,0 +1,14 @@
+set nocompatible
+let &rtp  = '~/.vim/bundle/vimtex,' . &rtp
+let &rtp .= ',~/.vim/bundle/vimtex/after'
+filetype plugin indent on
+syntax enable
+
+let g:vimtex_view_enabled = 1
+
+au BufNewFile,BufRead *.cls,*.sty set ft=tex
+
+edit minimal.tex
+wincmd n
+edit test.sty
+quitall
