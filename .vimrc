@@ -16,60 +16,77 @@ set tw=120
 let $ac = expand('%:e') "read file extensions
 
 call plug#begin('~/.vim/bundle')
-Plug 'vim-syntastic/syntastic'
-Plug 'luochen1990/rainbow'
-Plug 'Shadowsith/vim-syntax'
-Plug 'vim-scripts/SingleCompile'
+"User Interface
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'nanotech/jellybeans.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'jistr/vim-nerdtree-tabs'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'majutsushi/tagbar'
+Plug 'simeji/winresizer'
 
-"Mucomplete crashes with completor and javacomplete, so only plugs for other
-"filetypes
+"Completion Engines
 if $ac != "c" || $ac != "cpp" || $ac != "c++" || $ac != "h" || $ac != "hpp" || $ac != "js" || $ac != "py"
     Plug 'lifepillar/vim-mucomplete' 
 endif
-Plug 'lifepillar/pgsql.vim'
-Plug 'lifepillar/vim-cheat40'
-Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'maralla/completor.vim', { 'for': ['cpp', 'c', 'js', 'py'] }
-Plug 'scrooloose/nerdtree'
-Plug 'jistr/vim-nerdtree-tabs'
+Plug 'shawncplus/phpcomplete.vim'
 Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
 Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' } "lua autocompletion
 Plug 'xolox/vim-misc' "needed for lua-autocompletion
+Plug 'ternjs/tern_for_vim' "javascript, default jQuery support
+Plug 'ludovicchabant/vim-gutentags' "auto ctags generation
+
+"Snippets
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-Plug 'majutsushi/tagbar'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'Yggdroot/indentLine'
-Plug 'jason0x43/vim-js-indent'
+
+"Syntax Highlighting
+Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'othree/html5.vim' "also code completion of html5 tags
+Plug 'Shadowsith/vim-syntax'
 Plug 'elmar-hinz/vim.typoscript' 
-Plug 'nanotech/jellybeans.vim'
-Plug 'shawncplus/phpcomplete.vim'
-Plug 'ternjs/tern_for_vim'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'othree/html5.vim'
+Plug 'lifepillar/pgsql.vim'
+Plug 'ap/vim-css-color'
+Plug 'udalov/kotlin-vim'
+
+"Code Helper
+Plug 'luochen1990/rainbow' "different colors for different bracklets
+Plug 'tpope/vim-commentary'
+Plug 'jason0x43/vim-js-indent'
+Plug 'cohama/lexima.vim' "automatic closes paranthesis and strings
+Plug 'Shougo/denite.nvim' "search filesystem, tags, buffers
+Plug 'maksimr/vim-jsbeautify'
+Plug 'alvan/vim-closetag' "closes html tags in html-documents
+
+"Debugging and building
+Plug 'vim-syntastic/syntastic'
+Plug 'vim-scripts/SingleCompile'
+Plug '~/.vim/bundle/Conque-GDB'
+Plug 'vim-vdebug/vdebug', {'for' : ['py', 'php'] }
+
+"UI Helper
+Plug 'Yggdroot/indentLine'
+Plug 'MattesGroeger/vim-bookmarks'
+Plug 'inside/vim-search-pulse'
+Plug 'terryma/vim-expand-region'
+Plug 'EinfachToll/DidYouMean'
+
+"Documentation
+Plug 'lervag/vimtex' "LaTeX bundle
+Plug 'vimwiki/vimwiki'
+Plug 'xolox/vim-notes'
+
+"Various
+Plug 'lifepillar/vim-cheat40'
+
+
+"C# must be checked
 Plug 'OmniSharp/omnisharp-vim', {'for': 'cs'}
 Plug 'Shougo/vimproc.vim', {'for' : 'cs'}
 Plug 'tpope/vim-dispatch', {'for' : 'cs'} 
-Plug '~/.vim/bundle/dbext'
-Plug 'EinfachToll/DidYouMean'
-Plug 'simeji/winresizer'
-Plug 'inside/vim-search-pulse'
-Plug 'tpope/vim-commentary'
-Plug 'vimwiki/vimwiki'
-Plug 'ap/vim-css-color'
-Plug 'MattesGroeger/vim-bookmarks'
-Plug 'cohama/lexima.vim'
-Plug 'alvan/vim-closetag'
-Plug 'maksimr/vim-jsbeautify'
-Plug 'udalov/kotlin-vim'
-Plug 'lervag/vimtex'
-Plug 'xolox/vim-notes'
-Plug 'Shougo/denite.nvim'
-Plug 'terryma/vim-expand-region'
-Plug '~/.vim/bundle/Conque-GDB'
-Plug 'vim-vdebug/vdebug', {'for' : ['py', 'php'] }
+"Plug '~/.vim/bundle/dbext'
 call plug#end()
 call plug#helptags() 
 
@@ -141,7 +158,7 @@ call settingloader#Snippets()
 "SearchTasks
 call settingloader#SearchTasks()
 
-"Php Autoindent
+"Php Autoindent 
 autocmd BufEnter *.php set autoindent 
 
 "OmniSharp
