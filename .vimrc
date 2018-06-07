@@ -10,6 +10,7 @@ set smarttab
 set nosmd 
 set noru
 set splitbelow 
+set tw=120
 
 "Handle autocompletion problems by loading plugins conditionally
 let $ac = expand('%:e') "read file extensions
@@ -135,6 +136,9 @@ call settingloader#Snippets()
 
 "SearchTasks
 call settingloader#SearchTasks()
+
+"Php Autoindent
+autocmd BufEnter *.php set autoindent 
 
 "OmniSharp
 if $ac == "cs"
