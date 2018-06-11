@@ -81,7 +81,6 @@ Plug 'xolox/vim-notes'
 "Various
 Plug 'lifepillar/vim-cheat40'
 
-
 "C# must be checked
 Plug 'OmniSharp/omnisharp-vim', {'for': 'cs'}
 Plug 'Shougo/vimproc.vim', {'for' : 'cs'}
@@ -93,24 +92,12 @@ call plug#helptags()
 "Jellybeans colorscheme
 call settingloader#Jellybeans()
 
-"Vim-Airline (Userinterface)
+"UI---------------------
 call settingloader#Airline() 
-
-"Rainbow brakets
-let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
+call settingloader#UiFeatures()
 
 "Vim Notes
 let g:notes_directories = ['~/.notesvim']
-
-
-"Nerdtree
-map <C-n> :NERDTreeTabsToggle<CR>
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-"Tagbar 
-map <C-t> :TagbarToggle<CR>
-let g:tagbar_phpctags_bin='/usr/bin/phpctags'
-let g:tagbar_phpctags_memory_limit = '256M'
 
 "Syntatisc
 call settingloader#Syntastic()
@@ -152,16 +139,17 @@ call settingloader#CppEnhancedHighlight()
 "Vim buildin omnicompletion"
 call settingloader#VimOmniCompletion()
 
+"PhpComplete settings
+call settingloader#PHPComplete()
+
 "Vim snippets for many languages
 call settingloader#Snippets()
 
 "SearchTasks
 call settingloader#SearchTasks()
 
-"Php Autoindent 
-autocmd BufEnter *.php set autoindent 
-
 "OmniSharp
 if $ac == "cs"
     call settingloader#OmniSharp() 
 endif
+

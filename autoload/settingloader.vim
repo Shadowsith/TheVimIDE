@@ -4,6 +4,20 @@ function settingloader#Airline()
     let g:airline#extensions#tabline#left_alt_sep = '|'
 endfunction
 
+function settingloader#UiFeatures()
+    "Nerdtree
+    map <C-n> :NERDTreeTabsToggle<CR>
+    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+    "Tagbar 
+    map <C-t> :TagbarToggle<CR>
+    let g:tagbar_phpctags_bin='/usr/bin/phpctags'
+    let g:tagbar_phpctags_memory_limit = '256M'
+
+    "Rainbow brakets
+    let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
+endfunction
+
 function settingloader#Jellybeans()
     let g:jellybeans_overrides = {
     \    'Todo': { 'guifg': '303030', 'guibg': 'f0f000',
@@ -21,6 +35,13 @@ function settingloader#Jellybeans()
     \    'background': { 'guibg': '000000' },
     \}    
     colorscheme jellybeans
+    " Enables cursor line position tracking:
+    set cursorline
+    " Removes the underline causes by enabling cursorline:
+    highlight clear CursorLine
+    " Sets the line numbering to red background:
+highlight CursorLineNR ctermfg=cyan
+
 endfunction
 
 function settingloader#Syntastic() 
@@ -42,6 +63,10 @@ function settingloader#MuComplete()
     set completeopt+=noselect
     set shortmess+=c   " Shut off completion messages
     set belloff+=ctrlg " If Vim beeps during completion
+    "Turn off error Messages
+    let g:mucomplete#no_popup_mappings = 1
+    imap <c-y> <plug>(MUcompletePopupAccept)
+    imap <cr> <plug>(MUcompleteCR)
 endfunction 
 
 function settingloader#Completor()
@@ -57,6 +82,18 @@ function settingloader#Completor()
     if &completeopt !~# 'noinsert\|noselect'
         set completeopt+=noselect
     endif
+endfunction
+
+function settingloader#PHPComplete()
+    "Php autoindent has bugs and need to reenabled manually
+    autocmd BufEnter *.php set autoindent 
+    "Default mapping makes problems 
+    let g:phpcomplete_mappings = {
+    \ 'jump_to_def': '<C-]>',
+    \ 'jump_to_def_split': '<C-D><C-]>',
+    \ 'jump_to_def_vsplit': '<C-D><C-\>',
+    \ 'jump_to_def_tabnew': '<C-D><C-[>',
+    \}
 endfunction
 
 function settingloader#Javacomplete2()
