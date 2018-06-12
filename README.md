@@ -1,15 +1,7 @@
 ------
-<pre>
-ooooooooooooo oooo                  oooooo     oooo  o8o                    ooooo oooooooooo.   oooooooooooo
-8'   888   `8 `888                   `888.     .8'   `"'                    `888' `888'   `Y8b  `888'     `8
-     888       888 .oo.    .ooooo.    `888.   .8'   oooo  ooo. .oo.  .oo.    888   888      888  888        
-     888       888P"Y88b  d88' `88b    `888. .8'    `888  `888P"Y88bP"Y88b   888   888      888  888oooo8   
-     888       888   888  888ooo888     `888.8'      888   888   888   888   888   888      888  888    "   
-     888       888   888  888    .o      `888'       888   888   888   888   888   888     d88'  888       o
-    o888o     o888o o888o `Y8bod8P'       `8'       o888o o888o o888o o888o o888o o888bood8P'   o888ooooood8
-</pre>
+![](img/vimidelogo.png)
 -------------------------------------------------------------------------------------------------------------
-![](gifs/intro.png)
+![](img/intro.png)
 !Warning: This project is under active development!
 ----
 1. [Introduction](#introduction) 
