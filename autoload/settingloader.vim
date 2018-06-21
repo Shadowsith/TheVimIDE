@@ -82,6 +82,7 @@ function settingloader#Completor()
     if &completeopt !~# 'noinsert\|noselect'
         set completeopt+=noselect
     endif
+    let g:completor_completion_delay=10
 endfunction
 
 function settingloader#PHPComplete()
