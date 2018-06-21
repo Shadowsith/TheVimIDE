@@ -37,6 +37,8 @@ Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' } "lua autocompletion
 Plug 'xolox/vim-misc' "needed for lua-autocompletion
 Plug 'ternjs/tern_for_vim' "javascript, default jQuery support
 Plug 'ludovicchabant/vim-gutentags' "auto ctags generation
+Plug 'vim-ruby/vim-ruby' "default ruby
+Plug 'tpope/vim-rails' "ruby on rails
 
 "Snippets
 Plug 'SirVer/ultisnips'
@@ -129,6 +131,9 @@ call settingloader#Javacomplete2()
 
 "vim-lua-ftplugin for Lua-Autocompletion
 call settingloader#LuaComplete()
+
+"ruby autocompletion
+call settingloader#RubyComplete()
 
 "pgsql Plugin
 "let g:sql_type_default = 'pgsql' "If you want use this plugin for all sql files

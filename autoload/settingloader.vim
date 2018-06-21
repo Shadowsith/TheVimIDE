@@ -131,6 +131,12 @@ function settingloader#LuaComplete()
     let g:lua_complete_omni = 1
 endfunction
 
+function settingloader#RubyComplete()
+    autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1 
+    autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+    autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
+endfunction
+
 function settingloader#CppEnhancedHighlight()
     let g:cpp_class_scope_highlight = 1 
     let g:cpp_member_variable_highlight = 1 
