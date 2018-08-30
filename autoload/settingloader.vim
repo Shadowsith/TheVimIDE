@@ -1,3 +1,11 @@
+function settingloader#FileIndent()
+    au FileType ruby setl sw=2 sts=2 et smarttab
+    au FileType sql setl sw=2 sts=2 et smarttab
+    au FileType html setl sw=2 sts=2 et smarttab
+    au FileType xml setl sw=2 sts=2 et smarttab
+    au FileType yml setl sw=2 sts=2 et smarttab
+endfunction
+
 function settingloader#Airline()
     let g:airline#extensions#tabline#enabled = 1
     let g:airline#extensions#tabline#left_sep = ' '

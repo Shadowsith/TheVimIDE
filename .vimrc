@@ -1,5 +1,5 @@
 set nocompatible
-filetype off 
+filetype plugin indent on
 syntax on
 set number
 set autoindent
@@ -10,21 +10,15 @@ set smarttab
 set nosmd 
 set noru
 set splitbelow 
-set tw=120
+set tw=90
+
+"Indent format for some programming languages
+call settingloader#FileIndent()
 
 "Handle autocompletion problems by loading plugins conditionally
 let $ac = expand('%:e') "read file extensions
 
 call plug#begin('~/.vim/bundle')
-"User Interface
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'nanotech/jellybeans.vim'
-Plug 'scrooloose/nerdtree'
-Plug 'jistr/vim-nerdtree-tabs'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'majutsushi/tagbar'
-Plug 'simeji/winresizer'
 
 "Completion Engines
 if $ac != "c" || $ac != "cpp" || $ac != "c++" || $ac != "h" || $ac != "hpp" || $ac != "js" || $ac != "py"
@@ -68,6 +62,27 @@ Plug 'vim-scripts/SingleCompile'
 Plug '~/.vim/bundle/Conque-GDB'
 Plug 'vim-vdebug/vdebug', {'for' : ['py', 'php'] }
 
+"Documentation
+Plug 'lervag/vimtex' "LaTeX bundle
+Plug 'vimwiki/vimwiki'
+Plug 'xolox/vim-notes'
+
+"C# must be checked
+Plug 'OmniSharp/omnisharp-vim', {'for': 'cs'}
+Plug 'Shougo/vimproc.vim', {'for' : 'cs'}
+Plug 'tpope/vim-dispatch', {'for' : 'cs'} 
+"Plug '~/.vim/bundle/dbext'
+
+"User Interface
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'nanotech/jellybeans.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'jistr/vim-nerdtree-tabs'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'majutsushi/tagbar'
+Plug 'simeji/winresizer'
+
 "UI Helper
 Plug 'Yggdroot/indentLine'
 Plug 'MattesGroeger/vim-bookmarks'
@@ -75,19 +90,9 @@ Plug 'inside/vim-search-pulse'
 Plug 'terryma/vim-expand-region'
 Plug 'EinfachToll/DidYouMean'
 
-"Documentation
-Plug 'lervag/vimtex' "LaTeX bundle
-Plug 'vimwiki/vimwiki'
-Plug 'xolox/vim-notes'
-
 "Various
 Plug 'lifepillar/vim-cheat40'
 
-"C# must be checked
-Plug 'OmniSharp/omnisharp-vim', {'for': 'cs'}
-Plug 'Shougo/vimproc.vim', {'for' : 'cs'}
-Plug 'tpope/vim-dispatch', {'for' : 'cs'} 
-"Plug '~/.vim/bundle/dbext'
 call plug#end()
 call plug#helptags() 
 
