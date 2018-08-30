@@ -52,7 +52,6 @@ Below you can the the most considerable features.
 * [Syntastic](https://github.com/vim-syntastic/syntastic) to for showing syntax errors during programming
 * [SingleCompile](https://github.com/vim-scripts/SingleCompile) to run fast test compilings without closing vim
 * [UtilSnips](https://github.com/SirVer/ultisnips) and [vim-snippets](https://github.com/honza/vim-snippets) support for many languages 
-* Advanced syntax highlighting for [C++](https://github.com/octol/vim-cpp-enhanced-highlight), [PGSQL](https://github.com/lifepillar/pgsql.vim), [HTML5](https://github.com/othree/html5.vim) and [CSS](https://github.com/ap/vim-css-color)
 * Settingloader in ./autoload to prefend a to big .vimrc and plugin incompatibilities  
 
 <a name="minorfeatures"></a> 
@@ -70,6 +69,9 @@ Below you can the the most considerable features.
 * [DidYouMean](https://github.com/EinfachToll/DidYouMean) asks for the right file to open when similiar files exists
 * [Search Tasks](https://github.com/gilsondev/searchtasks.vim) for searching TODO, FIXME or other tags in your project 
 * [Bookmarks](https://github.com/MattesGroeger/vim-bookmarks) to toggle and go through bookmarks in your file/project
+* Advanced syntax highlighting for [C++](https://github.com/octol/vim-cpp-enhanced-highlight), 
+* [PGSQL](https://github.com/lifepillar/pgsql.vim) 
+* [HTML5](https://github.com/othree/html5.vim) and [CSS](https://github.com/ap/vim-css-color)
 * Smart hotkeys (using same hotkey to toggle on or of a feature) 
 * Small Syntax Highlights by myself
 
@@ -86,6 +88,7 @@ Below you can the the most considerable features.
 * [Lua](https://github.com/xolox/vim-lua-ftplugin) (Lua ftp plugin)
 * [C#](https://github.com/OmniSharp/omnisharp-vim) (MuComplete+OmniSharp-vim) 
 * Python (Completor+Jedi)
+* [Gutentags](https://github.com/ludovicchabant/vim-gutentags) (all ctag compatible languages)
 
 <a name="upcomingauto"></a> 
 
@@ -115,6 +118,7 @@ You need to install these third party programs for the mentioned features:
 * __Jedi__ for Python autocompletion
 * __npm, nodejs__ for (good) JavaScript autocompletion, default needs nothings
 * __maven__ to build Java autocompletion at your own
+* **ctags** for Vim-Gutentags support
 * [__phpctags__](https://github.com/vim-php/phpctags) for better PHP autocompletion experience
 
 #### Installing third party Requirements:
@@ -129,7 +133,7 @@ The named OS above are tested
 
 After execution of the install.sh script you can use the 
 other install scripts in ./build for plugins that you need to build. 
-* omnisharp__install.sh for C# autocompletion 
+* omnisharp__install.sh for C# autocompletion (not working now)
 * java_install.sh for Java
 * javascript_install.sh for Javascript
 
@@ -162,9 +166,8 @@ Until then you need to read the help under: :help VdbugSetUp
 
 ## 6\. Knowing issuses
 ### C# omnicompletion does not work:
-If C# completion does not work after executing the omnisharp_install script 
-you have to add a empty .sln (Visual Studio Solution) file to your C# projecti or working folder. 
-I don't know why but then it works. 
+Omnisharp has switched to a new completion server (roselyn) and for that I have to rewrite
+the most of the C# installer.
 
 ### C# Compiling error with magic number 542
 This is a bug that occurs on gui-based terminals when ncurses 6.1 is installed. 
@@ -211,3 +214,7 @@ Why I don't use YouCompleteMe?
 <a name="future"></a> 
 
 ## 9\. Project future
+The project will be updated in irregular intervals.<br>
+For feature request open a new issue with Topic: Request - your feature request.
+
+The project documentation comes if time permits it.
