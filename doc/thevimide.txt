@@ -1,8 +1,114 @@
 *thevimide.txt* Out of the Box IDE for Vim8/Neovim
-
-
-==============================================================================
-1. Intro                                                     thevimide-intro
+*thevimide*
 
 ==============================================================================
+CONTENTS                                                  *thevimide-contents*
+
+    1.Intro.........................................|thevimide-intro|
+    2.Plugin overview...............................|thevimide-plugins|
+    3.Installation..................................|thevimide-install|
+        3.1.Requirements............................|thevimide-requirements|
+        3.2.Using the installer.....................|thevimide-install-auto|
+        3.3.Without installer.......................|thevimide-install-self|
+    4.UI-Features...................................|thevimide-ui|
+        4.1.General.................................|thevimide-ui-general|
+        4.1.Helpers.................................|thevimide-ui-helpers|
+    5.Syntax highligthing...........................|thevimide-syntax|
+    6.Autocompletion................................|thevimide-auto|
+        6.1.Completor...............................|thevimide-completor|
+        6.2.Mucomplete..............................|thevimide-mucomplete|
+        6.3.Gutentags...............................|thevimide-gutentags|
+    7.Syntax linter.................................|thevimide-linter|
+        7.1.Syntastic...............................|thevimide-syntastic|
+        7.2.Recommended Linters.....................|thevimide-rlinters|
+    8.Snippets......................................|thevimide-snippets|
+    9.Debugger......................................|thevimide-debug|
+        9.1.ConquerGDB..............................|thevimide-gdb|
+        9.2.Vdebug..................................|thevimide-vdebug|
+    10.Code helpers.................................|thevimide-code|
+    11.Docmentation.................................|thevimide-doc|
+        9.1.VimWiki.................................|thevimide-wiki|
+        9.2.Notes...................................|thevimide-notes|
+    12.Hotkey.......................................|thevimide-hotkeys|
+    13.Development..................................|thevimide-dev|
+        13.1.Settingloader..........................|thevimide-dev-loader|
+        13.2.Edit hotkeys...........................|thevimide-dev-hotkeys|
+        13.3.Installer..............................|thevimide-dev-installer|
+        13.4.Adding new plugins.....................|thevimide-dev-plugins|
+    14.Support......................................|thevimide-support|
+
+==============================================================================
+1. Intro                                                     *thevimide-intro*
+
+TheVimIDE is a try to make a fully functional out of the box IDE for many 
+popular languages. The origins of this project was a small plugin collection
+which has grown a lot over time and there was the problem to handle the
+configuration in a larger and larger vimrc file. 
+
+Another aspect was the existence of other 'IDE' projects which goes not wide
+enough to be near to a real development enviroment, have deprecated plugins
+or like SpaceVim gone to far from the simple vim plugin usage. 
+
+TheVimIDE has five major targets:
+    * Combine fastness of vim with the comfort of IDE features
+    * Support as many popular languages as possible
+    * Be easy to configure
+    * Be fully functional out of the box
+    * Be easy expandable and forkable
+
+==============================================================================
+2. Plugin overview                                         *thevimide-plugins*
+
+Here is an alphabetical list with all used plugins:
+
+==============================================================================
+3. Installation                                            *thevimide-install*
+
+TheVimIDE can be easy installed with help of an bash script installer or at
+your own by using the installation manual and needs some third party
+requirements to works correctly.
+
+------------------------------------------------------------------------------
+3.1. Requirements                                     *thevimide-requriements*
+
+Following programs are needed for the listed features:
+- Vim/Neovimmust be installed with python support
+    - Vim:
+        - For Debian/Ubuntu install vim-nox
+        - For Arch Linux python support is enabled by default
+
+    - Neovim (All Linux plattforms)
+        - sudo pip2 install --upgrade neovim && 
+          sudo pip3 install --upgrade neovim
+
+- Clang:        For C-familiy autocompletion
+- Jedi:         For Python autocompletion
+- Nodejs,Npm:   For (good) JavaScript autocompletion, default needs nothing
+- maven:        For building Java autocompletion
+- ctags:        For vim-gutentags support
+- phpctags:     For better PHP autocompletion experience
+
+------------------------------------------------------------------------------
+3.2. Using the installer                              *thevimide-install-auto*
+
+To install TheVimIDE automatically use the following installation scripts:
+- Vim:    install.sh
+- Neovim: install-neovim.sh
+
+If you later want to install one of the following plugins correctly use:
+- build/java_install.sh for JavaComplete2
+- build/javascript_tern_install.sh for JavaScript omnicompletion
+- build/tagbar_ctags.install.sh to install the tagbar
+
+
+------------------------------------------------------------------------------
+3.3. Install at your own                              *thevimide-install-self*
+
+To install TheVimIDE at our own use following steps:
+- backup or delete your own .vim/ folder and .vimrc file in your home dir
+- copy TheVimIDE/.vimrc to ~/.vimrc and TheVimIDE/.vim/ to ~/.vim/
+
+If you want to install Java or JavaScript autocompletion show into the
+install scripts at build/ see how the plugins have to be installed
+
 

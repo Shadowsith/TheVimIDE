@@ -94,9 +94,6 @@
 [submodule "bundle/vimproc.vim"]
 	path = bundle/vimproc.vim
 	url = https://github.com/Shougo/vimproc.vim.git
-[submodule "bundle/omnisharp-vim"]
-	path = bundle/omnisharp-vim
-	url = https://github.com/OmniSharp/omnisharp-vim.git
 [submodule "ctags"]
 	path = ctags
 	url = https://github.com/universal-ctags/ctags.git
