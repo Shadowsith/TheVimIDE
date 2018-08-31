@@ -12,6 +12,9 @@ set noru
 set splitbelow 
 set tw=90
 
+"Add thevimide help file
+execute 'helptags' '~/.vim/doc'
+
 "Indent format for some programming languages
 call settingloader#FileIndent()
 
