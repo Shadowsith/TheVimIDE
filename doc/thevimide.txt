@@ -12,7 +12,8 @@ CONTENTS                                                  *thevimide-contents*
         3.3.Without installer.......................|thevimide-install-self|
     4.UI-Features...................................|thevimide-ui|
         4.1.Interface...............................|thevimide-interface|
-        4.1.File Explorer...........................|thevimide-explorer|
+        4.2.File Explorer...........................|thevimide-explorer|
+        4.3.Helper..................................|thevimide-ui-helper|
     5.Syntax highligthing...........................|thevimide-syntax|
     6.Autocompletion................................|thevimide-auto|
         6.1.Completor...............................|thevimide-completor|
@@ -126,8 +127,8 @@ The configuration for all UI features could be found under:
 
 The basic interface is generally based on the status- and tabline plugin
 vim-airline and its theme extension vim-airline-themes. 
-The marker for the current line is a self made extension and can be found 
-under:  ~/.vim/autoload/settingloader.vim -> 
+The marker for the current cursorline is a self made extension and can be found 
+under:  ~/.vim/autoload/settingloader.vim -> UiFeatures 
 
 For help:
 - Airline         :help airline

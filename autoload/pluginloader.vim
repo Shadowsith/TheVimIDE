@@ -54,6 +54,7 @@ function pluginloader#CodeHelper()
     Plug 'inside/vim-search-pulse'
     Plug 'terryma/vim-expand-region'
     Plug 'tpope/vim-fugitive' "Git plugin
+    Plug 'airblade/vim-gitgutter' 
 endfunction
 
 function pluginloader#Debug()

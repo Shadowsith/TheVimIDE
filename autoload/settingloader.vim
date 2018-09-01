@@ -23,6 +23,13 @@ function settingloader#UiFeatures()
 
     "Rainbow brakets
     let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
+
+    "Colored cursorline
+    set cursorline
+    " Removes the underline causes by enabling cursorline:
+    highlight clear CursorLine
+    " Sets the line numbering to red background:
+    highlight CursorLineNR ctermfg=cyan
 endfunction
 
 function settingloader#Jellybeans()
@@ -43,12 +50,6 @@ function settingloader#Jellybeans()
     \}    
     colorscheme jellybeans
     " Enables cursor line position tracking:
-    set cursorline
-    " Removes the underline causes by enabling cursorline:
-    highlight clear CursorLine
-    " Sets the line numbering to red background:
-    highlight CursorLineNR ctermfg=cyan
-
 endfunction
 
 function settingloader#Syntastic() 
@@ -183,9 +184,9 @@ function settingloader#Hotkeys()
     nmap <C-Right> :tabn<cr>
     nmap <C-Left> :tabp<cr>
 
-    "Move next/prev file with shift+arrow left/right
-    nmap <S-Right> :next<cr>
-    nmap <C-Left> :prev<cr>
+    "Move next/prev file in buffer
+    nmap <S-l> :bnext<cr>
+    nmap <S-h> :bprev<cr>
 
     "SingleCompile
     nmap <F9> :SCCompile<cr>
