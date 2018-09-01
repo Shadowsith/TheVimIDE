@@ -160,3 +160,6 @@
 [submodule "bundle/awesome-vim-colorschemes"]
 	path = bundle/awesome-vim-colorschemes
 	url = https://github.com/rafi/awesome-vim-colorschemes
+[submodule "bundle/vim-fugitive"]
+	path = bundle/vim-fugitive
+	url = https://github.com/tpope/vim-fugitive.git

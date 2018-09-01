@@ -53,6 +53,7 @@ function pluginloader#CodeHelper()
     Plug 'MattesGroeger/vim-bookmarks'
     Plug 'inside/vim-search-pulse'
     Plug 'terryma/vim-expand-region'
+    Plug 'tpope/vim-fugitive' "Git plugin
 endfunction
 
 function pluginloader#Debug()
