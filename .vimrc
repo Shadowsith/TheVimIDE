@@ -22,20 +22,19 @@ call settingloader#FileIndent()
 let $ac = expand('%:e') "read file extensions
 
 call plug#begin('~/.vim/bundle')
-pluginloader#Completion()
-pluginloader#Snipptes()
-pluginloader#Syntax()
-pluginloader#UI()
-pluginloader#CodeHelper()
-pluginloader#Debug()
-pluginloader#Documentation()
+    call pluginloader#Completion()
+    call pluginloader#Snipptes()
+    call pluginloader#Syntax()
+    call pluginloader#UI()
+    call pluginloader#CodeHelper()
+    call pluginloader#Debug()
+    call pluginloader#Documentation()
 
-"Colorschemes
-Plug 'rafi/awesome-vim-colorschemes' 
+    "Colorschemes
+    Plug 'rafi/awesome-vim-colorschemes' 
 
-"Various
-Plug 'lifepillar/vim-cheat40'
-
+    "Various
+    Plug 'lifepillar/vim-cheat40'
 call plug#end()
 call plug#helptags() 
 
