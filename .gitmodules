@@ -70,9 +70,6 @@
 [submodule "bundle/vim.typoscript"]
 	path = bundle/vim.typoscript
 	url = https://github.com/elmar-hinz/vim.typoscript.git
-[submodule "bundle/jellybeans.vim"]
-	path = bundle/jellybeans.vim
-	url = https://github.com/nanotech/jellybeans.vim.git
 [submodule "bundle/phpcomplete.vim"]
 	path = bundle/phpcomplete.vim
 	url = https://github.com/shawncplus/phpcomplete.vim
@@ -160,3 +157,6 @@
 [submodule "bundle/vim-rails"]
 	path = bundle/vim-rails
 	url = https://github.com/tpope/vim-rails.git
+[submodule "bundle/awesome-vim-colorschemes"]
+	path = bundle/awesome-vim-colorschemes
+	url = https://github.com/rafi/awesome-vim-colorschemes

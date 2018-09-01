@@ -11,8 +11,8 @@ CONTENTS                                                  *thevimide-contents*
         3.2.Using the installer.....................|thevimide-install-auto|
         3.3.Without installer.......................|thevimide-install-self|
     4.UI-Features...................................|thevimide-ui|
-        4.1.General.................................|thevimide-ui-general|
-        4.1.Helpers.................................|thevimide-ui-helpers|
+        4.1.Interface...............................|thevimide-interface|
+        4.1.File Explorer...........................|thevimide-explorer|
     5.Syntax highligthing...........................|thevimide-syntax|
     6.Autocompletion................................|thevimide-auto|
         6.1.Completor...............................|thevimide-completor|
@@ -26,16 +26,17 @@ CONTENTS                                                  *thevimide-contents*
         9.1.ConquerGDB..............................|thevimide-gdb|
         9.2.Vdebug..................................|thevimide-vdebug|
     10.Code helpers.................................|thevimide-code|
-    11.Docmentation.................................|thevimide-doc|
-        9.1.VimWiki.................................|thevimide-wiki|
-        9.2.Notes...................................|thevimide-notes|
-    12.Hotkey.......................................|thevimide-hotkeys|
-    13.Development..................................|thevimide-dev|
-        13.1.Settingloader..........................|thevimide-dev-loader|
-        13.2.Edit hotkeys...........................|thevimide-dev-hotkeys|
-        13.3.Installer..............................|thevimide-dev-installer|
-        13.4.Adding new plugins.....................|thevimide-dev-plugins|
-    14.Support......................................|thevimide-support|
+    12.Version control..............................|thevimide-vcontrol|
+    13.Docmentation.................................|thevimide-doc|
+        13.1.VimWiki................................|thevimide-wiki|
+        13.2.Notes..................................|thevimide-notes|
+    14.Hotkeys......................................|thevimide-hotkeys|
+    15.Development..................................|thevimide-dev|
+        15.1.Settingloader..........................|thevimide-dev-loader|
+        15.2.Edit hotkeys...........................|thevimide-dev-hotkeys|
+        15.3.Installer..............................|thevimide-dev-installer|
+        15.4.Adding new plugins.....................|thevimide-dev-plugins|
+    16.Support......................................|thevimide-support|
 
 ==============================================================================
 1. Intro                                                     *thevimide-intro*
@@ -108,7 +109,34 @@ To install TheVimIDE at our own use following steps:
 - backup or delete your own .vim/ folder and .vimrc file in your home dir
 - copy TheVimIDE/.vimrc to ~/.vimrc and TheVimIDE/.vim/ to ~/.vim/
 
-If you want to install Java or JavaScript autocompletion show into the
-install scripts at build/ see how the plugins have to be installed
+If you want to install Java or JavaScript autocompletion look into the
+install scripts at build/*.sh and you see how it works.
+
+==============================================================================
+4. UI-Features                                                  *thevimide-ui*
+
+TheVimIDE is not eligible to be a develeopment enviroment without an well 
+looking interface.
+
+The configuration for all UI features could be found under:
+~/.vim/autoload/settingloader.vim settingloader#UiFeatures()
+
+------------------------------------------------------------------------------
+4.1. Interface                                           *thevimide-interface*
+
+The basic interface is generally based on the status- and tabline plugin
+vim-airline and its theme extension vim-airline-themes. 
+The marker for the current line is a self made extension and can be found 
+under:  ~/.vim/autoload/settingloader.vim -> 
+
+For help:
+- Airline         :help airline
+- Airline-Themes  :help airline-themes-list
+
+------------------------------------------------------------------------------
+4.2. File Explorer
+Fileexplorer:   NerdTREE        Advanced file explorer :help NerdTREE
+                NerdTREE-Tabs   :help nerdtree-tabs
+
 
 

@@ -6,13 +6,12 @@ function settingloader#FileIndent()
     au FileType yml setl sw=2 sts=2 et smarttab
 endfunction
 
-function settingloader#Airline()
+function settingloader#UiFeatures()
+    "Airline
     let g:airline#extensions#tabline#enabled = 1
     let g:airline#extensions#tabline#left_sep = ' '
     let g:airline#extensions#tabline#left_alt_sep = '|'
-endfunction
 
-function settingloader#UiFeatures()
     "Nerdtree
     map <C-n> :NERDTreeTabsToggle<CR>
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
@@ -48,7 +47,7 @@ function settingloader#Jellybeans()
     " Removes the underline causes by enabling cursorline:
     highlight clear CursorLine
     " Sets the line numbering to red background:
-highlight CursorLineNR ctermfg=cyan
+    highlight CursorLineNR ctermfg=cyan
 
 endfunction
 
@@ -169,6 +168,28 @@ endfunction
 
 function settingloader#SearchTasks()
     let g:searchtasks_list=["TODO", "FIXME", "XXX"]
+endfunction
+
+function settingloader#Hotkeys()
+    "F1 is reserved for vim help
+    nmap <F2> :call hotkeys#LineNumbers()<cr>
+    nmap <F3> :call hotkeys#AutoIndent()<cr>
+    nmap <F4> :call hotkeys#IndentLine()<cr> 
+
+    "Save with shift+s
+    nmap <S-s> :w<cr>
+
+    "Move tab with ctrl+arrow left/right
+    nmap <C-Right> :tabn<cr>
+    nmap <C-Left> :tabp<cr>
+
+    "Move next/prev file with shift+arrow left/right
+    nmap <S-Right> :next<cr>
+    nmap <C-Left> :prev<cr>
+
+    "SingleCompile
+    nmap <F9> :SCCompile<cr>
+    nmap <F10> :SCCompileRun<cr>
 endfunction
 
 function settingloader#OmniSharp()
