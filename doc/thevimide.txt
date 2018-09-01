@@ -13,6 +13,7 @@ CONTENTS                                                  *thevimide-contents*
     4.UI-Features...................................|thevimide-ui|
         4.1.Interface...............................|thevimide-interface|
         4.2.File Explorer...........................|thevimide-explorer|
+        4.3.Tagbar..................................|thevimide-tagbar|
         4.3.Helper..................................|thevimide-ui-helper|
     5.Syntax highligthing...........................|thevimide-syntax|
     6.Autocompletion................................|thevimide-auto|
@@ -28,7 +29,7 @@ CONTENTS                                                  *thevimide-contents*
         9.2.Vdebug..................................|thevimide-vdebug|
     10.Code helpers.................................|thevimide-code|
     12.Version control..............................|thevimide-vcontrol|
-    13.Docmentation.................................|thevimide-doc|
+    13.Documentation.................................|thevimide-doc|
         13.1.VimWiki................................|thevimide-wiki|
         13.2.Notes..................................|thevimide-notes|
     14.Hotkeys......................................|thevimide-hotkeys|
@@ -57,6 +58,9 @@ TheVimIDE has five major targets:
     * Be easy to configure
     * Be fully functional out of the box
     * Be easy expandable and forkable
+
+This metaplugin requires a good knowledge of the vim editor and the most 
+basic functions of vim.
 
 ==============================================================================
 2. Plugin overview                                         *thevimide-plugins*
@@ -135,9 +139,28 @@ For help:
 - Airline-Themes  :help airline-themes-list
 
 ------------------------------------------------------------------------------
-4.2. File Explorer
-Fileexplorer:   NerdTREE        Advanced file explorer :help NerdTREE
-                NerdTREE-Tabs   :help nerdtree-tabs
+4.2. File Explorer                                        *thevimide-explorer*
+
+TheVimIDE includes the vim file explorer NerdTREE which could be opened with
+the hotkey CTRL+N. It is independently from opening new tabs and you can
+use the same explorer for all tabs and buffers.
+
+Simple usage: 
+- Type <Enter> on a directory to open/close it
+- Type <Enter> on a file to open it in the actual buffer (window)
+- Type <T> on a file to open it on a new tab
+- Type <M> on a file or directory to modify it (add/move/delete)
 
 
+For help:
+:help NerdTREE
+:help nerdtree-tabs
 
+------------------------------------------------------------------------------
+4.3. Tagbar                                              *thevimide-ui-helper*
+
+Tagbar is a UI plugin which allows you to show all classes, methods and
+functions of an file.
+
+
+==============================================================================
