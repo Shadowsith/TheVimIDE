@@ -15,7 +15,7 @@ function pluginloader#Completion()
     if $ac != "c" || $ac != "cpp" || $ac != "c++" || $ac != "h" || $ac != "hpp" || $ac != "js" || $ac != "py"
         Plug 'lifepillar/vim-mucomplete' 
     endif
-    Plug 'maralla/completor.vim', { 'for': ['cpp', 'c', 'js', 'py'] }
+    Plug 'maralla/completor.vim', { 'for': ['cpp', 'c', 'javascript', 'python'] }
     Plug 'shawncplus/phpcomplete.vim'
     Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
     Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' } "lua autocompletion
@@ -35,7 +35,6 @@ function pluginloader#Syntax()
     Plug 'octol/vim-cpp-enhanced-highlight'
     Plug 'othree/html5.vim' "also code completion of html5 tags
     Plug 'Shadowsith/vim-syntax'
-    Plug 'elmar-hinz/vim.typoscript' 
     Plug 'lifepillar/pgsql.vim'
     Plug 'ap/vim-css-color'
     Plug 'udalov/kotlin-vim'

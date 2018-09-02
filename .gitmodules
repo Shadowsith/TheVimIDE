@@ -67,9 +67,6 @@
 [submodule "bundle/vim-js-indent"]
 	path = bundle/vim-js-indent
 	url = https://github.com/jason0x43/vim-js-indent.git
-[submodule "bundle/vim.typoscript"]
-	path = bundle/vim.typoscript
-	url = https://github.com/elmar-hinz/vim.typoscript.git
 [submodule "bundle/phpcomplete.vim"]
 	path = bundle/phpcomplete.vim
 	url = https://github.com/shawncplus/phpcomplete.vim
