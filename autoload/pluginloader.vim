@@ -24,6 +24,7 @@ function pluginloader#Completion()
     Plug 'ludovicchabant/vim-gutentags' "auto ctags generation
     Plug 'vim-ruby/vim-ruby' "default ruby
     Plug 'tpope/vim-rails' "ruby on rails
+    Plug 'Quramy/tsuquyomi' "typescript autocompletion
 endfunction
 
 function pluginloader#Snipptes()
@@ -38,6 +39,7 @@ function pluginloader#Syntax()
     Plug 'lifepillar/pgsql.vim'
     Plug 'ap/vim-css-color'
     Plug 'udalov/kotlin-vim'
+    Plug 'leafgarland/typescript-vim'
 endfunction
 
 function pluginloader#CodeHelper()
