@@ -32,7 +32,8 @@ function settingloader#UiFeatures()
     highlight CursorLineNR ctermfg=cyan
 endfunction
 
-function settingloader#Jellybeans()
+function settingloader#CustomJellybeans()
+    "example for a customized jellybeans 
     let g:jellybeans_overrides = {
     \    'Todo': { 'guifg': '303030', 'guibg': 'f0f000',
     \              'ctermfg': 'Black', 'ctermbg': 'Yellow',
@@ -173,9 +174,9 @@ endfunction
 
 function settingloader#Hotkeys()
     "F1 is reserved for vim help
-    nmap <F2> :call hotkeys#LineNumbers()<cr>
-    nmap <F3> :call hotkeys#AutoIndent()<cr>
-    nmap <F4> :call hotkeys#IndentLine()<cr> 
+    inoremap <F1> :call hotkeys#LineNumbers()<cr>
+    inoremap <F3> :call hotkeys#AutoIndent()<cr>
+    inoremap <F4> :call hotkeys#IndentLine()<cr> 
 
     "Save with shift+s
     nmap <S-s> :w<cr>

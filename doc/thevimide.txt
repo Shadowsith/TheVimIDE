@@ -1,8 +1,8 @@
 *thevimide.txt* Out of the Box IDE for Vim8/Neovim
 *thevimide*
 
-==============================================================================
-CONTENTS                                                  *thevimide-contents*
+================================================================================
+CONTENTS                                                    *thevimide-contents*
 
     1.Intro.........................................|thevimide-intro|
     2.Plugin overview...............................|thevimide-plugins|
@@ -40,8 +40,8 @@ CONTENTS                                                  *thevimide-contents*
         15.4.Adding new plugins.....................|thevimide-dev-plugins|
     16.Support......................................|thevimide-support|
 
-==============================================================================
-1. Intro                                                     *thevimide-intro*
+================================================================================
+1. Intro                                                       *thevimide-intro*
 
 TheVimIDE is a try to make a fully functional out of the box IDE for many 
 popular languages. The origins of this project was a small plugin collection
@@ -62,20 +62,20 @@ TheVimIDE has five major targets:
 This metaplugin requires a good knowledge of the vim editor and the most 
 basic functions of vim.
 
-==============================================================================
-2. Plugin overview                                         *thevimide-plugins*
+================================================================================
+2. Plugin overview                                           *thevimide-plugins*
 
 Here is an alphabetical list with all used plugins:
 
-==============================================================================
-3. Installation                                            *thevimide-install*
+================================================================================
+3. Installation                                              *thevimide-install*
 
 TheVimIDE can be easy installed with help of an bash script installer or at
 your own by using the installation manual and needs some third party
 requirements to works correctly.
 
-------------------------------------------------------------------------------
-3.1. Requirements                                     *thevimide-requriements*
+--------------------------------------------------------------------------------
+3.1. Requirements                                       *thevimide-requriements*
 
 Following programs are needed for the listed features:
 - Vim/Neovimmust be installed with python support
@@ -94,8 +94,8 @@ Following programs are needed for the listed features:
 - ctags:        For vim-gutentags support
 - phpctags:     For better PHP autocompletion experience
 
-------------------------------------------------------------------------------
-3.2. Using the installer                              *thevimide-install-auto*
+--------------------------------------------------------------------------------
+3.2. Using the installer                                *thevimide-install-auto*
 
 To install TheVimIDE automatically use the following installation scripts:
 - Vim:    install.sh
@@ -106,9 +106,8 @@ If you later want to install one of the following plugins correctly use:
 - build/javascript_tern_install.sh for JavaScript omnicompletion
 - build/tagbar_ctags.install.sh to install the tagbar
 
-
-------------------------------------------------------------------------------
-3.3. Install at your own                              *thevimide-install-self*
+--------------------------------------------------------------------------------
+3.3. Install at your own                                *thevimide-install-self*
 
 To install TheVimIDE at our own use following steps:
 - backup or delete your own .vim/ folder and .vimrc file in your home dir
@@ -117,7 +116,7 @@ To install TheVimIDE at our own use following steps:
 If you want to install Java or JavaScript autocompletion look into the
 install scripts at build/*.sh and you see how it works.
 
-==============================================================================
+================================================================================
 4. UI-Features                                                  *thevimide-ui*
 
 TheVimIDE is not eligible to be a develeopment enviroment without an well 
@@ -126,8 +125,8 @@ looking interface.
 The configuration for all UI features could be found under:
 ~/.vim/autoload/settingloader.vim settingloader#UiFeatures()
 
-------------------------------------------------------------------------------
-4.1. Interface                                           *thevimide-interface*
+--------------------------------------------------------------------------------
+4.1. Interface                                             *thevimide-interface*
 
 The basic interface is generally based on the status- and tabline plugin
 vim-airline and its theme extension vim-airline-themes. 
@@ -138,8 +137,8 @@ For help:
 - Airline         :help airline
 - Airline-Themes  :help airline-themes-list
 
-------------------------------------------------------------------------------
-4.2. File Explorer                                        *thevimide-explorer*
+--------------------------------------------------------------------------------
+4.2. File Explorer                                          *thevimide-explorer*
 
 TheVimIDE includes the vim file explorer NerdTREE which could be opened with
 the hotkey CTRL+N. It is independently from opening new tabs and you can
@@ -156,11 +155,40 @@ For help:
 :help NerdTREE
 :help nerdtree-tabs
 
-------------------------------------------------------------------------------
-4.3. Tagbar                                              *thevimide-ui-helper*
+--------------------------------------------------------------------------------
+4.3. Tagbar                                                *thevimide-ui-helper*
 
 Tagbar is a UI plugin which allows you to show all classes, methods and
-functions of an file.
+functions of an file. 
+
+================================================================================ 
+
+================================================================================ 
+14. Hotkeys                                                  *thevimide-hotkeys*
+
+TheVimIDE has a few special hotkeys by default:
 
 
-==============================================================================
+Key                 Description                     Modes
+- [F1]              Vim Help                        All
+- [F2]              Line numbers On/Off             All
+- [F3]              Autoindent On/Off               All
+- [F4]              Indent lines On/Off             All
+
+- [F9]              Run SingleCompile               Normal
+- [F10]             Run SingleCompileRun            Normal
+
+- [SHIFT]+[S]       Save file                       Normal
+
+- [Ctrl]+[Right]    Next tab                        Normal
+- [Ctrl]+[Left]     Previous tab                    Normal
+
+- [Shift]+[Right]   Next buffer                     Normal
+- [Shift]+[Left]    Previous buffer                 Normal
+
+- [Ctrl]+[F5]       background light/dark           All
+                    (for solarized themes)
+
+- [Ctrl]+[N]        Open fileexplorer
+
+================================================================================ 

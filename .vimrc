@@ -26,20 +26,17 @@ call plug#begin('~/.vim/bundle')
     call pluginloader#Snipptes()
     call pluginloader#Syntax()
     call pluginloader#UI()
+    call pluginloader#Colorschemes()
     call pluginloader#CodeHelper()
     call pluginloader#Debug()
     call pluginloader#Documentation()
-
-    "Colorschemes
-    Plug 'rafi/awesome-vim-colorschemes' 
 
     "Various
     Plug 'lifepillar/vim-cheat40'
 call plug#end()
 call plug#helptags() 
 
-"Jellybeans colorscheme
-call settingloader#Jellybeans()
+colorscheme flattened_dark
 
 "UI---------------------
 call settingloader#UiFeatures()

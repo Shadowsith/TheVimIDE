@@ -9,6 +9,11 @@ function pluginloader#UI()
     Plug 'EinfachToll/DidYouMean'
 endfunction
 
+function pluginloader#Colorschemes()
+    Plug 'rafi/awesome-vim-colorschemes' 
+    Plug 'altercation/vim-colors-solarized'
+endfunction
+
 function pluginloader#Completion() 
     let $ac = expand('%:e') "read file extensionns
     "Completion Engines
