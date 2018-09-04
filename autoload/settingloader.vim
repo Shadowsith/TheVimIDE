@@ -174,9 +174,9 @@ endfunction
 
 function settingloader#Hotkeys()
     "F1 is reserved for vim help
-    inoremap <F1> :call hotkeys#LineNumbers()<cr>
-    inoremap <F3> :call hotkeys#AutoIndent()<cr>
-    inoremap <F4> :call hotkeys#IndentLine()<cr> 
+    nmap <F2> :call hotkeys#LineNumbers()<cr>
+    nmap <F3> :call hotkeys#AutoIndent()<cr>
+    nmap <F4> :call hotkeys#IndentLine()<cr> 
 
     "Save with shift+s
     nmap <S-s> :w<cr>
@@ -188,6 +188,9 @@ function settingloader#Hotkeys()
     "Move next/prev file in buffer
     nmap <S-l> :bnext<cr>
     nmap <S-h> :bprev<cr>
+
+    "Switch between colorschemes
+    nmap <C-F5> :call hotkeys#ColorSchemeChanger()<cr>
 
     "SingleCompile
     nmap <F9> :SCCompile<cr>

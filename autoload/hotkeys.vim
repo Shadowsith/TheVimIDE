@@ -36,3 +36,19 @@ function hotkeys#IndentLine()
         echo "IndentLines on"
     endif
 endfunction 
+
+"you can change this to colorschmes of your choice
+"you can also add more conditions to switch through more 
+"themes
+let g:schemeChanger = 0
+function hotkeys#ColorSchemeChanger()
+    if g:schemeChanger == 0
+        colorscheme flattened_light 
+        let g:schemeChanger = 1
+        echo "Colorscheme changed"
+    else
+        colorscheme flattened_dark 
+        let g:schemeChanger = 0
+        echo "Colorscheme changed"
+    endif
+endfunction
