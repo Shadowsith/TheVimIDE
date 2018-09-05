@@ -10,7 +10,7 @@ set smarttab
 set nosmd 
 set noru
 set splitbelow 
-set tw=90
+set tw=85
 
 "Add thevimide help file
 execute 'helptags' '~/.vim/doc'
@@ -22,6 +22,7 @@ call settingloader#FileIndent()
 let $ac = expand('%:e') "read file extensions
 
 call plug#begin('~/.vim/bundle')
+"vimreg Default VimIDE Pluginloader
     call pluginloader#Completion()
     call pluginloader#Snipptes()
     call pluginloader#Syntax()
@@ -33,12 +34,16 @@ call plug#begin('~/.vim/bundle')
 
     "Various
     Plug 'lifepillar/vim-cheat40'
+"vimendreg
+
+"put your own plugins here: 
+
+
 call plug#end()
 call plug#helptags() 
 
 colorscheme flattened_dark
 
-"UI---------------------
 call settingloader#UiFeatures()
 
 "Vim Notes
@@ -91,4 +96,3 @@ call settingloader#SearchTasks()
 if $ac == "cs"
     call settingloader#OmniSharp() 
 endif
-

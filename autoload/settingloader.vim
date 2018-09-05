@@ -6,6 +6,11 @@ function settingloader#FileIndent()
     au FileType yml setl sw=2 sts=2 et smarttab
 endfunction
 
+function RegionFold()
+    set foldmethod=marker
+    set foldmarker=vimreg,vimendreg
+endfunction
+
 function settingloader#UiFeatures()
     "Airline
     let g:airline#extensions#tabline#enabled = 1
@@ -14,7 +19,8 @@ function settingloader#UiFeatures()
 
     "Nerdtree
     map <C-n> :NERDTreeTabsToggle<CR>
-    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") 
+        \ && b:NERDTree.isTabTree()) | q | endif
 
     "Tagbar 
     map <C-t> :TagbarToggle<CR>
@@ -30,8 +36,12 @@ function settingloader#UiFeatures()
     highlight clear CursorLine
     " Sets the line numbering to red background:
     highlight CursorLineNR ctermfg=cyan
+    highlight CursorLineNR guifg=cyan
+
+    call RegionFold()
 endfunction
 
+" example of cutomized jelly beans
 function settingloader#CustomJellybeans()
     "example for a customized jellybeans 
     let g:jellybeans_overrides = {
@@ -49,8 +59,6 @@ function settingloader#CustomJellybeans()
     \    'String': { 'guifg': 'ff99bb' }, 
     \    'background': { 'guibg': '000000' },
     \}    
-    colorscheme jellybeans
-    " Enables cursor line position tracking:
 endfunction
 
 function settingloader#Syntastic() 
@@ -82,9 +90,12 @@ function settingloader#Completor()
     let g:completor_clang_binary='/usr/bin/clang' "on Linux console: $ which clang
     let g:completor_python_binary='/usr/bin/python3' "on Linux console: $ which python3 
     let g:completor_node_binary = '/usr/bin/node' "on Linux console: $ which node
-    autocmd FileType c,cpp,py,js inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-    autocmd FileType c,cpp,py,js inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-    autocmd FileType c,cpp,py,js inoremap <expr> <cr> pumvisible() ? "\<C-y>\<cr>" : "\<cr>"
+    autocmd FileType c,cpp,py,js inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : 
+        \ "\<Tab>"
+    autocmd FileType c,cpp,py,js inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : 
+        \ "\<S-Tab>"
+    autocmd FileType c,cpp,py,js inoremap <expr> <cr> pumvisible() ? "\<C-y>\<cr>" : 
+        \ "\<cr>"
     set completeopt-=longest
     set completeopt+=menuone
     set completeopt-=menu
@@ -219,12 +230,14 @@ function settingloader#OmniSharp()
     set completeopt=longest,menuone,preview
     " Fetch full documentation during omnicomplete requests.
     " There is a performance penalty with this (especially on Mono)
-    " By default, only Type/Method signatures are fetched. Full documentation can still be fetched when
+    " By default, only Type/Method signatures are fetched. Full documentation i
+    " can still be fetched when
     " you need it with the :OmniSharpDocumentation command.
     " let g:omnicomplete_fetch_full_documentation=1
 
-    "Move the preview window (code documentation) to the bottom of the screen, so it doesn't move the code!
-    "You might also want to look at the echodoc plugin
+    " Move the preview window (code documentation) to the bottom of the screen, so it i
+    " doesn't move the code!
+    " You might also want to look at the echodoc plugin
     set splitbelow
 
     " Get Code Issues and syntax errors
@@ -234,7 +247,8 @@ function settingloader#OmniSharp()
     augroup omnisharp_commands
         autocmd!
 
-        "Set autocomplete function to OmniSharp (if not using YouCompleteMe completion plugin)
+        "Set autocomplete function to OmniSharp 
+        "(if not using YouCompleteMe completion plugin)
         autocmd FileType cs setlocal omnifunc=OmniSharp#Complete
 
         " Synchronous build (blocks Vim)
@@ -272,9 +286,11 @@ function settingloader#OmniSharp()
     augroup END
 
 
-    " this setting controls how long to wait (in ms) before fetching type / symbol information.
+    " this setting controls how long to wait (in ms) before fetching type / 
+    " symbol information.
     set updatetime=500
-    " Remove 'Press Enter to continue' message when type information is longer than one line.
+    " Remove 'Press Enter to continue' message when type information is 
+    " longer than one line.
     set cmdheight=2
 
     " Contextual code actions (requires CtrlP or unite.vim)
