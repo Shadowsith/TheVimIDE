@@ -3,7 +3,7 @@ function settingloader#FileIndent()
     au FileType sql setl sw=2 sts=2 et smarttab
     au FileType html setl sw=2 sts=2 et smarttab
     au FileType xml setl sw=2 sts=2 et smarttab
-    au FileType yml setl sw=2 sts=2 et smarttab
+    au FileType yaml setl sw=2 sts=2 et smarttab
 endfunction
 
 function RegionFold()
