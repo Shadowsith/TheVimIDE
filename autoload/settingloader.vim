@@ -71,7 +71,7 @@ function settingloader#Syntastic()
     let g:syntastic_check_on_wq = 0 
 
     "syntax checkers
-    let g:syntastic_javascript_checkers = ['jshint']
+    let g:syntastic_javascript_checkers = ['eslint']
     let g:syntastic_python_checkers = ['flake8']
 endfunction
 
