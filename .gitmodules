@@ -169,3 +169,6 @@
 [submodule "bundle/typescript-vim"]
 	path = bundle/typescript-vim
 	url = https://github.com/leafgarland/typescript-vim
+[submodule "bundle/copy-cut-paste.vim"]
+	path = bundle/copy-cut-paste.vim
+	url = https://github.com/NLKNguyen/copy-cut-paste.vim

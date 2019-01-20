@@ -40,7 +40,7 @@ do
     read -r ask
     if [ \( $ask == "y" \) -o \( $ask == "Y" \)  ];
         then
-            ./build/java_install.sh 
+            ./build/java_install.sh vim
             break
     fi 
     if [ \( $ask == "n" \) -o \( $ask == "N" \)  ];

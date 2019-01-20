@@ -61,6 +61,7 @@ function pluginloader#CodeHelper()
     Plug 'terryma/vim-expand-region'
     Plug 'tpope/vim-fugitive' "Git plugin
     Plug 'airblade/vim-gitgutter' 
+    Plug 'NLKNguyen/copy-cut-paste.vim' "only works on vim with gvim support
 endfunction
 
 function pluginloader#Debug()
