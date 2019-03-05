@@ -45,29 +45,18 @@ Below you can the the most considerable features.
 ### 2.1\. Autocompletion
 <a name="auto"></a> 
 
-| Language      | Used Engines                                                                         | Thirparty Tools |
-| ------------- | ------------------------------------------------------------------------------------ | --------------- |
-| C/C++         | [Completor](https://github.com/maralla/completor.vim)                                | clang           |
-| Java          | Completor, [JavaComplete2](https://github.com/artur-shaik/vim-javacomplete2)         |                 |
-| Python        | Completor                                                                            | Jedi            |
-| Ruby          | Completor, vim-ruby-autocomplete | Solargraph      |
-| PHP           | Completor, phpcomplete, phpctags |                 |
-| HTML          | Completor                        |                 |
-| CSS           | Completor                        |                 |
-| Lua           | MUComplete                       |                 |
-| All other     | MUComplete, Gutentags            |                 |
+| Language      | Used Plugins                                                                            | Thirparty Tools |
+| ------------- | ------------------------------------------------------------------------------------    | --------------- |
+| C/C++         | [Completor](https://github.com/maralla/completor.vim)                                   | clang           |
+| Java          | Completor, [JavaComplete2](https://github.com/artur-shaik/vim-javacomplete2)            |                 |
+| Python        | Completor                                                                               | Jedi            |
+| Ruby          | Completor, [vim-ruby-autocomplete](https://github.com/Shadowsith/vim-ruby-autocomplete) | Solargraph      |
+| PHP           | Completor, [phpcomplete](https://github.com/shawncplus/phpcomplete.vim)                 | phpctags        |
+| HTML          | Completor                                                                               |                 |
+| CSS           | Completor                                                                               |                 |
+| Lua           | [MUComplete](https://github.com/lifepillar/vim-mucomplete)                              |                 |
+| All other     | MUComplete, [Gutentags](https://github.com/ludovicchabant/vim-gutentags)                |                 |
 
-* C/C++ (Completor+clang) 
-* [Java] (JavaComplete2)
-* HTML5 (MuComplete)
-* CSS (MuComplete)
-* [PHP](https://github.com/shawncplus/phpcomplete.vim) (Completor+phpctags)
-* [JavaScript](https://github.com/ternjs/tern_for_vim) (Competor+tern)
-* [Lua](https://github.com/xolox/vim-lua-ftplugin) (Lua ftp plugin)
-* [C#](https://github.com/OmniSharp/omnisharp-vim) (MuComplete+OmniSharp-vim) 
-* Python (Completor+Jedi)
-* Ruby (Completor+Solargraph)
-* [Gutentags](https://github.com/ludovicchabant/vim-gutentags) (all ctag compatible languages)
 
 ### 2.2\. Code Helper
 
