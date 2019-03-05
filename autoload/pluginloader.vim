@@ -17,10 +17,11 @@ endfunction
 function pluginloader#Completion() 
     let $ac = expand('%:e') "read file extensionns
     "Completion Engines
-    if $ac != "c" || $ac != "cpp" || $ac != "c++" || $ac != "h" || $ac != "hpp" || $ac != "js" || $ac != "py"
+    if $ac != "c" || $ac != "cpp" || $ac != "c++" || $ac != "h" || $ac != "hpp" || $ac != "js" || $ac != "py" 
+                \ $ac != "rb" || $ac != "html" || $ac != "xml" || $ac != "css" || $ac != "php" || $ac != "java"
         Plug 'lifepillar/vim-mucomplete' 
     endif
-    Plug 'maralla/completor.vim', { 'for': ['cpp', 'c', 'javascript', 'python'] }
+    Plug 'maralla/completor.vim', { 'for': ['cpp', 'c', 'javascript', 'python', 'php', 'ruby', 'html', 'css', 'xml', 'java'] }
     Plug 'shawncplus/phpcomplete.vim'
     Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
     Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' } "lua autocompletion

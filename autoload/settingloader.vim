@@ -102,7 +102,13 @@ function settingloader#Completor()
     if &completeopt !~# 'noinsert\|noselect'
         set completeopt+=noselect
     endif
-    let g:completor_completion_delay=10
+    let g:completor_completion_delay=5
+    let g:completor_css_omni_trigger = '([\w-]+|@[\w-]*|[\w-]+:\s*[\w-]*)$'
+    let g:completor_html_omni_trigger = '(<[$\w]*|<\/[$\w]*)$'
+    let g:completor_xml_omni_trigger = '(<[$\w]*|<\/[$\w]*)$'
+    let g:completor_php_omni_trigger = '([$\w]{2,}|use\s*|->[$\w]*|::[$\w]*|implements\s*|extends\s*|class\s+[$\w]+|new\s*)$'
+    let g:completor_java_omni_trigger = '(\.[$\w]*)$'
+
 endfunction
 
 function settingloader#PHPComplete()
