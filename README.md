@@ -15,7 +15,7 @@
 3. [Installation](#installation) 
     1. [Requirements](#requirements)  
     2. [Compileable Plugins](#compile) 
-4. [Syntax Checkers](#syntaxcheckers)
+4. [Syntax Linter](#syntaxlinter)
 5. [Debugger](#debugger) 
 6. [Knowing issues](#issues) 
 7. [Examples](#examples) 
@@ -63,40 +63,42 @@ Below you can the the most considerable features.
 | [vim-plug](https://github.com/junegunn/vim-plug)| plugin manager |
 | [vim-airline](https://github.com/vim-airline/vim-airline) | modern vim user interface |
 | [vim-airline-themes](https://github.com/vim-airline/vim-airline-themes) | themes for vim airline |
-| [NERDTree](https://github.com/scrooloose/nerdtree) | project explorer to navigate easy through your file tree
-| [NERDTree-Tabs](https://github.com/jistr/vim-nerdtree-tabs) | to use same NERDTree on each tab
-| [Tagbar](https://github.com/majutsushi/tagbar) | show all classes, functions and global variables in a side bar
-| [identLine](https://github.com/Yggdroot/indentLine) | Highlights line indentation
-| [Bookmarks](https://github.com/MattesGroeger/vim-bookmarks) | add line-bookmarks in your file 
-| [DidYouMean](https://github.com/EinfachToll/DidYouMean) | asks for the right file to open when similiar files exists
+| [NERDTree](https://github.com/scrooloose/nerdtree) | project explorer to navigate easy through your file tree |
+| [NERDTree-Tabs](https://github.com/jistr/vim-nerdtree-tabs) | to use same NERDTree on each tab |
+| [Tagbar](https://github.com/majutsushi/tagbar) | show all classes, functions and global variables in a side bar |
+| [identLine](https://github.com/Yggdroot/indentLine) | Highlights line indentation |
+| [Bookmarks](https://github.com/MattesGroeger/vim-bookmarks) | add line-bookmarks in your file |
+| [DidYouMean](https://github.com/EinfachToll/DidYouMean) | asks for the right file to open when similiar files exists |
 
 <a name="syntax"></a>
 ### 2.3\. Syntax
 | Plugin | Description |
 | ------ | ----------- |
 | [Advances C++ Highlight](https://github.com/octol/vim-cpp-enhanced-highlight) | 
-| [rainbow bracklets](https://github.com/luochen1990/rainbow) | better highlights brackets/blocks 
-| [CSS Colors](https://github.com/ap/vim-css-color) | shows the color for html colors in code
-| [jellybeans](https://github.com/nanotech/jellybeans.vim) | color scheme
-| [Search Tasks](https://github.com/gilsondev/searchtasks.vim) | searching TODO, FIXME or other tags in your project 
-| [PGSQL](https://github.com/lifepillar/pgsql.vim) | better highlights (Postgre) SQL files
+| [rainbow bracklets](https://github.com/luochen1990/rainbow) | better highlights brackets/blocks |
+| [CSS Colors](https://github.com/ap/vim-css-color) | shows the color for html colors in code |
+| [jellybeans](https://github.com/nanotech/jellybeans.vim) | color scheme |
+| [Search Tasks](https://github.com/gilsondev/searchtasks.vim) | searching TODO, FIXME or other tags in your project |
+| [PGSQL](https://github.com/lifepillar/pgsql.vim) | better highlights (Postgre) SQL files |
 
 <a name="code_helper"></a>
 ### 2.4\. Code Helper
 | Plugin | Description |
 | ------ | ----------- |
-| [auto-pair](https://github.com/jiangmiao/auto-pairs) | autocloses brackets and quotation marks
-| [closetag](https://github.com/alvan/vim-closetag) | autocloses (x)html/xml tags
-| [Commentary](https://github.com/tpope/vim-commentary.git) | fast comment/uncomment lines
-| [UtilSnips](https://github.com/SirVer/ultisnips) | snippet handler for vim
-| [vim-snippets](https://github.com/honza/vim-snippets) | snippets for many languages 
+| [auto-pair](https://github.com/jiangmiao/auto-pairs) | autocloses brackets and quotation marks |
+| [closetag](https://github.com/alvan/vim-closetag) | autocloses (x)html/xml tags |
+| [Commentary](https://github.com/tpope/vim-commentary.git) | fast comment/uncomment lines |
+| [UtilSnips](https://github.com/SirVer/ultisnips) | snippet handler for vim |
+| [vim-snippets](https://github.com/honza/vim-snippets) | snippets for many languages |
 
 <a name="debugging"></a>
 ### 2.5\. Debugging
 | Plugin | Description |
 | ------ | ----------- |
-| [Syntastic](https://github.com/vim-syntastic/syntastic) | shows syntax errors during programming
-| [SingleCompile](https://github.com/vim-scripts/SingleCompile) | compiling single files without closing vim
+| [Syntastic](https://github.com/vim-syntastic/syntastic) | shows syntax errors during programming |
+| [SingleCompile](https://github.com/vim-scripts/SingleCompile) | compiling single files without closing vim |
+| [ConqueGdb](https://github.com/vim-scripts/Conque-GDB) | Integrated gdb C/C++ debugger for vim |
+| [Vdebug](https://github.com/vim-vdebug/vdebug.git) | Debugger for PHP, Python, Ruby, Perl, Tcl and NodeJS |
 
 <a name="documentation"></a>
 ### 2.6\. Documentation
@@ -147,11 +149,11 @@ other install scripts in ./build for plugins that you need to build.
 * java_install.sh for Java
 * javascript_install.sh for Javascript
 
-<a name="syntaxcheckers"></a> 
+<a name="syntaxlinter"></a> 
 
-## 4\. Syntax Checkers
-The default syntax checkers for following languages are:
-* JavaScript: Jshint, install it with `sudo npm install -g jshint`
+## 4\. Syntax Linter
+The default linter for following languages are:
+* JavaScript: eslint, install it with `sudo npm install -g eslint`
 * Python: flake8, install it with `sudo pip install flake8` 
 
 If you want to change the checker of a language:
@@ -175,13 +177,6 @@ Until then you need to read the help under: :help VdbugSetUp
 <a name="issues"></a> 
 
 ## 6\. Knowing issuses
-### C# omnicompletion does not work:
-Omnisharp has switched to a new completion server (roselyn) and for that I have to rewrite
-the most of the C# installer.
-
-### C# Compiling error with magic number 542
-This is a bug that occurs on gui-based terminals when ncurses 6.1 is installed. 
-A hotfix for this bug is to run the build/omnisharp_install.sh with the xterm terminal. 
 
 <a name="examples"></a> 
 
