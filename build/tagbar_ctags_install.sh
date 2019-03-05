@@ -1,6 +1,6 @@
 echo Installing ctags to see Methods of file
 
-if [ \($1 == "vim" \) -o \( $1 == "" \) ]; 
+if [ $1 == "vim" ]; 
     then
         cd ~/.vim/ctags/ 
     else

@@ -1,3 +1,12 @@
+function pluginloader#getFileTypes() 
+    let l:ft = ['c', 'cpp', 'c++', 'h', 'hpp', 'js', 'py', 'rb', 'html', 'xml']
+    call add(l:ft, 'css')
+    call add(l:ft, 'java')
+    call add(l:ft, 'php')
+    return l:ft
+endfunction
+
+
 function pluginloader#UI()
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
@@ -17,12 +26,14 @@ endfunction
 function pluginloader#Completion() 
     let $ac = expand('%:e') "read file extensionns
     "Completion Engines
-    if $ac != "c" || $ac != "cpp" || $ac != "c++" || $ac != "h" || $ac != "hpp" || $ac != "js" || $ac != "py" 
-                \ $ac != "rb" || $ac != "html" || $ac != "xml" || $ac != "css" || $ac != "php" || $ac != "java"
-        Plug 'lifepillar/vim-mucomplete' 
-    endif
+    for l:ft in pluginloader#getFileTypes() 
+        if l:ft != $ac
+            Plug 'lifepillar/vim-mucomplete' 
+            break
+        endif
+    endfor
     Plug 'maralla/completor.vim', { 'for': ['cpp', 'c', 'javascript', 'python', 'php', 'ruby', 'html', 'css', 'xml', 'java'] }
-    Plug 'shawncplus/phpcomplete.vim'
+    Plug 'shawncplus/phpcomplete.vim' { 'for': 'php' }
     Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
     Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' } "lua autocompletion
     Plug 'xolox/vim-misc' "needed for lua-autocompletion
@@ -31,6 +42,8 @@ function pluginloader#Completion()
     Plug 'vim-ruby/vim-ruby' "default ruby
     Plug 'tpope/vim-rails' "ruby on rails
     Plug 'Quramy/tsuquyomi' "typescript autocompletion
+    Plug 'autozimu/LanguageClient-neovim' 
+    Plug 'Shadowsith/vim-ruby-autocomplete'
 endfunction
 
 function pluginloader#Snipptes()

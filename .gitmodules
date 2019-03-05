@@ -178,3 +178,6 @@
 [submodule "bundle/vim-ruby-autocomplete"]
 	path = bundle/vim-ruby-autocomplete
 	url = https://github.com/Shadowsith/vim-ruby-autocomplete.git
+[submodule "bundle/rufo-vim"]
+	path = bundle/rufo-vim
+	url = https://github.com/ruby-formatter/rufo-vim.git

@@ -1,12 +1,12 @@
 #!/bin/bash
 echo Checking if npm is installed
-npm="$(command -v mvn)"
+mvn="$(command -v mvn)"
 path="/usr/bin/mvn"
-if [ "$npm" = "$path" ]
+if [ "$mvn" == "$path" ];
     then
         echo Found maven
         echo Build vim-javacomplete2
-        if [ \($1 == "vim" \) -o \( $1 == "" \) ]; 
+        if [ $1 == "vim" ];
             then
                 cd ~/.vim/bundle/vim-javacomplete2/libs/javavi/
                 mvn compile 

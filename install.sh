@@ -17,8 +17,12 @@ do
     fi 
     if [ \( $ask == "n" \) -o \( $ask == "N" \)  ];
         then
-            echo nothing has deleted, installtion aborted
-            exit 1
+            echo copy current .vim folder to vim_old
+            cp -rf ~/.vim/ vim_old
+            echo copy current .vimrc to vimrc_old
+            cp -rf ~/.vimrc vimrc_old 
+            rm -rf ~/.vim ~/.vimrc
+            break
         else
             echo Input was not correct
             echo "Do you want to delete old vim-files? [y/n]"
@@ -57,7 +61,7 @@ do
     read -r ask
     if [ \( $ask == "y" \) -o \( $ask == "Y" \)  ];
         then
-            ./build/javascript_tern_install.sh  
+            ./build/javascript_tern_install.sh vim 
             break
     fi 
     if [ \( $ask == "n" \) -o \( $ask == "N" \)  ];
@@ -68,13 +72,14 @@ do
             echo "Do you want to install JavaScript autocompletion? [y/n]"
     fi
 done
-echo "Do you want to install C# autocompletion? [y/n]"
+
+echo "Do you want to install Python autocompletion? [y/n]"
 while [ \( "$ask" != "y" \) -o \( "$ask" != "n" \) -o \( "$ask" != "Y" \) -o \( "$ask" != "N" \) ]
 do
     read -r ask
     if [ \( $ask == "y" \) -o \( $ask == "Y" \)  ];
         then
-            ./build/omnisharp_install.sh  
+            ./build/python_jedi_install.sh
             break
     fi 
     if [ \( $ask == "n" \) -o \( $ask == "N" \)  ];
@@ -82,16 +87,36 @@ do
             break 
         else
             echo Input was not correct
-            echo "Do you want to install C# autocompletion? [y/n]"
+            echo "Do you want to install Python autocompletion? [y/n]"
     fi
 done
+
+echo "Do you want to install Ruby autocompletion? [y/n]"
+while [ \( "$ask" != "y" \) -o \( "$ask" != "n" \) -o \( "$ask" != "Y" \) -o \( "$ask" != "N" \) ]
+do
+    read -r ask
+    if [ \( $ask == "y" \) -o \( $ask == "Y" \)  ];
+        then
+            ./build/ruby_solargraph_install.sh 
+            break
+    fi 
+    if [ \( $ask == "n" \) -o \( $ask == "N" \)  ];
+        then
+            break 
+        else
+            echo Input was not correct
+            echo "Do you want to install Ruby autocompletion? [y/n]"
+    fi
+done
+
+
 echo "Do you want to install Vim-Tagbar (shows a function bar at the left side)? [y/n]"
 while [ \( "$ask" != "y" \) -o \( "$ask" != "n" \) -o \( "$ask" != "Y" \) -o \( "$ask" != "N" \) ]
 do
     read -r ask
     if [ \( $ask == "y" \) -o \( $ask == "Y" \)  ];
         then
-            ./build/tagbar_ctags_install.sh  
+            ./build/tagbar_ctags_install.sh vim
             break
     fi 
     if [ \( $ask == "n" \) -o \( $ask == "N" \)  ];
