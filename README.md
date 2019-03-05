@@ -66,9 +66,13 @@ Below you can the the most considerable features.
 | [NERDTree](https://github.com/scrooloose/nerdtree) | project explorer to navigate easy through your file tree |
 | [NERDTree-Tabs](https://github.com/jistr/vim-nerdtree-tabs) | to use same NERDTree on each tab |
 | [Tagbar](https://github.com/majutsushi/tagbar) | show all classes, functions and global variables in a side bar |
+| [vim-fugitive](https://github.com/tpope/vim-fugitive.git) | Git wrapper for vim
+| [vim-gitgutter](https://github.com/airblade/vim-gitgutter.git) | shows if lines are added, modified or deleted since last commit |
 | [identLine](https://github.com/Yggdroot/indentLine) | Highlights line indentation |
 | [Bookmarks](https://github.com/MattesGroeger/vim-bookmarks) | add line-bookmarks in your file |
 | [DidYouMean](https://github.com/EinfachToll/DidYouMean) | asks for the right file to open when similiar files exists |
+| [winresizer](https://github.com/simeji/winresizer.git) | easy resizes vim windows with hotkeys
+| [vim-search-pulse](https://github.com/inside/vim-search-pulse.git) | highlights the line with the current found search pattern
 
 <a name="syntax"></a>
 ### 2.3\. Syntax
@@ -80,6 +84,7 @@ Below you can the the most considerable features.
 | [jellybeans](https://github.com/nanotech/jellybeans.vim) | color scheme |
 | [Search Tasks](https://github.com/gilsondev/searchtasks.vim) | searching TODO, FIXME or other tags in your project |
 | [PGSQL](https://github.com/lifepillar/pgsql.vim) | better highlights (Postgre) SQL files |
+| [vimtex](https://github.com/lervag/vimtex.git) | syntax and completion support for LaTeX
 
 <a name="code_helper"></a>
 ### 2.4\. Code Helper
@@ -90,6 +95,8 @@ Below you can the the most considerable features.
 | [Commentary](https://github.com/tpope/vim-commentary.git) | fast comment/uncomment lines |
 | [UtilSnips](https://github.com/SirVer/ultisnips) | snippet handler for vim |
 | [vim-snippets](https://github.com/honza/vim-snippets) | snippets for many languages |
+| [vim-ruby](https://github.com/vim-ruby/vim-ruby.git) | Vim/Ruby configuration files |
+| [vim-rails](https://github.com/tpope/vim-rails.git) | Ruby on Rails power tools |
 
 <a name="debugging"></a>
 ### 2.5\. Debugging
