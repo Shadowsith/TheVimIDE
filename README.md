@@ -6,7 +6,7 @@
 ----
 1. [Introduction](#introduction) 
 2. [Features](#features)
-    1. [Major Features](#majorfeatures)  
+    1. [Autocompletion](#auto)  
     2. [Minor Features](#minorfeatures)
     3. [Working Autocompletion](#auto)
     4. [Upcoming Autocompletion](#upcomingauto) 
@@ -42,6 +42,37 @@ Below you can the the most considerable features.
 
 <a name="majorfeatures"></a> 
 
+### 2.1\. Autocompletion
+<a name="auto"></a> 
+
+| Language      | Used Engines                                                                         | Thirparty Tools |
+| ------------- | ------------------------------------------------------------------------------------ | --------------- |
+| C/C++         | [Completor](https://github.com/maralla/completor.vim)                                | clang           |
+| Java          | Completor, [JavaComplete2](https://github.com/artur-shaik/vim-javacomplete2)         |                 |
+| Python        | Completor                                                                            | Jedi            |
+| Ruby          | Completor, vim-ruby-autocomplete | Solargraph      |
+| PHP           | Completor, phpcomplete, phpctags |                 |
+| HTML          | Completor                        |                 |
+| CSS           | Completor                        |                 |
+| Lua           | MUComplete                       |                 |
+| All other     | MUComplete, Gutentags            |                 |
+
+* C/C++ (Completor+clang) 
+* [Java] (JavaComplete2)
+* HTML5 (MuComplete)
+* CSS (MuComplete)
+* [PHP](https://github.com/shawncplus/phpcomplete.vim) (Completor+phpctags)
+* [JavaScript](https://github.com/ternjs/tern_for_vim) (Competor+tern)
+* [Lua](https://github.com/xolox/vim-lua-ftplugin) (Lua ftp plugin)
+* [C#](https://github.com/OmniSharp/omnisharp-vim) (MuComplete+OmniSharp-vim) 
+* Python (Completor+Jedi)
+* Ruby (Completor+Solargraph)
+* [Gutentags](https://github.com/ludovicchabant/vim-gutentags) (all ctag compatible languages)
+
+### 2.2\. Code Helper
+
+### 2.3\. 
+
 ### 2.1\. Major Features
 
 * [vim-plug](https://github.com/junegunn/vim-plug) to add plugins in a easy way 
@@ -75,20 +106,7 @@ Below you can the the most considerable features.
 * Smart hotkeys (using same hotkey to toggle on or of a feature) 
 * Small Syntax Highlights by myself
 
-<a name="auto"></a> 
 
-### 2.3\. Working autocompletion
-
-* C/C++ (Completor+clang) 
-* [Java](https://github.com/artur-shaik/vim-javacomplete2) (JavaComplete2)
-* HTML5 (MuComplete)
-* CSS (MuComplete)
-* [PHP](https://github.com/shawncplus/phpcomplete.vim) (Completor+phpctags)
-* [JavaScript](https://github.com/ternjs/tern_for_vim) (Competor+tern)
-* [Lua](https://github.com/xolox/vim-lua-ftplugin) (Lua ftp plugin)
-* [C#](https://github.com/OmniSharp/omnisharp-vim) (MuComplete+OmniSharp-vim) 
-* Python (Completor+Jedi)
-* [Gutentags](https://github.com/ludovicchabant/vim-gutentags) (all ctag compatible languages)
 
 <a name="upcomingauto"></a> 
 
