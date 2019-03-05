@@ -127,5 +127,7 @@ do
             echo "Do you want to install Vim-Tagbar (shows a function bar at the left side)? [y/n]"
     fi
 done
+cd ~/.vim/bundle/LanguageClient-neovim
+./install.sh
 echo Finished!
 exit 0

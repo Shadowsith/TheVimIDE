@@ -72,7 +72,7 @@ call settingloader#Javacomplete2()
 call settingloader#LuaComplete()
 
 "ruby autocompletion
-call settingloader#RubyComplete()
+call settingloader#Ruby()
 
 "pgsql Plugin
 "let g:sql_type_default = 'pgsql' "If you want use this plugin for all sql files

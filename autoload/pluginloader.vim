@@ -33,7 +33,7 @@ function pluginloader#Completion()
         endif
     endfor
     Plug 'maralla/completor.vim', { 'for': ['cpp', 'c', 'javascript', 'python', 'php', 'ruby', 'html', 'css', 'xml', 'java'] }
-    Plug 'shawncplus/phpcomplete.vim' { 'for': 'php' }
+    Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
     Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
     Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' } "lua autocompletion
     Plug 'xolox/vim-misc' "needed for lua-autocompletion
@@ -42,8 +42,8 @@ function pluginloader#Completion()
     Plug 'vim-ruby/vim-ruby' "default ruby
     Plug 'tpope/vim-rails' "ruby on rails
     Plug 'Quramy/tsuquyomi' "typescript autocompletion
-    Plug 'autozimu/LanguageClient-neovim' 
-    Plug 'Shadowsith/vim-ruby-autocomplete'
+    Plug 'autozimu/LanguageClient-neovim', { 'for': 'ruby' }
+    Plug 'Shadowsith/vim-ruby-autocomplete', { 'for': 'ruby' }
 endfunction
 
 function pluginloader#Snipptes()
@@ -76,13 +76,14 @@ function pluginloader#CodeHelper()
     Plug 'tpope/vim-fugitive' "Git plugin
     Plug 'airblade/vim-gitgutter' 
     Plug 'NLKNguyen/copy-cut-paste.vim' "only works on vim with gvim support
+    Plug 'ruby-formatter/rufo-vim'
 endfunction
 
 function pluginloader#Debug()
     Plug 'vim-syntastic/syntastic'
     Plug 'vim-scripts/SingleCompile'
     Plug '~/.vim/bundle/Conque-GDB'
-    Plug 'vim-vdebug/vdebug', {'for' : ['py', 'php'] }
+    Plug 'vim-vdebug/vdebug', {'for' : ['py', 'php', 'rb'] }
 endfunction
 
 function pluginloader#Documentation()
