@@ -6,10 +6,12 @@
 ----
 1. [Introduction](#introduction) 
 2. [Features](#features)
-    1. [Autocompletion](#auto)  
-    2. [Minor Features](#minorfeatures)
-    3. [Working Autocompletion](#auto)
-    4. [Upcoming Autocompletion](#upcomingauto) 
+    1. [Autocompletion](#autocomp)  
+    2. [Interface](#interface)
+    3. [Syntax](#syntax)
+    4. [Code Helper](#code_helper)
+    5. [Debugging](#debugging)
+    6. [Documentation](#documentation)
 3. [Installation](#installation) 
     1. [Requirements](#requirements)  
     2. [Compileable Plugins](#compile) 
@@ -40,11 +42,8 @@ TheVimIDE has five major targets:
 ## 2\. Features 
 Below you can the the most considerable features.
 
-<a name="majorfeatures"></a> 
-
+<a name="autocomp"></a> 
 ### 2.1\. Autocompletion
-<a name="auto"></a> 
-
 | Language      | Used Plugins                                                                            | Thirparty Tools |
 | ------------- | ------------------------------------------------------------------------------------    | --------------- |
 | C/C++         | [Completor](https://github.com/maralla/completor.vim)                                   | clang           |
@@ -52,56 +51,60 @@ Below you can the the most considerable features.
 | Python        | Completor                                                                               | Jedi            |
 | Ruby          | Completor, [vim-ruby-autocomplete](https://github.com/Shadowsith/vim-ruby-autocomplete) | Solargraph      |
 | PHP           | Completor, [phpcomplete](https://github.com/shawncplus/phpcomplete.vim)                 | phpctags        |
-| HTML          | Completor                                                                               |                 |
+| HTML          | Completor, [HTML5](https://github.com/othree/html5.vim)                                 |                 |
 | CSS           | Completor                                                                               |                 |
 | Lua           | [MUComplete](https://github.com/lifepillar/vim-mucomplete)                              |                 |
 | All other     | MUComplete, [Gutentags](https://github.com/ludovicchabant/vim-gutentags)                |                 |
 
+<a name="interface"></a>
+### 2.2\. Interface
+| Plugin | Description |
+| ------ | ----------- |
+| [vim-plug](https://github.com/junegunn/vim-plug)| plugin manager |
+| [vim-airline](https://github.com/vim-airline/vim-airline) | modern vim user interface |
+| [vim-airline-themes](https://github.com/vim-airline/vim-airline-themes) | themes for vim airline |
+| [NERDTree](https://github.com/scrooloose/nerdtree) | project explorer to navigate easy through your file tree
+| [NERDTree-Tabs](https://github.com/jistr/vim-nerdtree-tabs) | to use same NERDTree on each tab
+| [Tagbar](https://github.com/majutsushi/tagbar) | show all classes, functions and global variables in a side bar
+| [identLine](https://github.com/Yggdroot/indentLine) | Highlights line indentation
+| [Bookmarks](https://github.com/MattesGroeger/vim-bookmarks) | add line-bookmarks in your file 
+| [DidYouMean](https://github.com/EinfachToll/DidYouMean) | asks for the right file to open when similiar files exists
 
-### 2.2\. Code Helper
+<a name="syntax"></a>
+### 2.3\. Syntax
+| Plugin | Description |
+| ------ | ----------- |
+| [Advances C++ Highlight](https://github.com/octol/vim-cpp-enhanced-highlight) | 
+| [rainbow bracklets](https://github.com/luochen1990/rainbow) | better highlights brackets/blocks 
+| [CSS Colors](https://github.com/ap/vim-css-color) | shows the color for html colors in code
+| [jellybeans](https://github.com/nanotech/jellybeans.vim) | color scheme
+| [Search Tasks](https://github.com/gilsondev/searchtasks.vim) | searching TODO, FIXME or other tags in your project 
+| [PGSQL](https://github.com/lifepillar/pgsql.vim) | better highlights (Postgre) SQL files
 
-### 2.3\. 
+<a name="code_helper"></a>
+### 2.4\. Code Helper
+| Plugin | Description |
+| ------ | ----------- |
+| [auto-pair](https://github.com/jiangmiao/auto-pairs) | autocloses brackets and quotation marks
+| [closetag](https://github.com/alvan/vim-closetag) | autocloses (x)html/xml tags
+| [Commentary](https://github.com/tpope/vim-commentary.git) | fast comment/uncomment lines
+| [UtilSnips](https://github.com/SirVer/ultisnips) | snippet handler for vim
+| [vim-snippets](https://github.com/honza/vim-snippets) | snippets for many languages 
 
-### 2.1\. Major Features
+<a name="debugging"></a>
+### 2.5\. Debugging
+| Plugin | Description |
+| ------ | ----------- |
+| [Syntastic](https://github.com/vim-syntastic/syntastic) | shows syntax errors during programming
+| [SingleCompile](https://github.com/vim-scripts/SingleCompile) | compiling single files without closing vim
 
-* [vim-plug](https://github.com/junegunn/vim-plug) to add plugins in a easy way 
-* [vim-airline](https://github.com/vim-airline/vim-airline) for a modern user interface (+ [themes](https://github.com/vim-airline/vim-airline-themes))
-* Multi language autocompletion with help of [completor](https://github.com/maralla/completor.vim) and [mucomplete](https://github.com/lifepillar/vim-mucomplete) (see below for which languages are supported)
-* [NERDTree](https://github.com/scrooloose/nerdtree) and [NERDTree-Tabs](https://github.com/jistr/vim-nerdtree-tabs) to have a integrated file manager 
-* [Tagbar](https://github.com/majutsushi/tagbar) to show your functions, classes and variables in a list and jump to them fast  
-* [Syntastic](https://github.com/vim-syntastic/syntastic) to for showing syntax errors during programming
-* [SingleCompile](https://github.com/vim-scripts/SingleCompile) to run fast test compilings without closing vim
-* [UtilSnips](https://github.com/SirVer/ultisnips) and [vim-snippets](https://github.com/honza/vim-snippets) support for many languages 
-* Settingloader in ./autoload to prefend a to big .vimrc and plugin incompatibilities  
+<a name="documentation"></a>
+### 2.6\. Documentation
+| Plugin | Description |
+| ------ | ----------- |
+| [VimWiki](https://github.com/vimwiki/vimwiki) | wiki system for vim |
+| [vim-notes](https://github.com/xolox/vim-notes) | note system for vim |
 
-<a name="minorfeatures"></a> 
-
-### 2.2\. Minor Features 
-
-* [jellybeans](https://github.com/nanotech/jellybeans.vim) color scheme
-* [rainbow bracklets](https://github.com/luochen1990/rainbow) to highlight brackets 
-* [identLine](https://github.com/Yggdroot/indentLine) (Highlights line indentation) 
-* [auto-pair](https://github.com/jiangmiao/auto-pairs) to autoclose brackets and quotation marks
-* [closetag](https://github.com/alvan/vim-closetag) to autoclose (x)html/xml tags
-* [Commentary](https://github.com/tpope/vim-commentary.git) faster comment out lines
-* [VimWiki](https://github.com/vimwiki/vimwiki) (A wiki system for vim) 
-* [vim-notes](https://github.com/xolox/vim-notes) (A notes system for vim)
-* [DidYouMean](https://github.com/EinfachToll/DidYouMean) asks for the right file to open when similiar files exists
-* [Search Tasks](https://github.com/gilsondev/searchtasks.vim) for searching TODO, FIXME or other tags in your project 
-* [Bookmarks](https://github.com/MattesGroeger/vim-bookmarks) to toggle and go through bookmarks in your file/project
-* Advanced syntax highlighting for [C++](https://github.com/octol/vim-cpp-enhanced-highlight), 
-* [PGSQL](https://github.com/lifepillar/pgsql.vim) 
-* [HTML5](https://github.com/othree/html5.vim) and [CSS](https://github.com/ap/vim-css-color)
-* Smart hotkeys (using same hotkey to toggle on or of a feature) 
-* Small Syntax Highlights by myself
-
-
-
-<a name="upcomingauto"></a> 
-
-### 2.4\. Upcoming autocompleton: 
-
-* Rust (Completor+racer)
 
 <a name="installation"></a> 
 
