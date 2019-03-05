@@ -107,8 +107,8 @@ function settingloader#Completor()
     let g:completor_html_omni_trigger = '(<[$\w]*|<\/[$\w]*)$'
     let g:completor_xml_omni_trigger = '(<[$\w]*|<\/[$\w]*)$'
     let g:completor_php_omni_trigger = '([$\w]{2,}|use\s*|->[$\w]*|::[$\w]*|implements\s*|extends\s*|class\s+[$\w]+|new\s*)$'
+    let g:completor_ruby_omni_trigger = '(\.[$\w]*|::[$\w]*)$'
     let g:completor_java_omni_trigger = '(\.[$\w]*)$'
-
 endfunction
 
 function settingloader#PHPComplete()

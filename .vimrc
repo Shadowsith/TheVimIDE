@@ -11,6 +11,7 @@ set nosmd
 set noru
 set splitbelow 
 set tw=85
+inoremap <C-@> <C-X><C-O>
 
 "Add thevimide help file
 execute 'helptags' '~/.vim/doc'
