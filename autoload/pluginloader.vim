@@ -54,7 +54,6 @@ endfunction
 function pluginloader#Syntax()
     Plug 'octol/vim-cpp-enhanced-highlight'
     Plug 'othree/html5.vim' "also code completion of html5 tags
-    Plug 'Shadowsith/vim-syntax'
     Plug 'lifepillar/pgsql.vim'
     Plug 'ap/vim-css-color'
     Plug 'udalov/kotlin-vim'

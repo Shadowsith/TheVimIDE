@@ -90,12 +90,9 @@ function settingloader#Completor()
     let g:completor_clang_binary='/usr/bin/clang' "on Linux console: $ which clang
     let g:completor_python_binary='/usr/bin/python3' "on Linux console: $ which python3 
     let g:completor_node_binary = '/usr/bin/node' "on Linux console: $ which node
-    autocmd FileType c,cpp,py,js inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : 
-        \ "\<Tab>"
-    autocmd FileType c,cpp,py,js inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : 
-        \ "\<S-Tab>"
-    autocmd FileType c,cpp,py,js inoremap <expr> <cr> pumvisible() ? "\<C-y>\<cr>" : 
-        \ "\<cr>"
+    autocmd FileType c,cpp,py,js,php,rb,java,html,xml,css inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+    autocmd FileType c,cpp,py,js,php,rb,java,html,xml,css inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+    autocmd FileType c,cpp,py,js,php,rb,java,html,xml,css inoremap <expr> <cr> pumvisible() ? "\<C-y>\<cr>" : "\<cr>"
     set completeopt-=longest
     set completeopt+=menuone
     set completeopt-=menu
