@@ -172,9 +172,6 @@
 [submodule "bundle/copy-cut-paste.vim"]
 	path = bundle/copy-cut-paste.vim
 	url = https://github.com/NLKNguyen/copy-cut-paste.vim
-[submodule "bundle/LanguageClient-neovim"]
-	path = bundle/LanguageClient-neovim
-	url = https://github.com/autozimu/LanguageClient-neovim.git
 [submodule "bundle/vim-ruby-autocomplete"]
 	path = bundle/vim-ruby-autocomplete
 	url = https://github.com/Shadowsith/vim-ruby-autocomplete.git
