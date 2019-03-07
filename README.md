@@ -73,6 +73,7 @@ Below you can the the most considerable features.
 | [DidYouMean](https://github.com/EinfachToll/DidYouMean) | asks for the right file to open when similiar files exists |
 | [winresizer](https://github.com/simeji/winresizer.git) | easy resizes vim windows with hotkeys
 | [vim-search-pulse](https://github.com/inside/vim-search-pulse.git) | highlights the line with the current found search pattern
+| [denite](https://github.com/Shougo/denite.nvim) | asynchronous unite all interfaces for Neovim/Vim8 |
 
 <a name="syntax"></a>
 ### 2.3\. Syntax
@@ -84,19 +85,20 @@ Below you can the the most considerable features.
 | [jellybeans](https://github.com/nanotech/jellybeans.vim) | color scheme |
 | [Search Tasks](https://github.com/gilsondev/searchtasks.vim) | searching TODO, FIXME or other tags in your project |
 | [PGSQL](https://github.com/lifepillar/pgsql.vim) | better highlights (Postgre) SQL files |
-| [vimtex](https://github.com/lervag/vimtex.git) | syntax and completion support for LaTeX
+| [vimtex](https://github.com/lervag/vimtex.git) | syntax and completion support for LaTeX |
 
 <a name="code_helper"></a>
 ### 2.4\. Code Helper
 | Plugin | Description |
 | ------ | ----------- |
-| [auto-pair](https://github.com/jiangmiao/auto-pairs) | autocloses brackets and quotation marks |
+| [lexima](https://github.com/cohama/lexima.vim) | autocloses brackets, blocks and literals |
 | [closetag](https://github.com/alvan/vim-closetag) | autocloses (x)html/xml tags |
 | [Commentary](https://github.com/tpope/vim-commentary.git) | fast comment/uncomment lines |
 | [UtilSnips](https://github.com/SirVer/ultisnips) | snippet handler for vim |
 | [vim-snippets](https://github.com/honza/vim-snippets) | snippets for many languages |
 | [vim-ruby](https://github.com/vim-ruby/vim-ruby.git) | Vim/Ruby configuration files |
 | [vim-rails](https://github.com/tpope/vim-rails.git) | Ruby on Rails power tools |
+| [copy-cut-paste](https://github.com/NLKNguyen/copy-cut-paste.vim) | easy copy paste from system buffer into vim or from vim into system buffer (requires gvim)
 
 <a name="debugging"></a>
 ### 2.5\. Debugging
