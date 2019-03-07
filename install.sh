@@ -10,18 +10,17 @@ do
     if [ \( $ask == "y" \) -o \( $ask == "Y" \)  ];
         then
             rm -f ~/.vimrc
-            rm -rf ~/.vim/
+            sudo rm -rf ~/.vim/
             mkdir ~/.vim/
             echo The old vim files have been deleted!
             break
     fi 
     if [ \( $ask == "n" \) -o \( $ask == "N" \)  ];
         then
-            echo copy current .vim folder to vim_old
-            cp -rf ~/.vim/ vim_old
-            echo copy current .vimrc to vimrc_old
-            cp -rf ~/.vimrc vimrc_old 
-            rm -rf ~/.vim ~/.vimrc
+            echo move current .vim folder to vim_old
+            sudo mv ~/.vim/ vim_old
+            echo move current .vimrc to vimrc_old
+            cp mv ~/.vimrc vimrc_old 
             break
         else
             echo Input was not correct
@@ -127,7 +126,7 @@ do
             echo "Do you want to install Vim-Tagbar (shows a function bar at the left side)? [y/n]"
     fi
 done
-cd ~/.vim/bundle/LanguageClient-neovim
+cd ~/.vim/bundle/LanguageClient-neovim/
 ./install.sh
 echo Finished!
 exit 0
