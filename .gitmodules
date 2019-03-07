@@ -169,6 +169,3 @@
 [submodule "bundle/rufo-vim"]
 	path = bundle/rufo-vim
 	url = https://github.com/ruby-formatter/rufo-vim.git
-[submodule "bundle/LanguageClient-neovim"]
-	path = bundle/LanguageClient-neovim
-	url = https://github.com/autozimu/LanguageClient-neovim
