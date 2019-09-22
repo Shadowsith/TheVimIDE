@@ -169,6 +169,3 @@
 [submodule "ctags"]
 	path = ctags
 	url = https://github.com/universal-ctags/ctags.git
-[submodule "bundle/LanguageClient-neovim"]
-	path = bundle/LanguageClient-neovim
-	url = https://github.com/autozimu/LanguageClient-neovim.git
