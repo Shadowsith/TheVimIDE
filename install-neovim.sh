@@ -3,7 +3,6 @@ echo Firstly pull all submodules:
 git submodule update --init --recursive
 git submodule update --recursive
 echo "Do you want to delete old neovim-files? [y/n]"
-ask="a"
 while [ \( "$ask" != "y" \) -o \( "$ask" != "n" \) -o \( "$ask" != "Y" \) -o \( "$ask" != "N" \) ]
 do
     read -r ask

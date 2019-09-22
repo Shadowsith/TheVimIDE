@@ -3,8 +3,8 @@ echo Firstly pull all submodules:
 git submodule update --init --recursive
 git submodule update --recursive
 echo "Do you want to delete old vim-files? [y/n]"
-ask="a"
-while [ \( "$ask" != "y" \) -o \( "$ask" != "n" \) -o \( "$ask" != "Y" \) -o \( "$ask" != "N" \) ]
+while [ \( "$ask" != "y" \) -o \( "$ask" != "n" \) -o \( "$ask" != "Y" \) -o \
+    \( "$ask" != "N" \) ]
 do
     read -r ask
     if [ \( $ask == "y" \) -o \( $ask == "Y" \)  ];
@@ -18,9 +18,10 @@ do
     if [ \( $ask == "n" \) -o \( $ask == "N" \)  ];
         then
             echo move current .vim folder to vim_old
-            sudo mv ~/.vim/ vim_old
+            sudo mv ~/.vim/ ~/vim_old
             echo move current .vimrc to vimrc_old
-            cp mv ~/.vimrc vimrc_old 
+            mv ~/.vimrc ~/vimrc_old 
+            mkdir ~/.vim/
             break
         else
             echo Input was not correct
@@ -38,7 +39,8 @@ echo Copy .tern-config to ~/.tern-config
 cp ./.tern-config ~/.tern-config
 rm -f ~/.vim/.tern-config 
 echo "Do you want to install Java autocompletion? [y/n]" 
-while [ \( "$ask" != "y" \) -o \( "$ask" != "n" \) -o \( "$ask" != "Y" \) -o \( "$ask" != "N" \) ]
+while [ \( "$ask" != "y" \) -o \( "$ask" != "n" \) -o \( "$ask" != "Y" \) \
+    -o \( "$ask" != "N" \) ]
 do
     read -r ask
     if [ \( $ask == "y" \) -o \( $ask == "Y" \)  ];
@@ -55,7 +57,8 @@ do
     fi
 done
 echo "Do you want to install JavaScript autocompletion? [y/n]"
-while [ \( "$ask" != "y" \) -o \( "$ask" != "n" \) -o \( "$ask" != "Y" \) -o \( "$ask" != "N" \) ]
+while [ \( "$ask" != "y" \) -o \( "$ask" != "n" \) -o \( "$ask" != "Y" \) \
+    -o \( "$ask" != "N" \) ]
 do
     read -r ask
     if [ \( $ask == "y" \) -o \( $ask == "Y" \)  ];
@@ -73,7 +76,8 @@ do
 done
 
 echo "Do you want to install Python autocompletion? [y/n]"
-while [ \( "$ask" != "y" \) -o \( "$ask" != "n" \) -o \( "$ask" != "Y" \) -o \( "$ask" != "N" \) ]
+while [ \( "$ask" != "y" \) -o \( "$ask" != "n" \) -o \( "$ask" != "Y" \) \
+    -o \( "$ask" != "N" \) ]
 do
     read -r ask
     if [ \( $ask == "y" \) -o \( $ask == "Y" \)  ];
@@ -91,7 +95,8 @@ do
 done
 
 echo "Do you want to install Ruby autocompletion? [y/n]"
-while [ \( "$ask" != "y" \) -o \( "$ask" != "n" \) -o \( "$ask" != "Y" \) -o \( "$ask" != "N" \) ]
+while [ \( "$ask" != "y" \) -o \( "$ask" != "n" \) -o \( "$ask" != "Y" \) \
+    -o \( "$ask" != "N" \) ]
 do
     read -r ask
     if [ \( $ask == "y" \) -o \( $ask == "Y" \)  ];
@@ -109,8 +114,10 @@ do
 done
 
 
-echo "Do you want to install Vim-Tagbar (shows a function bar at the left side)? [y/n]"
-while [ \( "$ask" != "y" \) -o \( "$ask" != "n" \) -o \( "$ask" != "Y" \) -o \( "$ask" != "N" \) ]
+echo "Do you want to install Vim-Tagbar" \
+    "(shows a function bar at the left side)? [y/n]"
+while [ \( "$ask" != "y" \) -o \( "$ask" != "n" \) -o \( "$ask" != "Y" \) \
+    -o \( "$ask" != "N" \) ]
 do
     read -r ask
     if [ \( $ask == "y" \) -o \( $ask == "Y" \)  ];
@@ -123,7 +130,8 @@ do
             break 
         else
             echo Input was not correct
-            echo "Do you want to install Vim-Tagbar (shows a function bar at the left side)? [y/n]"
+            echo "Do you want to install Vim-Tagbar " \ 
+                "(shows a function bar at the left side)? [y/n]"
     fi
 done
 cd ~/.vim/bundle/LanguageClient-neovim/

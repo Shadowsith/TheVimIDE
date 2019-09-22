@@ -10,7 +10,9 @@ set smarttab
 set nosmd 
 set noru
 set splitbelow 
-set tw=85
+set tw=80
+set colorcolumn=+1
+
 inoremap <C-@> <C-X><C-O>
 
 "Add thevimide help file
@@ -92,8 +94,3 @@ call settingloader#Snippets()
 
 "SearchTasks
 call settingloader#SearchTasks()
-
-"OmniSharp
-if $ac == "cs"
-    call settingloader#OmniSharp() 
-endif
