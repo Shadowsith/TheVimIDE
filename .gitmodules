@@ -79,9 +79,6 @@
 [submodule "bundle/vimproc.vim"]
 	path = bundle/vimproc.vim
 	url = https://github.com/Shougo/vimproc.vim.git
-[submodule "ctags"]
-	path = ctags
-	url = https://github.com/universal-ctags/ctags.git
 [submodule "bundle/DidYouMean"]
 	path = bundle/DidYouMean
 	url = https://github.com/EinfachToll/DidYouMean.git
@@ -169,6 +166,9 @@
 [submodule "bundle/rufo-vim"]
 	path = bundle/rufo-vim
 	url = https://github.com/ruby-formatter/rufo-vim.git
+[submodule "ctags"]
+	path = ctags
+	url = https://github.com/universal-ctags/ctags.git
 [submodule "bundle/LanguageClient-neovim"]
 	path = bundle/LanguageClient-neovim
-	url = https://github.com/autozimu/LanguageClient-neovim
+	url = https://github.com/autozimu/LanguageClient-neovim.git
